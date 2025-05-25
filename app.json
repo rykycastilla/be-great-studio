@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "BeGreat Studio",
+    "slug": "be-great-studio",
+    "version": "1.0.0",
+    "orientation": "default",
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#9dcee5"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#9dcee5"
+      },
+      "softwareKeyboardLayoutMode": "pan",
+      "statusBar": {
+        "backgroundColor": "#9dcee5",
+        "translucent": true
+      },
+      "package": "com.begreat.studio"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a76cacc4-adff-4d81-878b-663886fdb759"
+      }
+    }
+  }
+}
