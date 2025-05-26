@@ -1,12 +1,9 @@
 import AddPictureButton from './components/AddPictureButton'
 import AnimatedSafeArea from '@/components/AnimatedSafeArea'
 import ScreenTransition from '@/components/ScreenTransition'
-import { enableAndroidLayoutAnimation } from '@/utils/enable_android_layout_animation'
 import { FadeIn } from 'react-native-reanimated'
 import { useTheme } from '@/hooks/theme/index'
 import { View, StyleSheet } from 'react-native'
-
-enableAndroidLayoutAnimation()
 
 export default function App() {
   const { colors } = useTheme()

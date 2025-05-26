@@ -1,7 +1,8 @@
 import AnimatedButton from '@/components/AnimatedButton'
-import { Alert, StyleSheet } from 'react-native'
 import { FadeIn } from 'react-native-reanimated'
 import { Ionicons } from '@expo/vector-icons'
+import { StyleSheet } from 'react-native'
+import { useRouter } from 'expo-router'
 import { useTheme } from '@/hooks/theme/index'
 
 /**
@@ -12,15 +13,19 @@ import { useTheme } from '@/hooks/theme/index'
  * @returns { ReactElement }
  */
 const AddPictureButton = () => {
+
   const { colors } = useTheme()
+  const router = useRouter()
+
   return (
     <AnimatedButton
       style={ [ styles.addPictureButton, { backgroundColor:colors.primary } ] }
-      onPress={ () => Alert.alert( 'Creating new...' ) }
+      onPress={ () => router.push( '/drawing' ) }
       entering={ FadeIn.delay( 300 ).duration( 300 ) }>
       <Ionicons name="add" size={ 28 } color="#FFFFFF" />
     </AnimatedButton>
   )
+
 }
 
 const styles = StyleSheet.create( {

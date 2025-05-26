@@ -1,7 +1,5 @@
 export { default as ThemeProvider } from './ThemeProvider'
 export { useTheme } from './theme'
 
-/**
- * @import { Theme } from './Theme'
- * @import { ThemeContext } from './ThemeContext'
- */
+/** @typedef { import( './ThemeContext' ).ThemeContext } ThemeContext */
+/** @typedef { import( './Theme' ).Theme } Theme */

@@ -1,0 +1,62 @@
+import { Dimensions } from 'react-native'
+import { useMemo } from 'react'
+import { useTheme } from '@/hooks/theme/index'
+
+/**
+ * @import { Theme, ThemeContext } from '@/hooks/theme'
+ */
+
+/**
+ * @param { number } width
+ * @param { string } aspectRatio
+ * @returns { number }
+ */
+function calcHeightWithAspectRatio( width, aspectRatio ) {
+  switch ( aspectRatio ) {
+  case '3:4':
+    return ( width * 4 ) / 3
+  case '4:3':
+    return ( width * 3 ) / 4
+  case '9:16':
+    return ( width * 16 ) / 9
+  case '16:9':
+    return ( width * 9 ) / 16
+  }
+  return width  // default: 1:1
+}
+
+/**
+ * @param { string } aspectRatio
+ * @param { Theme } theme
+ * @param { ThemeContext[ 'colors' ] } colors
+ * @returns { object }
+ */
+function getCanvasStyle( aspectRatio, theme, colors ) {
+  // Calculating dimensions
+  const width = Dimensions.get( 'window' ).width - 32 // 16px of margin in  both sides
+  const height = calcHeightWithAspectRatio( width, aspectRatio )
+  // Building styles
+  return {
+    width,
+    height,
+    backgroundColor: theme === 'dark' ? '#000000' : '#FFFFFF',
+    borderWidth: 1,
+    borderColor: theme === 'dark' ? colors.border : colors.border,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: theme === 'dark' ? 0.25 : 0.15,
+    shadowRadius: 6,
+    elevation: 8,
+  }
+}
+
+/**
+ * @param { string } aspectRatio
+ * @returns { object }
+ */
+export function useCanvasStyle( aspectRatio ) {
+  const { colors, theme } = useTheme()
+  return useMemo( () => {
+    return getCanvasStyle( aspectRatio, theme, colors )
+  }, [ aspectRatio, theme, colors ] )
+}
