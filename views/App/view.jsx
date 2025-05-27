@@ -1,21 +1,20 @@
 import AddPictureButton from './components/AddPictureButton'
-import AnimatedSafeArea from '@/components/AnimatedSafeArea'
-import ScreenTransition from '@/components/ScreenTransition'
-import { FadeIn } from 'react-native-reanimated'
-import { useTheme } from '@/hooks/theme/index'
+import AreaView from '@/components/AreaView/index'
 import { View, StyleSheet } from 'react-native'
 
-export default function App() {
-  const { colors } = useTheme()
+/**
+ * @import { ReactElement } from 'react'
+ */
+
+/**
+ * @returns { ReactElement }
+ */
+const App = () => {
   return (
-    <ScreenTransition entering={ true }>
-      <AnimatedSafeArea
-        style={ [ styles.container, { backgroundColor:colors.background } ] }
-        entering={ FadeIn.duration( 200 ) } >
-        <View style={ styles.header } />
-        <AddPictureButton />
-      </AnimatedSafeArea>
-    </ScreenTransition>
+    <AreaView style={ styles.container }>
+      <View style={ styles.header } />
+      <AddPictureButton />
+    </AreaView>
   )
 }
 
@@ -34,3 +33,5 @@ const styles = StyleSheet.create( {
   },
 
 } )
+
+export default App

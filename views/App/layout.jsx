@@ -18,12 +18,12 @@ const AppLayout = () => {
   const backgroundColor = colorScheme === 'dark' ? '#000000' : '#FFFFFF'
 
   return (
-    <GestureHandlerRootView style={{ flex: 1, backgroundColor }}>
+    <GestureHandlerRootView style={{ flex: 1, backgroundColor:'red' }}>
+      <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
       <SafeAreaProvider style={{ backgroundColor }}>
         <ThemeProvider>
-          <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} backgroundColor="transparent" translucent />
           <Stack
-            screenOptions={{
+            screenOptions={ {
               headerShown: false,
               animationDuration: 250,
               gestureEnabled: true,
@@ -34,7 +34,7 @@ const AppLayout = () => {
                 backgroundColor,
               },
               animationTypeForReplace: 'push',
-            }}
+            } }
           />
         </ThemeProvider>
       </SafeAreaProvider>

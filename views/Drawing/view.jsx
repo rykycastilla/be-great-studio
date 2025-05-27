@@ -1,10 +1,7 @@
-import AnimatedSafeArea from '@/components/AnimatedSafeArea'
+import AreaView from '@/components/AreaView/index'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
-import ScreenTransition from '@/components/ScreenTransition'
-import { FadeIn, FadeOut } from 'react-native-reanimated'
 import { StyleSheet, View } from 'react-native'
-import { useTheme } from '@/hooks/theme/index'
 
 /**
  * @import { ReactElement } from 'react'
@@ -14,23 +11,17 @@ import { useTheme } from '@/hooks/theme/index'
  * @returns { ReactElement }
  */
 const Drawing = () => {
-  const { colors } = useTheme()
   return (
-    <ScreenTransition entering={ true }>
-      <AnimatedSafeArea
-        style={ [ styles.container, { backgroundColor:colors.background } ] }
-        entering={ FadeIn.duration( 200 ) }
-        exiting={ FadeOut.duration( 150 ) }>
-        <View style={ { flex:1 } }>
-          <View style={ styles.header }>
-            <BackButton />
-          </View>
-          <View style={ styles.content }>
-            <Canvas aspectRatio="1:1" />
-          </View>
+    <AreaView style={ styles.container }>
+      <View style={ { flex:1 } }>
+        <View style={ styles.header }>
+          <BackButton />
         </View>
-      </AnimatedSafeArea>
-    </ScreenTransition>
+        <View style={ styles.content }>
+          <Canvas aspectRatio="1:1" />
+        </View>
+      </View>
+    </AreaView>
   )
 }
 

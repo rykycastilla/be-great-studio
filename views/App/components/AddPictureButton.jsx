@@ -1,7 +1,5 @@
-import AnimatedButton from '@/components/AnimatedButton'
-import { FadeIn } from 'react-native-reanimated'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useRouter } from 'expo-router'
 import { useTheme } from '@/hooks/theme/index'
 
@@ -18,12 +16,11 @@ const AddPictureButton = () => {
   const router = useRouter()
 
   return (
-    <AnimatedButton
+    <TouchableOpacity
       style={ [ styles.addPictureButton, { backgroundColor:colors.primary } ] }
-      onPress={ () => router.push( '/drawing' ) }
-      entering={ FadeIn.delay( 300 ).duration( 300 ) }>
+      onPress={ () => router.push( '/drawing' ) }>
       <Ionicons name="add" size={ 28 } color="#FFFFFF" />
-    </AnimatedButton>
+    </TouchableOpacity>
   )
 
 }

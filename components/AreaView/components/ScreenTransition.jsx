@@ -11,7 +11,6 @@ const { width } = Dimensions.get( 'window' )
 /**
  * @typedef { Object } ScreenTransitionProps
  * @property { ReactElement[] | ReactElement } children
- * @property { boolean } [ entering ]
  */
 
 /**
@@ -19,7 +18,7 @@ const { width } = Dimensions.get( 'window' )
  * @returns { ReactElement }
  */
 const ScreenTransition = ( props ) => {
-  const { children, entering = true } = props
+  const { children } = props
   const progress = useSharedValue( 0 )
 
   useEffect( () => {
@@ -32,13 +31,13 @@ const ScreenTransition = ( props ) => {
   const animatedStyle = useAnimatedStyle( () => {
     // To enter, the page comes from right
     // To leave, the page goes to right
-    const translateX = interpolate( progress.value, [0, 1], entering ? [ width, 0 ] :  [0, width ], Extrapolate.CLAMP )
+    const translateX = interpolate( progress.value, [ 0, 1 ], [ width, 0 ], Extrapolate.CLAMP )
 
     // Opacity effect
     const opacity = interpolate( progress.value, [ 0, 0.7, 1 ], [ 0, 0.7, 1 ], Extrapolate.CLAMP )
 
     // Scale effect to use depth
-    const scale = interpolate( progress.value, [ 0, 1 ], entering ? [ 0.95, 1 ] : [ 1, 0.95 ], Extrapolate.CLAMP )
+    const scale = interpolate( progress.value, [ 0, 1 ], [ 0.95, 1 ], Extrapolate.CLAMP )
 
     return {
       transform: [ { translateX }, { scale } ],
@@ -47,7 +46,7 @@ const ScreenTransition = ( props ) => {
   } )
 
   return (
-    <Animated.View style={ [styles.container, animatedStyle ] }>
+    <Animated.View style={ [ styles.container, animatedStyle ] }>
       { children }
     </Animated.View>
   )
