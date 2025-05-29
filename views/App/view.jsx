@@ -1,5 +1,6 @@
 import AddPictureButton from './components/AddPictureButton'
 import AreaView from '@/components/AreaView/index'
+import DrawingList from '@/components/DrawingList'
 import { View, StyleSheet } from 'react-native'
 
 /**
@@ -13,6 +14,7 @@ const App = () => {
   return (
     <AreaView style={ styles.container }>
       <View style={ styles.header } />
+      <DrawingList />
       <AddPictureButton />
     </AreaView>
   )

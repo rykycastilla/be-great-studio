@@ -1,3 +1,4 @@
+import { DrawingListProvider } from '@/components/DrawingList'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Stack } from 'expo-router'
@@ -20,22 +21,24 @@ const AppLayout = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor:'red' }}>
       <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
-      <SafeAreaProvider style={{ backgroundColor }}>
+      <SafeAreaProvider style={ { backgroundColor } }>
         <ThemeProvider>
-          <Stack
-            screenOptions={ {
-              headerShown: false,
-              animationDuration: 250,
-              gestureEnabled: true,
-              gestureDirection: 'horizontal',
-              presentation: 'card',
-              animation: 'slide_from_right',
-              contentStyle: {
-                backgroundColor,
-              },
-              animationTypeForReplace: 'push',
-            } }
-          />
+          <DrawingListProvider>
+            <Stack
+              screenOptions={ {
+                headerShown: false,
+                animationDuration: 250,
+                gestureEnabled: true,
+                gestureDirection: 'horizontal',
+                presentation: 'card',
+                animation: 'slide_from_right',
+                contentStyle: {
+                  backgroundColor,
+                },
+                animationTypeForReplace: 'push',
+              } }
+            />
+          </DrawingListProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
