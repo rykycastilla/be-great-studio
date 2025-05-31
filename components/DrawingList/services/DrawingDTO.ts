@@ -2,5 +2,5 @@ export interface DrawingDTO {
   id: string
   name: string
   thumbnail: string
-  lastModified: number
+  last_modified: number
 }

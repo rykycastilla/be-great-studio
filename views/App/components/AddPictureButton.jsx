@@ -1,5 +1,7 @@
+import { createToken } from 'create-token'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+import { useCallback } from 'react'
 import { useRouter } from 'expo-router'
 import { useTheme } from '@/hooks/theme/index'
 
@@ -15,10 +17,15 @@ const AddPictureButton = () => {
   const { colors } = useTheme()
   const router = useRouter()
 
+  const handlePress = useCallback( () => {
+    const id = createToken( 15 )
+    router.push( `/drawing/${ id }` )
+  }, [ router ] )
+
   return (
     <TouchableOpacity
       style={ [ styles.addPictureButton, { backgroundColor:colors.primary } ] }
-      onPress={ () => router.push( '/drawing' ) }>
+      onPress={ handlePress }>
       <Ionicons name="add" size={ 28 } color="#FFFFFF" />
     </TouchableOpacity>
   )

@@ -25,10 +25,10 @@ export class SqliteDrawingDAO {
    */
   async saveItem( drawing ) {
     const db = await SQLite()
-    const { id, name, thumbnail, lastModified } = drawing
+    const { id, name, thumbnail, last_modified } = drawing
     await db.runAsync(
       /* sql */ `REPLACE INTO drawing (id, name, thumbnail, last_modified) VALUES (?, ?, ?, ?)`,
-      [ id, name, thumbnail, lastModified ],
+      [ id, name, thumbnail, last_modified ],
     )
   }
 

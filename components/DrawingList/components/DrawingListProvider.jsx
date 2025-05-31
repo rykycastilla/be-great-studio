@@ -39,8 +39,15 @@ const DrawingListProvider = ( props ) => {
       setDrawingList( drawingList )
     }, [ drawingRepository ] )
 
+  const loadDrawingThumbnail = useCallback(
+    /** @type { ( drawing:Drawing ) => Promise<string|null> } */
+    ( drawing ) => {
+      return drawingRepository.loadThumbnail( drawing )
+    }, [ drawingRepository ] )
+
   return (
-    <DrawingListContext.Provider value={ { viewMode, setViewMode, drawingList, saveDrawing } }>
+    <DrawingListContext.Provider
+      value={ { viewMode, setViewMode, drawingList, saveDrawing, loadDrawingThumbnail } }>
       { children }
     </DrawingListContext.Provider>
   )

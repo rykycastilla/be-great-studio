@@ -1,9 +1,10 @@
 import GridDrawingItem from './GridDrawingItem'
 import ListDrawingItem from './ListDrawingItem'
 import { FlatList, StyleSheet, View } from 'react-native'
-import { useItemDimensions } from '../hooks/item_dimensions'
-
 import { useDrawingList } from '../hooks/drawing_list'
+import { useItemDimensions } from '../hooks/item_dimensions'
+import { useRouter } from 'expo-router'
+import { useTheme } from '@/hooks/theme'
 import { useViewMode } from '../hooks/view_mode'
 
 /**
@@ -29,14 +30,23 @@ const Separator = ( props ) => {
  */
 const DrawingList = () => {
 
+  // Basic list config
   const [ viewMode ] = useViewMode()
   const { drawingList } = useDrawingList()
-  const { spacing } = useItemDimensions( viewMode )
+  const dimensions = useItemDimensions( viewMode )
+  const { spacing } = dimensions
+
+  // Shared config
+  const { colors } = useTheme()
+  const router = useRouter()
+  const config = { dimensions, colors, router }
+
+  const Item = ( viewMode === 'grid' ) ? GridDrawingItem : ListDrawingItem
 
   return (
     <FlatList
       data={ drawingList }
-      renderItem={ ( viewMode === 'grid' ) ? GridDrawingItem : ListDrawingItem }
+      renderItem={ ( props ) => <Item { ...props } config={ config } /> }
       keyExtractor={ ( item ) => item.id }
       contentContainerStyle={[styles.drawingList, { paddingHorizontal: 16 }]}
       numColumns={ ( viewMode === 'grid' ) ? 2 : 1 }

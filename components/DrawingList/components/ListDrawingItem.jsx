@@ -1,12 +1,9 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Layout } from 'react-native-reanimated'
-import { useItemDimensions } from '../hooks/item_dimensions'
-import { useRouter } from 'expo-router'
-import { useTheme } from '@/hooks/theme/index'
 
 /**
- * @import { Drawing } from '../models'
+ * @import { Drawing, SharedConfig } from '../models'
  * @import { ReactElement } from 'react'
  * @import { ThemeContext } from '@/hooks/theme'
  */
@@ -59,6 +56,7 @@ const Info = ( props ) => {
  * @typedef { Object } ListDrawingItemProps
  * @property { Drawing } item
  * @property { number } index
+ * @property { SharedConfig } config
  */
 
 /**
@@ -67,11 +65,10 @@ const Info = ( props ) => {
  */
 const ListDrawingItem = ( props ) => {
 
-  const { item } = props
+  const { item, config } = props
   const { id, name, thumbnail, lastModified } = item
-  const { colors } = useTheme()
-  const { width } = useItemDimensions( 'list' )
-  const router = useRouter()
+  const { dimensions, colors, router } = config
+  const { width } = dimensions
 
   return (
     <AnimatedTouchableOpacity

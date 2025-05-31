@@ -1,12 +1,9 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Layout } from 'react-native-reanimated'
-import { useItemDimensions } from '../hooks/item_dimensions'
-import { useRouter } from 'expo-router'
-import { useTheme } from '@/hooks/theme/index'
 
 /**
- * @import { Drawing } from '../models'
+ * @import { Drawing, SharedConfig } from '../models'
  * @import { ReactElement } from 'react'
  * @import { ThemeContext } from '@/hooks/theme'
  */
@@ -60,7 +57,8 @@ const Info = ( props ) => {
  * @typedef { Object } GridDrawingItemProps
  * @property { Drawing } item
  * @property { number } index
-*/
+ * @property { SharedConfig } config
+ */
 
 /**
  * @param { GridDrawingItemProps } props
@@ -68,11 +66,10 @@ const Info = ( props ) => {
  */
 const GridDrawingItem = ( props ) => {
 
-  const { item, index } = props
+  const { item, index, config } = props
   const { id, thumbnail, name, lastModified } = item
-  const { width, spacing } = useItemDimensions( 'grid' )
-  const { colors } = useTheme()
-  const router = useRouter()
+  const { dimensions, colors, router } = config
+  const { width, spacing } = dimensions
 
   return (
     <AnimatedTouchableOpacity

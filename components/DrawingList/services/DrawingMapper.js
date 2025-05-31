@@ -11,9 +11,9 @@ export class DrawingMapper {
    * @returns { Drawing }
    */
   toModel( dto ) {
-    const { id, name, thumbnail, lastModified } = dto
+    const { id, name, thumbnail, last_modified } = dto
     // Converting milliseconds to a JS Date
-    return { id, name, thumbnail, lastModified:new Date( lastModified ) }
+    return { id, name, thumbnail, lastModified:new Date( last_modified ) }
   }
 
 }

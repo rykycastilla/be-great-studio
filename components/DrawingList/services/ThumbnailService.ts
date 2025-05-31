@@ -1,3 +1,4 @@
 export interface ThumbnailService {
-  save( id:string, data:string ): Promise<string>
+  loadContent( path:string ): Promise<string|null>
+  save( id:string, timeStamp:number, data:string ): Promise<string>
 }

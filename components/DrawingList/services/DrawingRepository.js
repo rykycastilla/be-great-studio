@@ -4,7 +4,7 @@ import { DrawingMapper } from './DrawingMapper'
  * @import { Drawing } from '../models'
  * @import { DrawingDAO } from './DrawingDAO'
  * @import { ThumbnailService } from './ThumbnailService'
-*/
+ */
 
 export class DrawingRepository {
 
@@ -20,6 +20,16 @@ export class DrawingRepository {
     this.drawingDAO = drawingDAO
     this.thumbnailService = thumbnailService
     this.mapper = new DrawingMapper()
+  }
+
+  /**
+   * @public
+   * @param { Drawing } drawing
+   * @returns { Promise<string|null> }
+   */
+  loadThumbnail( drawing ) {
+    const { thumbnail } = drawing
+    return this.thumbnailService.loadContent( thumbnail )
   }
 
   /**
@@ -44,8 +54,8 @@ export class DrawingRepository {
   async save( drawing, data ) {
     const { id, name } = drawing
     const lastModified = Date.now()
-    const thumbnail = await this.thumbnailService.save( id, data )
-    await this.drawingDAO.saveItem( { id, name, thumbnail, lastModified } )
+    const thumbnail = await this.thumbnailService.save( id, lastModified, data )
+    await this.drawingDAO.saveItem( { id, name, thumbnail, last_modified:lastModified } )
   }
 
 }
