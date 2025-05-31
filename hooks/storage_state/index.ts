@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useStorageManager } from './storage_manager'
 
 /**
@@ -8,17 +8,17 @@ import { useStorageManager } from './storage_manager'
  * @param defaultValue  Same as useState traditional hook
  * @param key  An identification key for the storage access of this value
  */
-export function useStorageState<T>( defaultValue:T, key:string ): [ T, ( state:T ) => void ] {
+export function useStorageState<T>( defaultValue:T, key:string ): [ T, ( state:T ) => void, Promise<void> ] {
 
   const [ state, setState ] = useState<T>( defaultValue )
   const storageManager = useStorageManager<T>( key )
 
-  useEffect( () => {
+  const requestingData = useMemo( () => {
     const fn = async() => {
       const savedValue: T | undefined = await storageManager.get()
       if( savedValue !== undefined ) { setState( savedValue ) }
     }
-    fn()
+    return fn()
   }, [ storageManager ] )
 
   const saveState = useCallback( ( state:T ) => {
@@ -27,6 +27,6 @@ export function useStorageState<T>( defaultValue:T, key:string ): [ T, ( state:T
     setState( state )
   }, [ defaultValue, storageManager ] )
 
-  return [ state, saveState ]
+  return [ state, saveState, requestingData ]
 
 }

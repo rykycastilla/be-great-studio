@@ -1,5 +1,5 @@
 import { DrawingListContext } from '../context'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDrawingRepository } from '../hooks/drawing_repository'
 import { useStorageState } from '@/hooks/storage_state'
 
@@ -11,6 +11,7 @@ import { useStorageState } from '@/hooks/storage_state'
 /**
  * @typedef { Object } DrawingListProviderProps
  * @property { ReactElement[] | ReactElement } [ children ]
+ * @property { () => void } [ onLoad ]
  */
 
 /**
@@ -19,16 +20,28 @@ import { useStorageState } from '@/hooks/storage_state'
  */
 const DrawingListProvider = ( props ) => {
 
-  const { children } = props
-  const [ viewMode, setViewMode ] = useStorageState( /** @type { 'grid' | 'list' } */ ( 'grid' ), 'view-mode' )
+  const { children, onLoad } = props
+  const [ viewMode, setViewMode, requestingViewMode ] = useStorageState( /** @type { 'grid' | 'list' } */ ( 'grid' ), 'view-mode' )
   const [ drawingList, setDrawingList ] = useState( /** @type { Drawing[] } */ ( [] ) )
   const drawingRepository = useDrawingRepository()
 
   // Loading saved drawings
-  useEffect( () => {
+  const requestingList = useMemo( () => {
     const requestingList = drawingRepository.requestAll()
     requestingList.then( ( drawingList ) => setDrawingList( drawingList ) )
+    return requestingList
   }, [ drawingRepository ] )
+
+  // Loading Drawing list provider data
+  const onLoadDrawingList = useCallback( async() => {
+    await requestingViewMode
+    await requestingList
+    if( onLoad !== undefined ) { onLoad() }
+  }, [ requestingViewMode, requestingList, onLoad ] )
+
+  useEffect( () => {
+    onLoadDrawingList()
+  }, [ onLoadDrawingList ] )
 
   // Saving new drawings
   const saveDrawing = useCallback(

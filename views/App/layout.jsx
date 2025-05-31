@@ -1,14 +1,18 @@
+import * as SplashScreen from 'expo-splash-screen'
 import { DrawingListProvider } from '@/components/DrawingList'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { ThemeProvider } from '@/hooks/theme/index'
+import { useCallback } from 'react'
 import { useColorScheme } from 'react-native'
 
 /**
  * @import { ReactElement } from 'react'
  */
+
+SplashScreen.preventAutoHideAsync()
 
 /**
  * @returns { ReactElement }
@@ -18,12 +22,16 @@ const AppLayout = () => {
   const colorScheme = useColorScheme()
   const backgroundColor = colorScheme === 'dark' ? '#000000' : '#FFFFFF'
 
+  const handleDrawingListLoad = useCallback( () => {
+    SplashScreen.hide()
+  }, [] )
+
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor:'red' }}>
       <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
       <SafeAreaProvider style={ { backgroundColor } }>
         <ThemeProvider>
-          <DrawingListProvider>
+          <DrawingListProvider onLoad={ handleDrawingListLoad }>
             <Stack
               screenOptions={ {
                 headerShown: false,
