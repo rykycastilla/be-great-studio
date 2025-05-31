@@ -1,6 +1,7 @@
 import AddPictureButton from './components/AddPictureButton'
 import AreaView from '@/components/AreaView/index'
 import DrawingList from '@/components/DrawingList'
+import ViewModeButton from './components/ViewModeButton'
 import { View, StyleSheet } from 'react-native'
 
 /**
@@ -13,7 +14,11 @@ import { View, StyleSheet } from 'react-native'
 const App = () => {
   return (
     <AreaView style={ styles.container }>
-      <View style={ styles.header } />
+      <View style={ styles.header }>
+        <View style={ styles.headerButtons }>
+          <ViewModeButton />
+        </View>
+      </View>
       <DrawingList />
       <AddPictureButton />
     </AreaView>
@@ -32,6 +37,12 @@ const styles = StyleSheet.create( {
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 12,
+  },
+
+  headerButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    alignItems: 'center',
   },
 
 } )

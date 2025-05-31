@@ -11,8 +11,8 @@ export class AsyncStorage implements Storage {
     await RNAsyncStorage.setItem( this.KEY, value )
   }
 
-  public async get(): Promise<string | null> {
-    return localStorage.getItem( this.KEY )
+  public get(): Promise<string | null> {
+    return RNAsyncStorage.getItem( this.KEY )
   }
 
 }
