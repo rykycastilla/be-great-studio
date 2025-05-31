@@ -14,7 +14,6 @@ const { height } = Dimensions.get( 'window' )
  * @typedef { Object } AnimatedModalProps
  * @property { boolean } visible
  * @property { ReactElement } children
- * @property { number } [ blurIntensity ]
  * @property { () => void } onClose
  */
 
@@ -22,7 +21,7 @@ const { height } = Dimensions.get( 'window' )
  * @param { AnimatedModalProps } props
 */
 const AnimatedModal = ( props ) => {
-  const { visible, onClose, children, blurIntensity = 25 } = props
+  const { visible, onClose, children } = props
   const { theme } = useTheme()
   const translateY = useSharedValue( height )
   const opacity = useSharedValue( 0 )
@@ -64,13 +63,11 @@ const AnimatedModal = ( props ) => {
 
   if ( !isVisible ) return null
 
-  const actualBlurIntensity = theme === 'dark' ? blurIntensity * 2 : blurIntensity
-
   return (
     <Modal transparent visible={isVisible} animationType="none" onRequestClose={onClose} statusBarTranslucent>
       <Animated.View style={[styles.container, animatedContainerStyle]}>
         <BlurView
-          intensity={ actualBlurIntensity }
+          intensity={ ( theme === 'dark' ) ? 400 : 200 }
           tint={theme === 'dark' ? 'dark' : 'light'}
           style={ StyleSheet.absoluteFill } />
         <TouchableWithoutFeedback onPress={onClose}>

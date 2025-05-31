@@ -4,11 +4,14 @@ import Canvas from './components/Canvas'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
 import { StyleSheet, Text, View } from 'react-native'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
 import { useSaverHandler } from './hooks/saver_handler'
 import { useTheme } from '@/hooks/theme'
+
+import { useModal } from '@/contexts/modal'
+import { useRouter } from 'expo-router'
 
 /**
  * @import { CanvasObject } from './components/Canvas'
@@ -22,10 +25,10 @@ import { useTheme } from '@/hooks/theme'
 const Drawing = () => {
 
   const canvasRef = useRef( /** @type { CanvasObject | null } */ ( null ) )
-  const [ showExitConfirmation, setShowExitConfirmation ] = useState( false )
   const content = useContent()
   const { name } = useDrawing()
   const { colors } = useTheme()
+  const router = useRouter()
 
   const requestData = useCallback( async() => {
     const canvas = canvasRef.current
@@ -43,9 +46,17 @@ const Drawing = () => {
       setSavedData( data )
     }, [ setSavedData ] )
 
+  const dispatchSaveWarningModal = useModal(
+    'Exit without saving?', SaveWarningModal, {},
+    {
+      acceptButtonTitle: 'Exit',
+      onAccept() { router.back() },
+    },
+  )
+
   const backButtonFallback = useCallback( () => {
-    setShowExitConfirmation( true )
-  }, [] )
+    dispatchSaveWarningModal()
+  }, [ dispatchSaveWarningModal ] )
 
   return (
     <AreaView style={ styles.container }>
@@ -61,9 +72,6 @@ const Drawing = () => {
           <Canvas ref={ canvasRef } content={ content } aspectRatio="1:1" />
         </View>
       </View>
-      <SaveWarningModal
-        showExitConfirmation={ showExitConfirmation }
-        setShowExitConfirmation={ setShowExitConfirmation } />
     </AreaView>
   )
 

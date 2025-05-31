@@ -1,6 +1,7 @@
 import * as SplashScreen from 'expo-splash-screen'
 import { DrawingListProvider } from '@/components/DrawingList'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
+import { ModalProvider } from '@/contexts/modal'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
@@ -31,22 +32,24 @@ const AppLayout = () => {
       <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
       <SafeAreaProvider style={ { backgroundColor } }>
         <ThemeProvider>
-          <DrawingListProvider onLoad={ handleDrawingListLoad }>
-            <Stack
-              screenOptions={ {
-                headerShown: false,
-                animationDuration: 250,
-                gestureEnabled: true,
-                gestureDirection: 'horizontal',
-                presentation: 'card',
-                animation: 'slide_from_right',
-                contentStyle: {
-                  backgroundColor,
-                },
-                animationTypeForReplace: 'push',
-              } }
-            />
-          </DrawingListProvider>
+          <ModalProvider>
+            <DrawingListProvider onLoad={ handleDrawingListLoad }>
+              <Stack
+                screenOptions={ {
+                  headerShown: false,
+                  animationDuration: 250,
+                  gestureEnabled: true,
+                  gestureDirection: 'horizontal',
+                  presentation: 'card',
+                  animation: 'slide_from_right',
+                  contentStyle: {
+                    backgroundColor,
+                  },
+                  animationTypeForReplace: 'push',
+                } }
+              />
+            </DrawingListProvider>
+          </ModalProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
