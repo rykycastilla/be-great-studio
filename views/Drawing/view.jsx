@@ -2,8 +2,9 @@ import AreaView from '@/components/AreaView/index'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
 import SaveButton from './components/SaveButton'
+import SaveWarningModal from './components/SaveWarningModal'
 import { StyleSheet, Text, View } from 'react-native'
-import { useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
 import { useSaverHandler } from './hooks/saver_handler'
@@ -21,6 +22,7 @@ import { useTheme } from '@/hooks/theme'
 const Drawing = () => {
 
   const canvasRef = useRef( /** @type { CanvasObject | null } */ ( null ) )
+  const [ showExitConfirmation, setShowExitConfirmation ] = useState( false )
   const content = useContent()
   const { name } = useDrawing()
   const { colors } = useTheme()
@@ -31,7 +33,7 @@ const Drawing = () => {
     return canvas.requestImageData()
   }, [ canvasRef ] )
 
-  const { disabled, setSavedData } = useSaverHandler( requestData )
+  const { disabled:savingIsUnnecessary, setSavedData } = useSaverHandler( requestData )
 
   // Indicating to the saver handler that the canvas was saved to disable (temporally) saving function
   const handleSave = useCallback(
@@ -41,20 +43,27 @@ const Drawing = () => {
       setSavedData( data )
     }, [ setSavedData ] )
 
+  const backButtonFallback = useCallback( () => {
+    setShowExitConfirmation( true )
+  }, [] )
+
   return (
     <AreaView style={ styles.container }>
       <View style={ { flex:1 } }>
         <View style={ styles.header }>
-          <BackButton />
+          <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
           <Text style={ [ styles.title, { color:colors.text } ] }>
             { name }
           </Text>
-          <SaveButton disabled={ disabled } dataRequester={ requestData } onSave={ handleSave } />
+          <SaveButton disabled={ savingIsUnnecessary } dataRequester={ requestData } onSave={ handleSave } />
         </View>
         <View style={ styles.content }>
           <Canvas ref={ canvasRef } content={ content } aspectRatio="1:1" />
         </View>
       </View>
+      <SaveWarningModal
+        showExitConfirmation={ showExitConfirmation }
+        setShowExitConfirmation={ setShowExitConfirmation } />
     </AreaView>
   )
 
