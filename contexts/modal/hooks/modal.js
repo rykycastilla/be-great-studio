@@ -14,7 +14,7 @@ import { useStaticCallback } from '@/hooks/static_callback'
  */
 
 /**
- * @typedef { Object } ModalConfig
+ * @typedef { object } ModalConfig
  * @property { string } [ acceptButtonTitle ]
  * @property { boolean } [ isButtonInactive ]
  * @property { () => void }  [ onAccept ]

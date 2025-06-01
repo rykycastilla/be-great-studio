@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 /**
- * @typedef { Object } SaveHandlerResult
+ * @typedef { object } SaveHandlerResult
  * @property { boolean } disabled
  * @property { ( savedData:string ) => void } setSavedData
  */

@@ -11,12 +11,12 @@ import { wait } from '@/utils/wait'
  */
 
 /**
- * @typedef { Object } SaveEvent
+ * @typedef { object } SaveEvent
  * @property { string } data
  */
 
 /**
- * @typedef { Object } SaveButtonProps
+ * @typedef { object } SaveButtonProps
  * @property { InteractiveDrawing } drawing
  * @property { boolean } disabled
  * @property { () => Promise<string|null> } dataRequester

@@ -12,7 +12,7 @@ import { useViewMode } from '../hooks/view_mode'
  */
 
 /**
- * @typedef { Object } SeparatorProps
+ * @typedef { object } SeparatorProps
  * @property { number } spacing
  */
 

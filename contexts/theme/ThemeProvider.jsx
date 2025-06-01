@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react'
  */
 
 /**
- * @typedef { Object } ThemeProviderProps
+ * @typedef { object } ThemeProviderProps
  * @property { ReactElement[] | ReactElement } children
  */
 

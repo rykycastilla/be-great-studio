@@ -9,7 +9,7 @@ import { useStorageState } from '@/hooks/storage_state'
  */
 
 /**
- * @typedef { Object } DrawingListProviderProps
+ * @typedef { object } DrawingListProviderProps
  * @property { ReactElement[] | ReactElement } [ children ]
  * @property { () => void } [ onLoad ]
  */

@@ -11,7 +11,7 @@ import { useTheme } from '@/contexts/theme'
 const { height } = Dimensions.get( 'window' )
 
 /**
- * @typedef { Object } AnimatedModalProps
+ * @typedef { object } AnimatedModalProps
  * @property { boolean } visible
  * @property { ReactElement } children
  * @property { () => void } onClose

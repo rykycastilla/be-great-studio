@@ -6,7 +6,7 @@ import { useContext } from 'react'
  */
 
 /**
- * @typedef { Object } DrawingListResult
+ * @typedef { object } DrawingListResult
  * @property { Drawing[] } drawingList
  * @property { ( drawing:Drawing, data:string ) => Promise<void> } saveDrawing
  * @property { ( drawing:Drawing, newProperties:Partial<Drawing> ) => Promise<void> } updateDrawing

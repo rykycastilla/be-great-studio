@@ -2,7 +2,7 @@ import { Dimensions } from 'react-native'
 import { useMemo } from 'react'
 
 /**
- * @typedef { Object } Layout
+ * @typedef { object } Layout
  * @property { number } width
  * @property { number } height
  * @property { number } spacing

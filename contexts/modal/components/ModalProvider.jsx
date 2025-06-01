@@ -9,7 +9,7 @@ import { useState } from 'react'
  */
 
 /**
- * @typedef { Object } ModalProviderProps
+ * @typedef { object } ModalProviderProps
  * @property { ReactElement } children
  */
 

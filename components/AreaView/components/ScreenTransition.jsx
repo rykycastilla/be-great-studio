@@ -9,7 +9,7 @@ import { StyleSheet, Dimensions } from 'react-native'
 const { width } = Dimensions.get( 'window' )
 
 /**
- * @typedef { Object } ScreenTransitionProps
+ * @typedef { object } ScreenTransitionProps
  * @property { ReactElement[] | ReactElement } children
  */
 

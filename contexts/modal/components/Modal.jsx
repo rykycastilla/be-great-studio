@@ -9,7 +9,7 @@ import { useTheme } from '@/contexts/theme'
  */
 
 /**
- * @typedef { Object } ModalProps
+ * @typedef { object } ModalProps
  * @property { ReactElement } children
  * @property { boolean } isVisible
  * @property { string } title

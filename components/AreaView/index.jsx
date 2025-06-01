@@ -9,7 +9,7 @@ import { useTheme } from '@/contexts/theme/index'
  */
 
 /**
- * @typedef { Object } AreaViewProps
+ * @typedef { object } AreaViewProps
  * @property { ReactElement[] | ReactElement } [ children ]
  * @property { ViewProps[ 'style' ] } [ style ]
  */

@@ -9,13 +9,13 @@ import { useCanvasStyle } from '../hooks/canvas_style'
  */
 
 /**
- * @typedef { Object } CanvasProps
+ * @typedef { object } CanvasProps
  * @property { string | null } [ content ]
  * @property { string } aspectRatio
  */
 
 /**
- * @typedef { Object } CanvasObject
+ * @typedef { object } CanvasObject
  * @property { () => Promise<string|null> } requestImageData
  */
 

@@ -6,7 +6,7 @@ import { useTheme } from '@/contexts/theme'
  */
 
 /**
- * @typedef { Object } SaveWarningModalProps
+ * @typedef { object } SaveWarningModalProps
  * @property { boolean } showExitConfirmation
  * @property { ( showExitConfirmation:boolean ) => void } setShowExitConfirmation
  */

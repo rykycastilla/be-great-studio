@@ -9,7 +9,7 @@ import { Layout } from 'react-native-reanimated'
  */
 
 /**
- * @typedef { Object } ThumbnailProps
+ * @typedef { object } ThumbnailProps
  * @property { string } src
  * @property { number } size
  */
@@ -29,7 +29,7 @@ const Thumbnail = ( props ) => {
 }
 
 /**
- * @typedef { Object } InfoProps
+ * @typedef { object } InfoProps
  * @property { string } name
  * @property { Date } lastModified
  * @property { ThemeContext[ 'colors' ] } colors
@@ -54,7 +54,7 @@ const Info = ( props ) => {
 }
 
 /**
- * @typedef { Object } GridDrawingItemProps
+ * @typedef { object } GridDrawingItemProps
  * @property { Drawing } item
  * @property { number } index
  * @property { SharedConfig } config

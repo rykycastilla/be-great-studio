@@ -9,7 +9,7 @@ import { useTheme } from '@/contexts/theme/index'
  */
 
 /**
- * @typedef { Object } BackButtonProps
+ * @typedef { object } BackButtonProps
  * @property { boolean } [ blockNavigation ]
  * @property { () => void } [ fallback ]
  */
