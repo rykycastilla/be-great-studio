@@ -1,4 +1,4 @@
-import AreaView from '@/components/AreaView/index'
+import AreaView from '@/components/AreaView'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
 import Name from './components/Name'

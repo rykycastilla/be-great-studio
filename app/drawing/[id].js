@@ -1,1 +1,1 @@
-export { default } from '@/views/Drawing/index'
+export { default } from '@/views/Drawing'

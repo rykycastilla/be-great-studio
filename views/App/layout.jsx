@@ -5,7 +5,7 @@ import { ModalProvider } from '@/contexts/modal'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { ThemeProvider } from '@/contexts/theme/index'
+import { ThemeProvider } from '@/contexts/theme'
 import { useCallback } from 'react'
 import { useColorScheme } from 'react-native'
 

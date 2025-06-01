@@ -1,6 +1,6 @@
 import { Dimensions } from 'react-native'
 import { useMemo } from 'react'
-import { useTheme } from '@/contexts/theme/index'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { Theme, ThemeContext } from '@/contexts/theme'

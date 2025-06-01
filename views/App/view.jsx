@@ -1,5 +1,5 @@
 import AddPictureButton from './components/AddPictureButton'
-import AreaView from '@/components/AreaView/index'
+import AreaView from '@/components/AreaView'
 import ViewModeButton from './components/ViewModeButton'
 import { DrawingList } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
