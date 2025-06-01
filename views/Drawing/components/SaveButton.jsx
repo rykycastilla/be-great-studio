@@ -1,6 +1,6 @@
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { useDrawingList } from '@/components/DrawingList'
+import { useDrawingList } from '@/contexts/drawing_list'
 import { useState } from 'react'
 import { useTheme } from '@/contexts/theme'
 import { wait } from '@/utils/wait'

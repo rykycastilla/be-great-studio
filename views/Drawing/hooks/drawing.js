@@ -1,9 +1,9 @@
-import { useDrawingList } from '@/components/DrawingList'
+import { useDrawingList } from '@/contexts/drawing_list'
 import { useLocalSearchParams } from 'expo-router'
 import { useCallback, useMemo, useState } from 'react'
 
 /**
- * @import { Drawing } from '@/components/DrawingList'
+ * @import { Drawing } from '@/contexts/drawing_list'
  */
 
 /**

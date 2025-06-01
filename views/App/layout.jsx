@@ -1,5 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen'
-import { DrawingListProvider } from '@/components/DrawingList'
+import { DrawingListProvider } from '@/contexts/drawing_list'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ModalProvider } from '@/contexts/modal'
 import { SafeAreaProvider } from 'react-native-safe-area-context'

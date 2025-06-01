@@ -1,5 +1,5 @@
 import { useDrawing } from './drawing'
-import { useDrawingThumbnailLoader } from '@/components/DrawingList'
+import { useDrawingThumbnailLoader } from '@/contexts/drawing_list'
 import { useCallback, useEffect, useState } from 'react'
 
 /** Load the content saved of the current drawing

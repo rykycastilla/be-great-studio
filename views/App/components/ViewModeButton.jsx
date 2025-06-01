@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useTheme } from '@/contexts/theme'
-import { useViewMode } from '@/components/DrawingList'
+import { useViewMode } from '@/contexts/drawing_list'
 
 /**
  * @import { ReactElement } from 'react'
