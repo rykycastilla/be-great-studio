@@ -1,6 +1,6 @@
 import { Layout } from '../hooks/item_dimensions'
 import { Router } from 'expo-router'
-import { ThemeContext } from '@/hooks/theme'
+import { ThemeContext } from '@/contexts/theme'
 
 export interface SharedConfig {
   dimensions: Layout

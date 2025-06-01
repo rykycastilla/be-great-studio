@@ -1,7 +1,7 @@
 import ScreenTransition from './components/ScreenTransition'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useTheme } from '@/hooks/theme/index'
+import { useTheme } from '@/contexts/theme/index'
 
 /**
  * @import { ReactElement } from 'react'

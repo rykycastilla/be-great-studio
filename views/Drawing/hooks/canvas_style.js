@@ -1,9 +1,9 @@
 import { Dimensions } from 'react-native'
 import { useMemo } from 'react'
-import { useTheme } from '@/hooks/theme/index'
+import { useTheme } from '@/contexts/theme/index'
 
 /**
- * @import { Theme, ThemeContext } from '@/hooks/theme'
+ * @import { Theme, ThemeContext } from '@/contexts/theme'
  */
 
 /**

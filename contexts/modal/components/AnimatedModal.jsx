@@ -2,7 +2,7 @@ import Animated, { useSharedValue, useAnimatedStyle, withTiming, withSpring, run
 import { BlurView } from 'expo-blur'
 import { Dimensions, Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 import { useEffect, useState } from 'react'
-import { useTheme } from '@/hooks/theme'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { ReactElement } from 'react'

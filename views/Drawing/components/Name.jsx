@@ -2,7 +2,7 @@ import ChangeNameModal from './ChangeNameModal'
 import { StyleSheet, Text, TouchableWithoutFeedback } from 'react-native'
 import { useCallback, useState } from 'react'
 import { useModal } from '@/contexts/modal'
-import { useTheme } from '@/hooks/theme'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { InteractiveDrawing } from '../hooks/drawing'

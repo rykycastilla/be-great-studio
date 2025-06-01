@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput } from 'react-native'
 import { useEffect } from 'react'
-import { useTheme } from '@/hooks/theme'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { ReactElement } from 'react'

@@ -5,7 +5,7 @@ import { Layout } from 'react-native-reanimated'
 /**
  * @import { Drawing, SharedConfig } from '../models'
  * @import { ReactElement } from 'react'
- * @import { ThemeContext } from '@/hooks/theme'
+ * @import { ThemeContext } from '@/contexts/theme'
  */
 
 /**

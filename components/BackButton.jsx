@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import { useCallback } from 'react'
 import { useRouter } from 'expo-router'
-import { useTheme } from '@/hooks/theme/index'
+import { useTheme } from '@/contexts/theme/index'
 
 /**
  * @import { ReactElement } from 'react'

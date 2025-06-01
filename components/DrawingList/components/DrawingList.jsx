@@ -4,7 +4,7 @@ import { FlatList, StyleSheet, View } from 'react-native'
 import { useDrawingList } from '../hooks/drawing_list'
 import { useItemDimensions } from '../hooks/item_dimensions'
 import { useRouter } from 'expo-router'
-import { useTheme } from '@/hooks/theme'
+import { useTheme } from '@/contexts/theme'
 import { useViewMode } from '../hooks/view_mode'
 
 /**

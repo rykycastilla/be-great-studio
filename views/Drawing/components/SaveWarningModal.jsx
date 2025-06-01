@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from 'react-native'
-import { useTheme } from '@/hooks/theme'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { ReactElement } from 'react'

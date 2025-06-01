@@ -2,7 +2,7 @@ import AnimatedModal from './AnimatedModal'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useCallback } from 'react'
 import { useModalHider } from '../hooks/modal_hider'
-import { useTheme } from '@/hooks/theme'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { ReactElement } from 'react'
