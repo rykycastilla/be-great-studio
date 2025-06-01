@@ -1,12 +1,12 @@
 import { ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { useDrawing } from '../hooks/drawing'
 import { useDrawingList } from '@/components/DrawingList'
 import { useState } from 'react'
 import { useTheme } from '@/hooks/theme'
 import { wait } from '@/utils/wait'
 
 /**
+ * @import { InteractiveDrawing } from '../hooks/drawing'
  * @import { ReactElement } from 'react'
  */
 
@@ -17,6 +17,7 @@ import { wait } from '@/utils/wait'
 
 /**
  * @typedef { Object } SaveButtonProps
+ * @property { InteractiveDrawing } drawing
  * @property { boolean } disabled
  * @property { () => Promise<string|null> } dataRequester
  * @property { ( event:SaveEvent ) => void } onSave
@@ -28,8 +29,7 @@ import { wait } from '@/utils/wait'
  */
 const SaveButton = ( props ) => {
 
-  const { disabled, dataRequester:requestData, onSave } = props
-  const drawing = useDrawing()
+  const { drawing, disabled, dataRequester:requestData, onSave } = props
   const { saveDrawing } = useDrawingList()
   const { colors } = useTheme()
   const [ isSaving, setIsSaving ] = useState( false )

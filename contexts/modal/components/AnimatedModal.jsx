@@ -25,10 +25,10 @@ const AnimatedModal = ( props ) => {
   const { theme } = useTheme()
   const translateY = useSharedValue( height )
   const opacity = useSharedValue( 0 )
-  const [isVisible, setIsVisible] = useState( visible )
+  const [ isVisible, setIsVisible ] = useState( visible )
 
   useEffect( () => {
-    if ( visible ) {
+    if( visible ) {
       setIsVisible( true )
       opacity.value = withTiming( 1, { duration: 180 } )
       translateY.value = withSpring( 0, {
@@ -36,7 +36,8 @@ const AnimatedModal = ( props ) => {
         stiffness: 120,
         mass: 0.8,
       } )
-    } else {
+    }
+    else {
       translateY.value = withTiming( height, { duration: 180 }, () => {
         runOnJS( fadeOutBackground )()
       } )
@@ -57,23 +58,25 @@ const AnimatedModal = ( props ) => {
 
   const animatedModalStyle = useAnimatedStyle( () => {
     return {
-      transform: [{ translateY: translateY.value }],
+      transform: [ { translateY:translateY.value } ],
     }
   } )
 
   if ( !isVisible ) return null
 
   return (
-    <Modal transparent visible={isVisible} animationType="none" onRequestClose={onClose} statusBarTranslucent>
-      <Animated.View style={[styles.container, animatedContainerStyle]}>
+    <Modal transparent visible={ isVisible } animationType="none" onRequestClose={ onClose } statusBarTranslucent>
+      <Animated.View style={ [ styles.container, animatedContainerStyle ] }>
         <BlurView
           intensity={ ( theme === 'dark' ) ? 400 : 200 }
-          tint={theme === 'dark' ? 'dark' : 'light'}
+          tint={ theme === 'dark' ? 'dark' : 'light' }
           style={ StyleSheet.absoluteFill } />
-        <TouchableWithoutFeedback onPress={onClose}>
-          <View style={styles.backdrop} />
+        <TouchableWithoutFeedback onPress={ onClose }>
+          <View style={ styles.backdrop } />
         </TouchableWithoutFeedback>
-        <Animated.View style={[styles.modalContent, animatedModalStyle]}>{children}</Animated.View>
+        <Animated.View style={ [ styles.modalContent, animatedModalStyle ] }>
+          { children }
+        </Animated.View>
       </Animated.View>
     </Modal>
   )

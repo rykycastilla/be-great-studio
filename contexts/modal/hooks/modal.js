@@ -1,5 +1,6 @@
 import { ModalContext } from '../context'
-import { useCallback, useContext, useMemo } from 'react'
+import { useCallback, useContext, useEffect, useId, useMemo } from 'react'
+import { useStaticCallback } from '@/hooks/static_callback'
 
 /**
  * @import { ReactElement } from 'react'
@@ -15,6 +16,7 @@ import { useCallback, useContext, useMemo } from 'react'
 /**
  * @typedef { Object } ModalConfig
  * @property { string } [ acceptButtonTitle ]
+ * @property { boolean } [ isButtonInactive ]
  * @property { () => void }  [ onAccept ]
  */
 
@@ -28,19 +30,26 @@ import { useCallback, useContext, useMemo } from 'react'
  */
 export function useModal( title, Component, props, config ) {
 
-  const { setIsVisible, setConfig, setComponentRef } = useContext( ModalContext )
-  const { acceptButtonTitle, onAccept } = config ?? {}
+  const { currentModalId, setCurrentModalId, setConfig, setComponentRef } = useContext( ModalContext )
+  const { acceptButtonTitle, isButtonInactive, onAccept = () => {} } = config ?? {}
+  const onAcceptStatic = useStaticCallback( onAccept )
+  const id = useId()
 
   const fixedProps = useMemo( () => {
     return props
   }, [ JSON.stringify( props ) ] )  // eslint-disable-line
 
-  return useCallback( () => {
-    const config = { title, acceptButtonTitle, onAccept }
+  // Using modal props and config
+  useEffect( () => {
+    if( id !== currentModalId ) { return }
+    setConfig( { title, acceptButtonTitle, isButtonInactive, onAccept:onAcceptStatic } )
     const componentRef = { Component, props:fixedProps }
-    setIsVisible( true )
-    setConfig( config )
     setComponentRef( componentRef )
-  }, [ title, Component, fixedProps, acceptButtonTitle, onAccept, setIsVisible, setConfig, setComponentRef ] )
+  }, [ id, currentModalId, title, acceptButtonTitle, isButtonInactive, onAcceptStatic, setConfig, Component, fixedProps, setComponentRef ] )
+
+  // Activating this modal
+  return useCallback( () => {
+    setCurrentModalId( id )
+  }, [ id, setCurrentModalId ] )
 
 }

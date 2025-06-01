@@ -52,6 +52,15 @@ const DrawingListProvider = ( props ) => {
       setDrawingList( drawingList )
     }, [ drawingRepository ] )
 
+  // Updating properties of a specific drawing
+  const updateDrawing = useCallback(
+    /** @type { ( drawing:Drawing, newProperties:Partial<Drawing> ) => Promise<void> } */
+    async( drawing, newProperties ) => {
+      await drawingRepository.update( drawing, newProperties )
+      const drawingList = await drawingRepository.requestAll()
+      setDrawingList( drawingList )
+    }, [ drawingRepository ] )
+
   const loadDrawingThumbnail = useCallback(
     /** @type { ( drawing:Drawing ) => Promise<string|null> } */
     ( drawing ) => {
@@ -60,7 +69,9 @@ const DrawingListProvider = ( props ) => {
 
   return (
     <DrawingListContext.Provider
-      value={ { viewMode, setViewMode, drawingList, saveDrawing, loadDrawingThumbnail } }>
+      value={
+        { viewMode, setViewMode, drawingList, saveDrawing, updateDrawing, loadDrawingThumbnail }
+      }>
       { children }
     </DrawingListContext.Provider>
   )

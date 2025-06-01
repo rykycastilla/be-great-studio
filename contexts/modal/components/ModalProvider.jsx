@@ -20,20 +20,24 @@ import { useState } from 'react'
 const ModalProvider = ( props ) => {
 
   const { children } = props
-  const [ isVisible, setIsVisible ] = useState( false )
   const [ config, setConfig ] = useState( /** @type { ModalConfig } */ ( { title:'' } ) )
-  const { title, acceptButtonTitle, onAccept } = config
+  const { title, acceptButtonTitle, isButtonInactive, onAccept } = config
 
   const [ componentRef, setComponentRef ] = useState(
     { Component:DefaultComponent, props:{} },
   )
   const { Component, props:_props } = componentRef
 
+  // Setting current modal and visibility
+  const [ currentModalId, setCurrentModalId ] = useState( /** @type { string | null } */ ( null ) )
+  const isVisible = currentModalId !== null
+
   return (
     <ModalContext.Provider
       value={
-        { isVisible,
-          setIsVisible,
+        {
+          currentModalId,
+          setCurrentModalId,
           setConfig,
           setComponentRef: /** @type { ModalContext[ 'setComponentRef' ] } */ ( setComponentRef ),
         }
@@ -43,6 +47,7 @@ const ModalProvider = ( props ) => {
         isVisible={ isVisible }
         title={ title }
         acceptButtonTitle={ acceptButtonTitle }
+        isButtonInactive={ isButtonInactive }
         onAccept={ onAccept }>
         <Component { ..._props } />
       </Modal>

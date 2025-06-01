@@ -2,8 +2,8 @@ import { ModalConfig } from './ModalConfig'
 import { ReactElement } from 'react'
 
 export interface ModalContext {
-  isVisible: boolean
-  setIsVisible( isVisible:boolean ): void
+  currentModalId: string | null
+  setCurrentModalId( currentModalId:string|null ): void
   setConfig( config:ModalConfig ): void
   setComponentRef<T extends object>( componentRef:ComponentRef<T> ): void
 }

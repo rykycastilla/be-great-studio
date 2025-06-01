@@ -5,8 +5,8 @@ import { useCallback, useContext } from 'react'
  * @returns { () => void }
  */
 export function useModalHider() {
-  const { setIsVisible } = useContext( ModalContext )
+  const { setCurrentModalId } = useContext( ModalContext )
   return useCallback( () => {
-    setIsVisible( false )
-  }, [ setIsVisible ] )
+    setCurrentModalId( null )
+  }, [ setCurrentModalId ] )
 }

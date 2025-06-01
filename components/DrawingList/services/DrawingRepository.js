@@ -47,6 +47,19 @@ export class DrawingRepository {
   }
 
   /**
+   * Updates only the specified properties of the drawing
+   * @public
+   * @param { Drawing } drawing
+   * @param { Partial<Drawing> } newProperties
+   */
+  async update( drawing, newProperties ) {
+    const model = Object.assign( {}, drawing )
+    Object.assign( model, newProperties )
+    const dto = this.mapper.toDTO( model )
+    await this.drawingDAO.saveItem( dto )
+  }
+
+  /**
    * @public
    * @param { Drawing } drawing
    * @param { string } data

@@ -1,17 +1,16 @@
 import AreaView from '@/components/AreaView/index'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
+import Name from './components/Name'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useCallback, useRef } from 'react'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
-import { useSaverHandler } from './hooks/saver_handler'
-import { useTheme } from '@/hooks/theme'
-
 import { useModal } from '@/contexts/modal'
 import { useRouter } from 'expo-router'
+import { useSaverHandler } from './hooks/saver_handler'
 
 /**
  * @import { CanvasObject } from './components/Canvas'
@@ -26,8 +25,7 @@ const Drawing = () => {
 
   const canvasRef = useRef( /** @type { CanvasObject | null } */ ( null ) )
   const content = useContent()
-  const { name } = useDrawing()
-  const { colors } = useTheme()
+  const drawing = useDrawing()
   const router = useRouter()
 
   const requestData = useCallback( async() => {
@@ -63,10 +61,12 @@ const Drawing = () => {
       <View style={ { flex:1 } }>
         <View style={ styles.header }>
           <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
-          <Text style={ [ styles.title, { color:colors.text } ] }>
-            { name }
-          </Text>
-          <SaveButton disabled={ savingIsUnnecessary } dataRequester={ requestData } onSave={ handleSave } />
+          <Name drawing={ drawing } />
+          <SaveButton
+            drawing={ drawing }
+            disabled={ savingIsUnnecessary }
+            dataRequester={ requestData }
+            onSave={ handleSave } />
         </View>
         <View style={ styles.content }>
           <Canvas ref={ canvasRef } content={ content } aspectRatio="1:1" />
@@ -89,12 +89,6 @@ const styles = StyleSheet.create( {
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 12,
-  },
-
-  title: {
-    fontSize: 17,
-    fontWeight: '600',
-    fontFamily: 'System',
   },
 
   content: {

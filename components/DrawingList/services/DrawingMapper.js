@@ -16,4 +16,15 @@ export class DrawingMapper {
     return { id, name, thumbnail, lastModified:new Date( last_modified ) }
   }
 
+  /**
+   * @public
+   * @param { Drawing } model
+   * @returns { DrawingDTO }
+   */
+  toDTO( model ) {
+    const { id, name, thumbnail, lastModified } = model
+    const last_modified = lastModified.getTime()
+    return { id, name, thumbnail, last_modified }
+  }
+
 }

@@ -14,6 +14,7 @@ import { useTheme } from '@/hooks/theme'
  * @property { boolean } isVisible
  * @property { string } title
  * @property { string } [ acceptButtonTitle ]
+ * @property { boolean } [ isButtonInactive ]
  * @property { () => void } [ onAccept ]
  */
 
@@ -23,7 +24,7 @@ import { useTheme } from '@/hooks/theme'
  */
 const Modal = ( props ) => {
 
-  const { children, isVisible, title, acceptButtonTitle, onAccept } = props
+  const { children, isVisible, title, acceptButtonTitle, isButtonInactive, onAccept } = props
   const hide = useModalHider()
   const { colors } = useTheme()
 
@@ -46,7 +47,13 @@ const Modal = ( props ) => {
             <Text style={ [ styles.buttonText, { color:colors.primary } ] }>Cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={ [ styles.button, { backgroundColor:colors.primary } ] }
+            disabled={ isButtonInactive }
+            style={
+              [
+                styles.button,
+                { backgroundColor:( isButtonInactive ? colors.inactive : colors.primary ) },
+              ]
+            }
             onPress={ handleAccept }>
             <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? 'Accept' }</Text>
           </TouchableOpacity>
