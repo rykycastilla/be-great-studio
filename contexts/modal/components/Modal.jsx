@@ -1,4 +1,4 @@
-import AnimatedModal from './AnimatedModal'
+import ModalContainer from './ModalContainer'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useCallback } from 'react'
 import { useModalHider } from '../hooks/modal_hider'
@@ -34,43 +34,35 @@ const Modal = ( props ) => {
   }, [ hide, onAccept ] )
 
   return (
-    <AnimatedModal
+    <ModalContainer
       visible={ isVisible }
       onClose={ hide }>
-      <View style={ [ styles.content, { backgroundColor:colors.card } ] }>
-        <Text style={ [ styles.title, { color:colors.text }]  }>{ title }</Text>
-        { children }
-        <View style={ styles.buttons }>
-          <TouchableOpacity
-            style={ [ styles.button, { backgroundColor:colors.background } ] }
-            onPress={ hide }>
-            <Text style={ [ styles.buttonText, { color:colors.primary } ] }>Cancel</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            disabled={ isButtonInactive }
-            style={
-              [
-                styles.button,
-                { backgroundColor:( isButtonInactive ? colors.inactive : colors.primary ) },
-              ]
-            }
-            onPress={ handleAccept }>
-            <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? 'Accept' }</Text>
-          </TouchableOpacity>
-        </View>
+      <Text style={ [ styles.title, { color:colors.text }]  }>{ title }</Text>
+      { children }
+      <View style={ styles.buttons }>
+        <TouchableOpacity
+          style={ [ styles.button, { backgroundColor:colors.background } ] }
+          onPress={ hide }>
+          <Text style={ [ styles.buttonText, { color:colors.primary } ] }>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          disabled={ isButtonInactive }
+          style={
+            [
+              styles.button,
+              { backgroundColor:( isButtonInactive ? colors.inactive : colors.primary ) },
+            ]
+          }
+          onPress={ handleAccept }>
+          <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? 'Accept' }</Text>
+        </TouchableOpacity>
       </View>
-    </AnimatedModal>
+    </ModalContainer>
   )
 
 }
 
 const styles = StyleSheet.create( {
-
-  content: {
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    padding: 20,
-  },
 
   title: {
     fontSize: 18,
