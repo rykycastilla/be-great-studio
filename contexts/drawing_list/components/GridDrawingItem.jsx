@@ -23,7 +23,7 @@ const Thumbnail = ( props ) => {
   return (
     <View
       style={ [ styles.thumbnailContainer, { height:size } ] }>
-      <Image src={ src } width={ 32 } height={ 32 } resizeMode="cover" />
+      <Image src={ src } width={ 90 } height={ 90 } resizeMode="cover" />
     </View>
   )
 }

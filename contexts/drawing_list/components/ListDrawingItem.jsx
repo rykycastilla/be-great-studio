@@ -20,9 +20,10 @@ import { Layout } from 'react-native-reanimated'
  */
 const Thumbnail = ( props ) => {
   const { src, size } = props
+  const thumbnailSize = size * 1.5
   return (
     <View style={ [ styles.thumbnailContainer ] }>
-      <Image src={ src } width={ size } height={ size } resizeMode="cover" />
+      <Image src={ src } width={ thumbnailSize } height={ thumbnailSize } resizeMode="cover" />
     </View>
   )
 }
