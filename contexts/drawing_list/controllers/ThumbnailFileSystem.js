@@ -46,6 +46,14 @@ export class ThumbnailFileSystem {
 
   /**
    * @public
+   * @param { string } path
+   */
+  async delete( path ) {
+    await FileSystem.deleteAsync( path, { idempotent:true } )
+  }
+
+  /**
+   * @public
    * @param { string } fileName
    * @param { number } timeStamp
    * @param { string } base64

@@ -65,9 +65,10 @@ export class DrawingRepository {
    * @param { string } data
    */
   async save( drawing, data ) {
-    const { id, name } = drawing
+    const { id, name, thumbnail:oldThumbnail } = drawing
     const lastModified = Date.now()
     const thumbnail = await this.thumbnailService.save( id, lastModified, data )
+    if( oldThumbnail !== '' ) { await this.thumbnailService.delete( oldThumbnail ) }
     await this.drawingDAO.saveItem( { id, name, thumbnail, last_modified:lastModified } )
   }
 
