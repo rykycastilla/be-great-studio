@@ -1,4 +1,6 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
+import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
+import { debounce } from '@/utils/debounce'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Layout } from 'react-native-reanimated'
 
@@ -71,6 +73,10 @@ const GridDrawingItem = ( props ) => {
   const { dimensions, colors, router } = config
   const { width, spacing } = dimensions
 
+  const handlePress = () => {
+    router.push( `/drawing/${ id }` )
+  }
+
   return (
     <AnimatedTouchableOpacity
       style={ [
@@ -83,7 +89,7 @@ const GridDrawingItem = ( props ) => {
           marginRight: ( index % 2 === 1 ) ? 0 : 0,
         },
       ] }
-      onPress={ () => router.push( `/drawing/${ id }` ) }
+      onPress={ debounce( handlePress, BUTTON_DEBOUNCE_DELAY ) }
       layout={ Layout.springify() }>
       <Thumbnail src={ thumbnail } size={ width } />
       <Info name={ name } lastModified={ lastModified } colors={ colors } />

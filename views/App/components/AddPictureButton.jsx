@@ -1,4 +1,6 @@
+import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { createToken } from 'create-token'
+import { debounce } from '@/utils/debounce'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useCallback } from 'react'
@@ -25,7 +27,7 @@ const AddPictureButton = () => {
   return (
     <TouchableOpacity
       style={ [ styles.addPictureButton, { backgroundColor:colors.primary } ] }
-      onPress={ handlePress }>
+      onPress={ debounce( handlePress, BUTTON_DEBOUNCE_DELAY ) }>
       <Ionicons name="add" size={ 28 } color="#FFFFFF" />
     </TouchableOpacity>
   )

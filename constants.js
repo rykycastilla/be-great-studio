@@ -1,0 +1,1 @@
+export const BUTTON_DEBOUNCE_DELAY = 500

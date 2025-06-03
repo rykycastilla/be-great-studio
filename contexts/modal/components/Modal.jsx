@@ -1,4 +1,6 @@
 import ModalContainer from './ModalContainer'
+import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
+import { debounce } from '@/utils/debounce'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useCallback } from 'react'
 import { useModalHider } from '../hooks/modal_hider'
@@ -53,7 +55,7 @@ const Modal = ( props ) => {
               { backgroundColor:( isButtonInactive ? colors.inactive : colors.primary ) },
             ]
           }
-          onPress={ handleAccept }>
+          onPress={ debounce( handleAccept, BUTTON_DEBOUNCE_DELAY ) }>
           <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? 'Accept' }</Text>
         </TouchableOpacity>
       </View>

@@ -1,4 +1,6 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
+import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
+import { debounce } from '@/utils/debounce'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import { Layout } from 'react-native-reanimated'
 
@@ -71,10 +73,14 @@ const ListDrawingItem = ( props ) => {
   const { dimensions, colors, router } = config
   const { width } = dimensions
 
+  const handlePress = () => {
+    router.push( `/drawing/${ id }` )
+  }
+
   return (
     <AnimatedTouchableOpacity
       style={ [ styles.item, { width, backgroundColor:colors.card, borderColor: colors.border } ] }
-      onPress={ () => ( router.push( `/drawing/${ id }` ) ) }
+      onPress={ debounce( handlePress, BUTTON_DEBOUNCE_DELAY ) }
       layout={ Layout.springify() }>
       <Thumbnail src={ thumbnail } size={ 24 } />
       <Info name={ name } lastModified={ lastModified } colors={ colors } />
