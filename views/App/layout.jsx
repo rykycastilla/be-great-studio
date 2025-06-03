@@ -1,8 +1,8 @@
 import * as SplashScreen from 'expo-splash-screen'
+import SafeAreaView from '@/components/SafeAreaView'
 import { DrawingListProvider } from '@/contexts/drawing_list'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ModalProvider } from '@/contexts/modal'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { ThemeProvider } from '@/contexts/theme'
@@ -30,8 +30,8 @@ const AppLayout = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1, backgroundColor:'red' }}>
       <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
-      <SafeAreaProvider style={ { backgroundColor } }>
-        <ThemeProvider>
+      <ThemeProvider>
+        <SafeAreaView backgroundColor={ backgroundColor }>
           <ModalProvider>
             <DrawingListProvider onLoad={ handleDrawingListLoad }>
               <Stack
@@ -50,8 +50,8 @@ const AppLayout = () => {
               />
             </DrawingListProvider>
           </ModalProvider>
-        </ThemeProvider>
-      </SafeAreaProvider>
+        </SafeAreaView>
+      </ThemeProvider>
     </GestureHandlerRootView>
   )
 
