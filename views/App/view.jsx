@@ -2,7 +2,7 @@ import AddPictureButton from './components/AddPictureButton'
 import AreaView from '@/components/AreaView'
 import SelectionButton from './components/SelectionButton'
 import ViewModeButton from './components/ViewModeButton'
-import { DrawingList } from '@/contexts/drawing_list'
+import { DrawingList, useIsSelectionMode } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
 
 /**
@@ -13,16 +13,17 @@ import { View, StyleSheet } from 'react-native'
  * @returns { ReactElement }
  */
 const App = () => {
+  const [ isSelectionMode ] = useIsSelectionMode()
   return (
     <AreaView style={ styles.container }>
       <View style={ styles.header }>
         <SelectionButton />
         <View style={ styles.headerButtons }>
-          <ViewModeButton />
+          { !isSelectionMode && <ViewModeButton /> }
         </View>
       </View>
       <DrawingList />
-      <AddPictureButton />
+      { !isSelectionMode && <AddPictureButton /> }
     </AreaView>
   )
 }
@@ -42,6 +43,7 @@ const styles = StyleSheet.create( {
   },
 
   headerButtons: {
+    height: 40,
     flexDirection: 'row',
     gap: 12,
     alignItems: 'center',

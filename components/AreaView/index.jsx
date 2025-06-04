@@ -3,13 +3,13 @@ import { StyleSheet, View } from 'react-native'
 import { useTheme } from '@/contexts/theme'
 
 /**
- * @import { ReactElement } from 'react'
+ * @import { ReactElement, ReactNode } from 'react'
  * @import { ViewProps } from 'react-native'
  */
 
 /**
  * @typedef { object } AreaViewProps
- * @property { ReactElement[] | ReactElement } [ children ]
+ * @property { ReactNode } [ children ]
  * @property { ViewProps[ 'style' ] } [ style ]
  */
 
