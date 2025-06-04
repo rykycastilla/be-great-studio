@@ -1,5 +1,6 @@
 import AddPictureButton from './components/AddPictureButton'
 import AreaView from '@/components/AreaView'
+import SelectionButton from './components/SelectionButton'
 import ViewModeButton from './components/ViewModeButton'
 import { DrawingList } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
@@ -15,6 +16,7 @@ const App = () => {
   return (
     <AreaView style={ styles.container }>
       <View style={ styles.header }>
+        <SelectionButton />
         <View style={ styles.headerButtons }>
           <ViewModeButton />
         </View>

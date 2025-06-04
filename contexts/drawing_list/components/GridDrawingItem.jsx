@@ -1,4 +1,5 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
+import SelectionCircle from './SelectionCircle'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { Image, StyleSheet, Text, View } from 'react-native'
@@ -9,6 +10,25 @@ import { Layout } from 'react-native-reanimated'
  * @import { ReactElement } from 'react'
  * @import { ThemeContext } from '@/contexts/theme'
  */
+
+/**
+ * @typedef { object } GridSelectionCircleProps
+ * @property { boolean } isSelected
+ * @property { ThemeContext[ 'colors' ] } colors
+ */
+
+/**
+ * @param { GridSelectionCircleProps } props
+ * @returns { ReactElement }
+ */
+const GridSelectionCircle = ( props ) => {
+  const { isSelected, colors } = props
+  return (
+    <View style={ styles.selectionCircleContainer }>
+      <SelectionCircle isSelected={ isSelected } colors={ colors } />
+    </View>
+  )
+}
 
 /**
  * @typedef { object } ThumbnailProps
@@ -70,10 +90,22 @@ const GridDrawingItem = ( props ) => {
 
   const { item, index, config } = props
   const { id, thumbnail, name, lastModified } = item
-  const { dimensions, colors, router } = config
+  const { dimensions, colors, router, isSelectionMode, selectionList, setSelectionList } = config
+  const isSelected = selectionList.includes( id )
   const { width, spacing } = dimensions
 
-  const handlePress = () => {
+  const toggleSelection = () => {
+    if( isSelected ) {
+      const index = selectionList.indexOf( id )
+      selectionList.splice( index, 1 )
+    }
+    else {
+      selectionList.push( id )
+    }
+    setSelectionList( [ ...selectionList ] )
+  }
+
+  const openDrawing = () => {
     router.push( `/drawing/${ id }` )
   }
 
@@ -89,8 +121,9 @@ const GridDrawingItem = ( props ) => {
           marginRight: ( index % 2 === 1 ) ? 0 : 0,
         },
       ] }
-      onPress={ debounce( handlePress, BUTTON_DEBOUNCE_DELAY ) }
+      onPress={ isSelectionMode ? toggleSelection : debounce( openDrawing, BUTTON_DEBOUNCE_DELAY ) }
       layout={ Layout.springify() }>
+      { isSelectionMode && <GridSelectionCircle isSelected={ isSelected } colors={ colors } /> }
       <Thumbnail src={ thumbnail } size={ width } />
       <Info name={ name } lastModified={ lastModified } colors={ colors } />
     </AnimatedTouchableOpacity>
@@ -130,6 +163,13 @@ const styles = StyleSheet.create( {
 
   date: {
     fontSize: 12,
+  },
+
+  selectionCircleContainer: {
+    position: 'absolute',
+    top: 8,
+    left: 8,
+    zIndex: 10,
   },
 
 } )

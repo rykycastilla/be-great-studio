@@ -1,4 +1,5 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
+import SelectionCircle from './SelectionCircle'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { Image, StyleSheet, Text, View } from 'react-native'
@@ -9,6 +10,25 @@ import { Layout } from 'react-native-reanimated'
  * @import { ReactElement } from 'react'
  * @import { ThemeContext } from '@/contexts/theme'
  */
+
+/**
+ * @typedef { object } ListSelectionCircleProps
+ * @property { boolean } isSelected
+ * @property { ThemeContext[ 'colors' ] } colors
+ */
+
+/**
+ * @param { ListSelectionCircleProps } props
+ * @returns { ReactElement }
+ */
+const ListSelectionCircle = ( props ) => {
+  const { isSelected, colors } = props
+  return (
+    <View style={ styles.selectionCircleContainer }>
+      <SelectionCircle isSelected={ isSelected } colors={ colors } />
+    </View>
+  )
+}
 
 /**
  * @typedef { object } ThumbnailProps
@@ -70,18 +90,31 @@ const ListDrawingItem = ( props ) => {
 
   const { item, config } = props
   const { id, name, thumbnail, lastModified } = item
-  const { dimensions, colors, router } = config
+  const { dimensions, colors, router, isSelectionMode, selectionList, setSelectionList } = config
+  const isSelected = selectionList.includes( id )
   const { width } = dimensions
 
-  const handlePress = () => {
+  const toggleSelection = () => {
+    if( isSelected ) {
+      const index = selectionList.indexOf( id )
+      selectionList.splice( index, 1 )
+    }
+    else {
+      selectionList.push( id )
+    }
+    setSelectionList( [ ...selectionList ] )
+  }
+
+  const openDrawing = () => {
     router.push( `/drawing/${ id }` )
   }
 
   return (
     <AnimatedTouchableOpacity
       style={ [ styles.item, { width, backgroundColor:colors.card, borderColor: colors.border } ] }
-      onPress={ debounce( handlePress, BUTTON_DEBOUNCE_DELAY ) }
+      onPress={ isSelectionMode ? toggleSelection : debounce( openDrawing, BUTTON_DEBOUNCE_DELAY ) }
       layout={ Layout.springify() }>
+      { isSelectionMode && <ListSelectionCircle isSelected={ isSelected } colors={ colors } /> }
       <Thumbnail src={ thumbnail } size={ 24 } />
       <Info name={ name } lastModified={ lastModified } colors={ colors } />
     </AnimatedTouchableOpacity>
@@ -127,6 +160,12 @@ const styles = StyleSheet.create( {
 
   date: {
     fontSize: 12,
+  },
+
+  selectionCircleContainer: {
+    top: '50%',
+    marginLeft: 12,
+    transform: [{ translateY: -12 }],
   },
 
 } )

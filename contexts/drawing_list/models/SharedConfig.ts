@@ -6,4 +6,7 @@ export interface SharedConfig {
   dimensions: Layout
   colors: ThemeContext[ 'colors' ]
   router: Router
+  isSelectionMode: boolean
+  selectionList: string[]
+  setSelectionList( selectionList:string[] ): void
 }

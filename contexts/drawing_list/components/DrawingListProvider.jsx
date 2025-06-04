@@ -22,6 +22,7 @@ const DrawingListProvider = ( props ) => {
 
   const { children, onLoad } = props
   const [ viewMode, setViewMode, requestingViewMode ] = useStorageState( /** @type { 'grid' | 'list' } */ ( 'grid' ), 'view-mode' )
+  const [ isSelectionMode, setIsSelectionMode ] = useState( false )
   const [ drawingList, setDrawingList ] = useState( /** @type { Drawing[] } */ ( [] ) )
   const drawingRepository = useDrawingRepository()
 
@@ -70,7 +71,16 @@ const DrawingListProvider = ( props ) => {
   return (
     <DrawingListContext.Provider
       value={
-        { viewMode, setViewMode, drawingList, saveDrawing, updateDrawing, loadDrawingThumbnail }
+        {
+          viewMode,
+          setViewMode,
+          isSelectionMode,
+          setIsSelectionMode,
+          drawingList,
+          saveDrawing,
+          updateDrawing,
+          loadDrawingThumbnail,
+        }
       }>
       { children }
     </DrawingListContext.Provider>
