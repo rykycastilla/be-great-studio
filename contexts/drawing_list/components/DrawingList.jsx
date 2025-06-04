@@ -2,8 +2,7 @@ import GridDrawingItem from './GridDrawingItem'
 import ListDrawingItem from './ListDrawingItem'
 import { FlatList, StyleSheet, View } from 'react-native'
 import { useDrawingList } from '../hooks/drawing_list'
-import { useEffect, useState } from 'react'
-import { useIsSelectionMode } from '../hooks/is_selection_mode'
+import { useSelectionMode } from '../hooks/selection_mode'
 import { useItemDimensions } from '../hooks/item_dimensions'
 import { useRouter } from 'expo-router'
 import { useTheme } from '@/contexts/theme'
@@ -41,14 +40,8 @@ const DrawingList = () => {
   // Shared config
   const { colors } = useTheme()
   const router = useRouter()
-  const [ isSelectionMode ] = useIsSelectionMode()
-  const [ selectionList, setSelectionList ] = useState( /** @type { string[] } */ ( [] ) )
-  const config = { dimensions, colors, router, isSelectionMode, selectionList, setSelectionList }
-
-  // Reset selection list
-  useEffect( () => {
-    setSelectionList( [] )
-  }, [ isSelectionMode ] )
+  const { isSelectionMode, addItem, checkItemIncluded, deleteItem } = useSelectionMode()
+  const config = { dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem }
 
   const Item = ( viewMode === 'grid' ) ? GridDrawingItem : ListDrawingItem
 

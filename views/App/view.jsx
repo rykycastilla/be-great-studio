@@ -1,8 +1,9 @@
 import AddPictureButton from './components/AddPictureButton'
 import AreaView from '@/components/AreaView'
 import SelectionButton from './components/SelectionButton'
+import SelectionCounter from './components/SelectionCounter'
 import ViewModeButton from './components/ViewModeButton'
-import { DrawingList, useIsSelectionMode } from '@/contexts/drawing_list'
+import { DrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
 
 /**
@@ -13,13 +14,13 @@ import { View, StyleSheet } from 'react-native'
  * @returns { ReactElement }
  */
 const App = () => {
-  const [ isSelectionMode ] = useIsSelectionMode()
+  const { isSelectionMode } = useSelectionMode()
   return (
     <AreaView style={ styles.container }>
       <View style={ styles.header }>
         <SelectionButton />
         <View style={ styles.headerButtons }>
-          { !isSelectionMode && <ViewModeButton /> }
+          { isSelectionMode ? <SelectionCounter /> : <ViewModeButton /> }
         </View>
       </View>
       <DrawingList />

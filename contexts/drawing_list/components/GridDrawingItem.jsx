@@ -90,19 +90,17 @@ const GridDrawingItem = ( props ) => {
 
   const { item, index, config } = props
   const { id, thumbnail, name, lastModified } = item
-  const { dimensions, colors, router, isSelectionMode, selectionList, setSelectionList } = config
-  const isSelected = selectionList.includes( id )
+
+  const {
+    dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem,
+  } = config
+
+  const isSelected = checkItemIncluded( id )
   const { width, spacing } = dimensions
 
   const toggleSelection = () => {
-    if( isSelected ) {
-      const index = selectionList.indexOf( id )
-      selectionList.splice( index, 1 )
-    }
-    else {
-      selectionList.push( id )
-    }
-    setSelectionList( [ ...selectionList ] )
+    if( isSelected ) { deleteItem( id ) }
+    else { addItem( id ) }
   }
 
   const openDrawing = () => {

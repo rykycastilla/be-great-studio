@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useCallback } from 'react'
-import { useIsSelectionMode } from '@/contexts/drawing_list'
+import { useSelectionMode } from '@/contexts/drawing_list'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -13,7 +13,7 @@ import { useTheme } from '@/contexts/theme'
 const SelectionButton = () => {
 
   const { colors } = useTheme()
-  const [ isSelectionMode, setIsSelectionMode ] = useIsSelectionMode()
+  const { isSelectionMode, setIsSelectionMode } = useSelectionMode()
 
   // Toggle selection mode
   const handlePress = useCallback( () => {

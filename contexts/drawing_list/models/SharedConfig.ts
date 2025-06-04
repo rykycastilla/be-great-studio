@@ -7,6 +7,7 @@ export interface SharedConfig {
   colors: ThemeContext[ 'colors' ]
   router: Router
   isSelectionMode: boolean
-  selectionList: string[]
-  setSelectionList( selectionList:string[] ): void
+  addItem( id:string ): void
+  checkItemIncluded( id:string ): boolean
+  deleteItem( id:string ): void
 }

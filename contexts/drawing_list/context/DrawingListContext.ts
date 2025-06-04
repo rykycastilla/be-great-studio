@@ -5,6 +5,8 @@ export interface DrawingListContext {
   setViewMode( viewMode:( 'grid' | 'list' ) ): void
   isSelectionMode: boolean
   setIsSelectionMode( isSelectionMode:boolean ): void
+  selectionList: Set<string>
+  setSelectionList( selectionList:Set<string> ): void
   drawingList: Drawing[]
   saveDrawing( drawing:Drawing, data:string ): Promise<void>
   updateDrawing( drawing:Drawing, newProperties:Partial<Drawing> ): Promise<void>
