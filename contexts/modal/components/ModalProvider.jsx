@@ -21,7 +21,7 @@ const ModalProvider = ( props ) => {
 
   const { children } = props
   const [ config, setConfig ] = useState( /** @type { ModalConfig } */ ( { title:'' } ) )
-  const { title, acceptButtonTitle, isButtonInactive, onAccept } = config
+  const { title, acceptButtonTitle, isButtonInactive, hideButtons, onAccept } = config
 
   const [ componentRef, setComponentRef ] = useState(
     { Component:DefaultComponent, props:{} },
@@ -48,6 +48,7 @@ const ModalProvider = ( props ) => {
         title={ title }
         acceptButtonTitle={ acceptButtonTitle }
         isButtonInactive={ isButtonInactive }
+        hideButtons={ hideButtons }
         onAccept={ onAccept }>
         <Component { ..._props } />
       </Modal>

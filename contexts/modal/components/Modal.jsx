@@ -17,6 +17,7 @@ import { useTheme } from '@/contexts/theme'
  * @property { string } title
  * @property { string } [ acceptButtonTitle ]
  * @property { boolean } [ isButtonInactive ]
+ * @property { boolean } [ hideButtons ]
  * @property { () => void } [ onAccept ]
  */
 
@@ -26,7 +27,9 @@ import { useTheme } from '@/contexts/theme'
  */
 const Modal = ( props ) => {
 
-  const { children, isVisible, title, acceptButtonTitle, isButtonInactive, onAccept } = props
+  const {
+    children, isVisible, title, acceptButtonTitle, isButtonInactive, hideButtons, onAccept,
+  } = props
   const hide = useModalHider()
   const { colors } = useTheme()
 
@@ -41,24 +44,28 @@ const Modal = ( props ) => {
       onClose={ hide }>
       <Text style={ [ styles.title, { color:colors.text }]  }>{ title }</Text>
       { children }
-      <View style={ styles.buttons }>
-        <TouchableOpacity
-          style={ [ styles.button, { backgroundColor:colors.background } ] }
-          onPress={ hide }>
-          <Text style={ [ styles.buttonText, { color:colors.primary } ] }>Cancel</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          disabled={ isButtonInactive }
-          style={
-            [
-              styles.button,
-              { backgroundColor:( isButtonInactive ? colors.inactive : colors.primary ) },
-            ]
-          }
-          onPress={ debounce( handleAccept, BUTTON_DEBOUNCE_DELAY ) }>
-          <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? 'Accept' }</Text>
-        </TouchableOpacity>
-      </View>
+      {
+        !hideButtons && (
+          <View style={ styles.buttons }>
+            <TouchableOpacity
+              style={ [ styles.button, { backgroundColor:colors.background } ] }
+              onPress={ hide }>
+              <Text style={ [ styles.buttonText, { color:colors.primary } ] }>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              disabled={ isButtonInactive }
+              style={
+                [
+                  styles.button,
+                  { backgroundColor:( isButtonInactive ? colors.inactive : colors.primary ) },
+                ]
+              }
+              onPress={ debounce( handleAccept, BUTTON_DEBOUNCE_DELAY ) }>
+              <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? 'Accept' }</Text>
+            </TouchableOpacity>
+          </View>
+        )
+      }
     </ModalContainer>
   )
 

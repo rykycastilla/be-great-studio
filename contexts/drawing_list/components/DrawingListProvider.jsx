@@ -27,6 +27,11 @@ const DrawingListProvider = ( props ) => {
   const [ drawingList, setDrawingList ] = useState( /** @type { Drawing[] } */ ( [] ) )
   const drawingRepository = useDrawingRepository()
 
+  // Reset selection list on mode changing
+  useEffect( () => {
+    setSelectionList( new Set() )
+    }, [ isSelectionMode ] )  // eslint-disable-line
+
   // Loading saved drawings
   const requestingList = useMemo( () => {
     const requestingList = drawingRepository.requestAll()

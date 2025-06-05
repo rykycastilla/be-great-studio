@@ -2,6 +2,7 @@ import AddPictureButton from './components/AddPictureButton'
 import AreaView from '@/components/AreaView'
 import SelectionButton from './components/SelectionButton'
 import SelectionCounter from './components/SelectionCounter'
+import SelectionMenuButton from './components/SelectionMenuButton'
 import ViewModeButton from './components/ViewModeButton'
 import { DrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
@@ -20,7 +21,16 @@ const App = () => {
       <View style={ styles.header }>
         <SelectionButton />
         <View style={ styles.headerButtons }>
-          { isSelectionMode ? <SelectionCounter /> : <ViewModeButton /> }
+          {
+            isSelectionMode
+              ? (
+                <>
+                  <SelectionCounter />
+                  <SelectionMenuButton />
+                </>
+              )
+              : <ViewModeButton />
+          }
         </View>
       </View>
       <DrawingList />

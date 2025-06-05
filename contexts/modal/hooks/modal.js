@@ -17,6 +17,7 @@ import { useStaticCallback } from '@/hooks/static_callback'
  * @typedef { object } ModalConfig
  * @property { string } [ acceptButtonTitle ]
  * @property { boolean } [ isButtonInactive ]
+ * @property { boolean } [ hideButtons ]
  * @property { () => void }  [ onAccept ]
  */
 
@@ -25,13 +26,13 @@ import { useStaticCallback } from '@/hooks/static_callback'
  * @param { string } title
  * @param { Component<T> } Component
  * @param { T } props
- * @param { ModalConfig } config
+ * @param { ModalConfig } [ config ]
  * @returns { () => void }
  */
 export function useModal( title, Component, props, config ) {
 
   const { currentModalId, setCurrentModalId, setConfig, setComponentRef } = useContext( ModalContext )
-  const { acceptButtonTitle, isButtonInactive, onAccept = () => {} } = config ?? {}
+  const { acceptButtonTitle, isButtonInactive, hideButtons, onAccept = () => {} } = config ?? {}
   const onAcceptStatic = useStaticCallback( onAccept )
   const id = useId()
 
@@ -39,13 +40,19 @@ export function useModal( title, Component, props, config ) {
     return props
   }, [ JSON.stringify( props ) ] )  // eslint-disable-line
 
-  // Using modal props and config
+  // Using modal config
   useEffect( () => {
     if( id !== currentModalId ) { return }
-    setConfig( { title, acceptButtonTitle, isButtonInactive, onAccept:onAcceptStatic } )
+    const config = { title, acceptButtonTitle, isButtonInactive, hideButtons, onAccept:onAcceptStatic }
+    setConfig( config )
+  }, [ id, currentModalId, setConfig, title, acceptButtonTitle, isButtonInactive, hideButtons, onAcceptStatic ] )
+
+  // Using modal props
+  useEffect( () => {
+    if( id !== currentModalId ) { return }
     const componentRef = { Component, props:fixedProps }
     setComponentRef( componentRef )
-  }, [ id, currentModalId, title, acceptButtonTitle, isButtonInactive, onAcceptStatic, setConfig, Component, fixedProps, setComponentRef ] )
+  }, [ id, currentModalId, Component, fixedProps, setComponentRef ] )
 
   // Activating this modal
   return useCallback( () => {

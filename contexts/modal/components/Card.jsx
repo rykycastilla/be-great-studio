@@ -4,13 +4,13 @@ import { useAnimatedStyle } from 'react-native-reanimated'
 import { useTheme } from '@/contexts/theme'
 
 /**
- * @import { ReactElement } from 'react'
+ * @import { ReactElement, ReactNode } from 'react'
  * @import { SharedValue } from 'react-native-reanimated'
  */
 
 /**
  * @typedef { object } CardProps
- * @property { ReactElement[] | ReactElement } children
+ * @property { ReactNode } children
  * @property { SharedValue<number> } translateY
  */
 

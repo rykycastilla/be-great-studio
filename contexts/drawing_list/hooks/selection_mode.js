@@ -1,5 +1,5 @@
 import { DrawingListContext } from '../context'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import { useContext } from 'react'
 
 /**
@@ -20,11 +20,6 @@ export function useSelectionMode() {
   const {
     isSelectionMode, setIsSelectionMode, selectionList, setSelectionList,
   } = useContext( DrawingListContext )
-
-  // Reset selection list on mode changing
-  useEffect( () => {
-    setSelectionList( new Set() )
-  }, [ isSelectionMode ] )  // eslint-disable-line
 
   const addItem = useCallback(
     /** @type { ( id:string ) => void } */

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { useSharedValue, withTiming, withSpring, runOnJS } from 'react-native-reanimated'
 
 /**
- * @import { ReactElement } from 'react'
+ * @import { ReactNode } from 'react'
  */
 
 const { height } = Dimensions.get( 'window' )
@@ -13,7 +13,7 @@ const { height } = Dimensions.get( 'window' )
 /**
  * @typedef { object } ModalContainerProps
  * @property { boolean } visible
- * @property { ReactElement[] | ReactElement } children
+ * @property { ReactNode } children
  * @property { () => void } onClose
  */
 

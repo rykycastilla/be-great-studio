@@ -32,8 +32,8 @@ const AppLayout = () => {
       <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
       <ThemeProvider>
         <SafeAreaView backgroundColor={ backgroundColor }>
-          <ModalProvider>
-            <DrawingListProvider onLoad={ handleDrawingListLoad }>
+          <DrawingListProvider onLoad={ handleDrawingListLoad }>
+            <ModalProvider>
               <Stack
                 screenOptions={ {
                   headerShown: false,
@@ -46,10 +46,9 @@ const AppLayout = () => {
                     backgroundColor,
                   },
                   animationTypeForReplace: 'push',
-                } }
-              />
-            </DrawingListProvider>
-          </ModalProvider>
+                } } />
+            </ModalProvider>
+          </DrawingListProvider>
         </SafeAreaView>
       </ThemeProvider>
     </GestureHandlerRootView>
