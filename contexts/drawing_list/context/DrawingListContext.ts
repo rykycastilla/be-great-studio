@@ -10,5 +10,6 @@ export interface DrawingListContext {
   drawingList: Drawing[]
   saveDrawing( drawing:Drawing, data:string ): Promise<void>
   updateDrawing( drawing:Drawing, newProperties:Partial<Drawing> ): Promise<void>
+  removeDrawing( drawing:Drawing ): Promise<void>
   loadDrawingThumbnail( drawing:Drawing ): Promise<string|null>
 }

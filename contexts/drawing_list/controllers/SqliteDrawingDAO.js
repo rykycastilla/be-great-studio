@@ -32,4 +32,14 @@ export class SqliteDrawingDAO {
     )
   }
 
+  /**
+   * @public
+   * @param { DrawingDTO } drawing
+   */
+  async removeItem( drawing ) {
+    const db = await SQLite()
+    const { id } = drawing
+    await db.runAsync( /* sql */ `DELETE FROM drawing WHERE id = ?`, [ id ] )
+  }
+
 }

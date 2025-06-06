@@ -72,4 +72,15 @@ export class DrawingRepository {
     await this.drawingDAO.saveItem( { id, name, thumbnail, last_modified:lastModified } )
   }
 
+  /**
+   * @public
+   * @param { Drawing } drawing
+   */
+  async remove( drawing ) {
+    const { thumbnail } = drawing
+    const dto = this.mapper.toDTO( drawing )
+    await this.drawingDAO.removeItem( dto )
+    await this.thumbnailService.delete( thumbnail )
+  }
+
 }

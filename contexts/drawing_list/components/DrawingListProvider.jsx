@@ -68,6 +68,14 @@ const DrawingListProvider = ( props ) => {
       setDrawingList( drawingList )
     }, [ drawingRepository ] )
 
+  const removeDrawing = useCallback(
+    /** @type { ( drawing:Drawing ) => Promise<void> } */
+    async( drawing ) => {
+      await drawingRepository.remove( drawing )
+      const drawingList = await drawingRepository.requestAll()
+      setDrawingList( drawingList )
+    }, [ drawingRepository ] )
+
   const loadDrawingThumbnail = useCallback(
     /** @type { ( drawing:Drawing ) => Promise<string|null> } */
     ( drawing ) => {
@@ -87,6 +95,7 @@ const DrawingListProvider = ( props ) => {
           drawingList,
           saveDrawing,
           updateDrawing,
+          removeDrawing,
           loadDrawingThumbnail,
         }
       }>

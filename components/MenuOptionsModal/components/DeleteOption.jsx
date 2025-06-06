@@ -3,6 +3,7 @@ import OptionItem from './OptionItem'
 import { useModal } from '@/contexts/modal'
 
 /**
+ * @import { Drawing } from '@/contexts/drawing_list'
  * @import { ReactElement } from 'react'
  */
 
@@ -10,8 +11,13 @@ import { useModal } from '@/contexts/modal'
  * @returns { ReactElement }
  */
 const DeleteOption = () => {
-  const dispatchDeleteWarningModal = useModal( 'delete-warning', 'Delete warning', DeleteWarningModal, {}, {} )
-  return <OptionItem name="Delete" icon="trash-bin-outline" onAction={ ( drawing ) => dispatchDeleteWarningModal( drawing ) } />
+  const dispatchDeleteWarningModal = useModal(
+    'delete-warning', 'Delete warning', DeleteWarningModal, {}, {},
+  )
+  return (
+    <OptionItem name="Delete" icon="trash-bin-outline" onAction={ dispatchDeleteWarningModal } />
+  )
+
 }
 
 export default DeleteOption

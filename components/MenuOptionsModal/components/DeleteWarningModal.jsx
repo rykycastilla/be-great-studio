@@ -1,4 +1,6 @@
 import { StyleSheet, Text } from 'react-native'
+import { useCallback } from 'react'
+import { useDrawingList } from '@/contexts/drawing_list'
 import { useModalAction } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 
@@ -19,17 +21,24 @@ import { useTheme } from '@/contexts/theme'
 const DeleteWarningModal = ( props ) => {
 
   const { args } = props
-  const [ removableDrawingList ] = args
-  const isOnlyOne = removableDrawingList.length === 1
+  const [ drawingList ] = args
+  const isOnlyOne = drawingList.length === 1
   const { colors } = useTheme()
+  const { removeDrawing } = useDrawingList()
+
+  const onAction = useCallback( async() => {
+    for( const drawing of drawingList ) {
+      await removeDrawing( drawing )
+    }
+  }, [ drawingList, removeDrawing ] )
 
   useModalAction( () => {
-    console.log( removableDrawingList )
+    onAction()
   } )
 
   return (
     <Text style={ [ styles.text, { color:colors.text } ] }>
-      Area you sure y want to delete { removableDrawingList.length } { isOnlyOne ? 'element' : 'elements' }
+      Area you sure y want to delete { drawingList.length } { isOnlyOne ? 'element' : 'elements' }
     </Text>
   )
 

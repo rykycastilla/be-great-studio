@@ -1,4 +1,4 @@
-// import DeleteOption from './components/DeleteOption'
+import DeleteOption from './components/DeleteOption'
 
 /**
  * @import { ReactElement } from 'react'
@@ -10,7 +10,7 @@
 const MenuOptionsModal = () => {
   return (
     <>
-      {/* <DeleteOption /> */}
+      <DeleteOption />
     </>
   )
 }

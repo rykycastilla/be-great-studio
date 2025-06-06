@@ -10,12 +10,13 @@ import { useContext } from 'react'
  * @property { Drawing[] } drawingList
  * @property { ( drawing:Drawing, data:string ) => Promise<void> } saveDrawing
  * @property { ( drawing:Drawing, newProperties:Partial<Drawing> ) => Promise<void> } updateDrawing
+ * @property { ( drawing:Drawing ) => Promise<void> } removeDrawing
  */
 
 /**
  * @returns { DrawingListResult }
  */
 export function useDrawingList() {
-  const { drawingList, saveDrawing, updateDrawing } = useContext( DrawingListContext )
-  return { drawingList, saveDrawing, updateDrawing }
+  const { drawingList, saveDrawing, updateDrawing, removeDrawing } = useContext( DrawingListContext )
+  return { drawingList, saveDrawing, updateDrawing, removeDrawing }
 }
