@@ -1,5 +1,5 @@
 import { ModalContext } from '../context'
-import { ReactElement, useCallback, useContext, useEffect, useId, useMemo, useState } from 'react'
+import { ReactElement, useCallback, useContext, useEffect, useMemo } from 'react'
 import { useStaticCallback } from '@/hooks/static_callback'
 
 type Props<T extends object, U extends unknown[]> = T & { args:U }
@@ -13,17 +13,21 @@ interface ModalConfig {
 }
 
 export function useModal<T extends object,U extends unknown[]>(
+  id: string,
   title: string,
   Component: Component<T,U>,
   componentProps: T,
   config: ModalConfig,
 ): ( ...args:U ) => void
 {
-  const { currentModalId, setCurrentModalId, setConfig, setComponentRef } = useContext( ModalContext )
+
+  const {
+    currentModalId, setCurrentModalId, setConfig, setComponentRef, modalArgs, setModalArgs:setArgs,
+  } = useContext( ModalContext )
+
   const { acceptButtonTitle, isButtonInactive, hideButtons, onAccept = () => {} } = config ?? {}
   const onAcceptStatic = useStaticCallback( onAccept )
-  const id = useId()
-  const [ args, setArgs ] = useState( undefined as unknown as U )
+  const args = modalArgs as U
 
   const props = useMemo( (): Props<T,U> => {
     return { ...props, args }
@@ -41,7 +45,7 @@ export function useModal<T extends object,U extends unknown[]>(
     if( id !== currentModalId ) { return }
     const componentRef = { Component, props }
     setComponentRef( componentRef )
-  }, [ id, currentModalId, Component, props, args, setComponentRef ] )
+  }, [ id, currentModalId, Component, props, setComponentRef ] )
 
   // Activating this modal
   return useCallback( ( ...args:U ) => {

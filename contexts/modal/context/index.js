@@ -5,6 +5,7 @@ import { createContext } from 'react'
  */
 
 /**
+ * @typedef { import( './ActionRef' ).ActionRef } ActionRef
  * @typedef { import( './ModalConfig' ).ModalConfig } ModalConfig
  */
 

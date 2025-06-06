@@ -18,7 +18,7 @@ import { useTheme } from '@/contexts/theme'
  * @property { string } [ acceptButtonTitle ]
  * @property { boolean } [ isButtonInactive ]
  * @property { boolean } [ hideButtons ]
- * @property { () => void } [ onAccept ]
+ * @property { () => void } onAccept
  */
 
 /**
@@ -35,7 +35,7 @@ const Modal = ( props ) => {
 
   const handleAccept = useCallback( () => {
     hide()
-    if( onAccept !== undefined ) { onAccept() }
+    onAccept()
   }, [ hide, onAccept ] )
 
   return (

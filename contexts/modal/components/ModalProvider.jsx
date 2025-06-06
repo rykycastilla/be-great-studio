@@ -1,10 +1,10 @@
 import DefaultComponent from './DefaultComponent'
 import Modal from './Modal'
 import { ModalContext } from '../context'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 /**
- * @import { ModalConfig } from '../context'
+ * @import { ActionRef, ModalConfig } from '../context'
  * @import { ReactElement } from 'react'
  */
 
@@ -21,7 +21,17 @@ const ModalProvider = ( props ) => {
 
   const { children } = props
   const [ config, setConfig ] = useState( /** @type { ModalConfig } */ ( { title:'' } ) )
-  const { title, acceptButtonTitle, isButtonInactive, hideButtons, onAccept } = config
+  const { title, acceptButtonTitle, isButtonInactive, hideButtons, onAccept:runConfigAction } = config
+  const [ modalArgs, setModalArgs ] = useState(
+    /** @type { unknown[] } */ ( /** @type { unknown } */ ( undefined ) ),
+  )
+  const [ actionRef, setActionRef ] = useState( /** @type { ActionRef } */ ( {} ) )
+
+  const onAccept = useCallback( () => {
+    if( runConfigAction !== undefined ) { runConfigAction() }
+    const runHookAction = actionRef.current
+    if( runHookAction !== undefined ) { runHookAction() }
+  }, [ runConfigAction, actionRef ] )
 
   const [ componentRef, setComponentRef ] = useState(
     { Component:DefaultComponent, props:{} },
@@ -40,6 +50,9 @@ const ModalProvider = ( props ) => {
           setCurrentModalId,
           setConfig,
           setComponentRef: /** @type { ModalContext[ 'setComponentRef' ] } */ ( setComponentRef ),
+          modalArgs,
+          setModalArgs,
+          setActionRef,
         }
       }>
       { children }

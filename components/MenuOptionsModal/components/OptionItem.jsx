@@ -3,7 +3,9 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useCallback } from 'react'
 import { useDrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { useModalHider } from '@/contexts/modal'
+import { useStaticCallback } from '@/hooks/static_callback'
 import { useTheme } from '@/contexts/theme'
+import { wait } from '@/utils/wait'
 
 /**
  * @import { Drawing } from '@/contexts/drawing_list'
@@ -29,17 +31,20 @@ const OptionItem = ( props ) => {
   const hideOptionsModal = useModalHider()
   const { drawingList } = useDrawingList()
   const { setIsSelectionMode, selectionList } = useSelectionMode()
+  const onActionStatic = useStaticCallback( onAction )
 
-  const selectOption = useCallback( () => {
+  const selectOption = useCallback( async() => {
     /** @type { Drawing[] } */ const selectedDrawingList = []
     for( const drawing of drawingList ) {
       const isSelected = selectionList.has( drawing.id )
       if( isSelected ) { selectedDrawingList.push( drawing ) }
     }
+    // Preparing to allow modal calls on `onStaticAction`
     hideOptionsModal()
     setIsSelectionMode( false )
-    onAction( selectedDrawingList )
-  }, [ drawingList, selectionList, onAction, hideOptionsModal, setIsSelectionMode ] )
+    await wait( 1000 )
+    onActionStatic( selectedDrawingList )
+  }, [ drawingList, selectionList, onActionStatic, hideOptionsModal, setIsSelectionMode ] )
 
   return (
     <TouchableOpacity style={ styles.optionItem } onPress={ selectOption }>

@@ -1,3 +1,4 @@
+import { ActionRef } from './ActionRef'
 import { ModalConfig } from './ModalConfig'
 import { ReactElement } from 'react'
 
@@ -6,6 +7,9 @@ export interface ModalContext {
   setCurrentModalId( currentModalId:string|null ): void
   setConfig( config:ModalConfig ): void
   setComponentRef<T extends object>( componentRef:ComponentRef<T> ): void
+  modalArgs: unknown[]
+  setModalArgs( modalArgs:unknown[] ): void
+  setActionRef( actionRef:ActionRef ): void
 }
 
 interface Component<T extends object> {

@@ -45,7 +45,7 @@ const Drawing = () => {
     }, [ setSavedData ] )
 
   const dispatchSaveWarningModal = useModal(
-    'Exit without saving?', SaveWarningModal, {},
+    'exit-save-warning', 'Exit without saving?', SaveWarningModal, {},
     {
       acceptButtonTitle: 'Exit',
       onAccept() { router.back() },
