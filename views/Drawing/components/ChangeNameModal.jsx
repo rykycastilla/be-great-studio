@@ -1,6 +1,4 @@
-import { StyleSheet, TextInput } from 'react-native'
-import { useEffect } from 'react'
-import { useTheme } from '@/contexts/theme'
+import Input from '@/components/Input'
 
 /**
  * @import { ReactElement } from 'react'
@@ -18,29 +16,7 @@ import { useTheme } from '@/contexts/theme'
  */
 const ChangeNameModal = ( props ) => {
   const { defaultName, setName } = props
-  const { colors } = useTheme()
-
-  useEffect( () => {
-    setName( defaultName )
-  }, [] )  // eslint-disable-line
-
-  return (
-    <TextInput
-      autoFocus
-      defaultValue={ defaultName }
-      style={ [ styles.text, { color:colors.text } ] }
-      onChangeText={ setName } />
-  )
+  return <Input defaultValue={ defaultName } setValue={ setName } />
 }
-
-const styles = StyleSheet.create( {
-  text: {
-    height: 60,
-    marginBottom: 8,
-    fontSize: 19,
-    fontWeight: '800',
-    fontFamily: 'System',
-  },
-} )
 
 export default ChangeNameModal

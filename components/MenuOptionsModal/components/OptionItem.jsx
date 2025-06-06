@@ -17,16 +17,17 @@ import { wait } from '@/utils/wait'
  * @typedef { object } OptionItemProps
  * @property { string } name
  * @property { OptionIcon } icon
+ * @property { boolean } [ hidden ]
  * @property { ( selectedDrawingList:Drawing[] ) => void } onAction
  */
 
 /**
  * @param { OptionItemProps } props
- * @returns { ReactElement }
+ * @returns { ReactElement | null }
  */
 const OptionItem = ( props ) => {
 
-  const { name, icon, onAction } = props
+  const { name, icon, hidden, onAction } = props
   const { colors } = useTheme()
   const hideOptionsModal = useModalHider()
   const { drawingList } = useDrawingList()
@@ -45,6 +46,8 @@ const OptionItem = ( props ) => {
     await wait( 1000 )
     onActionStatic( selectedDrawingList )
   }, [ drawingList, selectionList, onActionStatic, hideOptionsModal, setIsSelectionMode ] )
+
+  if( hidden ) { return null }
 
   return (
     <TouchableOpacity style={ styles.optionItem } onPress={ selectOption }>
