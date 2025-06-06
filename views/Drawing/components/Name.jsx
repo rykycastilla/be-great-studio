@@ -2,6 +2,7 @@ import ChangeNameModal from './ChangeNameModal'
 import { StyleSheet, Text, TouchableWithoutFeedback } from 'react-native'
 import { useCallback, useState } from 'react'
 import { useModal } from '@/contexts/modal'
+import { useStaticCallback } from '@/hooks/static_callback'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -24,13 +25,15 @@ const Name = ( props ) => {
   const { colors } = useTheme()
   const [ newName, setNewName ] = useState( drawing.name )
 
-  const handleChangeNameAccept = useCallback( () => {
+  const onAccept = useCallback( () => {
     drawing.setName( newName )
   }, [ newName, drawing.setName ] )  // eslint-disable-line
 
+  const onAcceptStatic = useStaticCallback( onAccept )
+
   const dispatchChangeNameModal = useModal(
     'drawing-view-name-changer', ChangeNameModal,
-    { defaultName:drawing.name, name:newName, setName:setNewName, onAccept:handleChangeNameAccept },
+    { defaultName:drawing.name, name:newName, setName:setNewName, onAccept:onAcceptStatic },
   )
 
   return (

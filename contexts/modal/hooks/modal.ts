@@ -13,8 +13,8 @@ export function useModal<T extends object,U extends unknown[]>( id:string, Compo
   const args = modalArgs as U
 
   const props = useMemo( (): Props<T,U> => {
-    return { ...props, args }
-  }, [ JSON.stringify( componentProps ), args ] )  // eslint-disable-line
+    return { ...componentProps, args }
+  }, [ ...Object.values( componentProps ), args ] )  // eslint-disable-line
 
   // Using modal props
   useEffect( () => {
