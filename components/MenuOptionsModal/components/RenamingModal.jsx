@@ -24,7 +24,8 @@ const RenamingModal = ( props ) => {
   const [ drawing ] = /** @type { [ Drawing ] } */ ( drawingList )
   const [ name, setName ] = useState( '' )
   const { updateDrawing } = useDrawingList()
-  useModalConfig( { title:'Change name' } )
+  const isButtonInactive = name === ''
+  useModalConfig( { title:'Change name', acceptButtonTitle:'Change', isButtonInactive } )
 
   useModalAction( () => {
     updateDrawing( drawing, { name } )
