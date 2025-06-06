@@ -1,4 +1,5 @@
 import Input from '@/components/Input'
+import { useModalAction, useModalConfig } from '@/contexts/modal'
 
 /**
  * @import { ReactElement } from 'react'
@@ -7,7 +8,9 @@ import Input from '@/components/Input'
 /**
  * @typedef { object } ChangeNameModalProps
  * @property { string } defaultName
+ * @property { string } name
  * @property { ( name:string ) => void } setName
+ * @property { () => void } onAccept
  */
 
 /**
@@ -15,7 +18,11 @@ import Input from '@/components/Input'
  * @returns { ReactElement }
  */
 const ChangeNameModal = ( props ) => {
-  const { defaultName, setName } = props
+  const { defaultName, name, setName, onAccept } = props
+  useModalConfig(
+    { title:'Change name', acceptButtonTitle:'Change', isButtonInactive:( name === '' ) },
+  )
+  useModalAction( onAccept )
   return <Input defaultValue={ defaultName } setValue={ setName } />
 }
 

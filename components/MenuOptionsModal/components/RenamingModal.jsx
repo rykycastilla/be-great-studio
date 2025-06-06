@@ -1,6 +1,6 @@
 import Input from '@/components/Input'
 import { useDrawingList } from '@/contexts/drawing_list'
-import { useModalAction } from '@/contexts/modal'
+import { useModalAction, useModalConfig } from '@/contexts/modal'
 import { useState } from 'react'
 
 /**
@@ -24,6 +24,7 @@ const RenamingModal = ( props ) => {
   const [ drawing ] = /** @type { [ Drawing ] } */ ( drawingList )
   const [ name, setName ] = useState( '' )
   const { updateDrawing } = useDrawingList()
+  useModalConfig( { title:'Change name' } )
 
   useModalAction( () => {
     updateDrawing( drawing, { name } )

@@ -17,7 +17,7 @@ import { useModal } from '@/contexts/modal'
  */
 const RenameOption = ( props ) => {
   const { hidden } = props
-  const dispatchRenamingModal = useModal( 'renaming', 'Change name', RenamingModal, {}, {} )
+  const dispatchRenamingModal = useModal( 'renaming', RenamingModal, {} )
   return (
     <OptionItem
       name="Rename"

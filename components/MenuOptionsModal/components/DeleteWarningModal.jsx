@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from 'react-native'
 import { useCallback } from 'react'
 import { useDrawingList } from '@/contexts/drawing_list'
-import { useModalAction } from '@/contexts/modal'
+import { useModalAction, useModalConfig } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -25,6 +25,7 @@ const DeleteWarningModal = ( props ) => {
   const isOnlyOne = drawingList.length === 1
   const { colors } = useTheme()
   const { removeDrawing } = useDrawingList()
+  useModalConfig( { title:'Delete warning' } )
 
   const onAction = useCallback( async() => {
     for( const drawing of drawingList ) {

@@ -1,44 +1,20 @@
 import { ModalContext } from '../context'
 import { ReactElement, useCallback, useContext, useEffect, useMemo } from 'react'
-import { useStaticCallback } from '@/hooks/static_callback'
 
 type Props<T extends object, U extends unknown[]> = T & { args:U }
 type Component<T extends object, U extends unknown[]> = ( props:Props<T,U> ) => ReactElement
 
-interface ModalConfig {
-  acceptButtonTitle?: string
-  isButtonInactive?: boolean
-  hideButtons?: boolean
-  onAccept?: () => void
-}
-
-export function useModal<T extends object,U extends unknown[]>(
-  id: string,
-  title: string,
-  Component: Component<T,U>,
-  componentProps: T,
-  config: ModalConfig,
-): ( ...args:U ) => void
-{
+export function useModal<T extends object,U extends unknown[]>( id:string, Component:Component<T,U>, componentProps:T ): ( ...args:U ) => void {
 
   const {
-    currentModalId, setCurrentModalId, setConfig, setComponentRef, modalArgs, setModalArgs:setArgs,
+    currentModalId, setCurrentModalId, setComponentRef, modalArgs, setModalArgs:setArgs,
   } = useContext( ModalContext )
 
-  const { acceptButtonTitle, isButtonInactive, hideButtons, onAccept = () => {} } = config ?? {}
-  const onAcceptStatic = useStaticCallback( onAccept )
   const args = modalArgs as U
 
   const props = useMemo( (): Props<T,U> => {
     return { ...props, args }
   }, [ JSON.stringify( componentProps ), args ] )  // eslint-disable-line
-
-  // Using modal config
-  useEffect( () => {
-    if( id !== currentModalId ) { return }
-    const config = { title, acceptButtonTitle, isButtonInactive, hideButtons, onAccept:onAcceptStatic }
-    setConfig( config )
-  }, [ id, currentModalId, setConfig, title, acceptButtonTitle, isButtonInactive, hideButtons, onAcceptStatic ] )
 
   // Using modal props
   useEffect( () => {

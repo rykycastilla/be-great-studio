@@ -9,7 +9,6 @@ import { useCallback, useRef } from 'react'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
 import { useModal } from '@/contexts/modal'
-import { useRouter } from 'expo-router'
 import { useSaverHandler } from './hooks/saver_handler'
 
 /**
@@ -26,7 +25,6 @@ const Drawing = () => {
   const canvasRef = useRef( /** @type { CanvasObject | null } */ ( null ) )
   const content = useContent()
   const drawing = useDrawing()
-  const router = useRouter()
 
   const requestData = useCallback( async() => {
     const canvas = canvasRef.current
@@ -44,13 +42,7 @@ const Drawing = () => {
       setSavedData( data )
     }, [ setSavedData ] )
 
-  const dispatchSaveWarningModal = useModal(
-    'exit-save-warning', 'Exit without saving?', SaveWarningModal, {},
-    {
-      acceptButtonTitle: 'Exit',
-      onAccept() { router.back() },
-    },
-  )
+  const dispatchSaveWarningModal = useModal( 'exit-save-warning', SaveWarningModal, {} )
 
   const backButtonFallback = useCallback( () => {
     dispatchSaveWarningModal()

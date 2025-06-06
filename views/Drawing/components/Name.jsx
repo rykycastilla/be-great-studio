@@ -29,13 +29,8 @@ const Name = ( props ) => {
   }, [ newName, drawing.setName ] )  // eslint-disable-line
 
   const dispatchChangeNameModal = useModal(
-    'drawing-view-name-changer', 'Change name', ChangeNameModal,
-    { defaultName:drawing.name, setName:setNewName },
-    {
-      acceptButtonTitle: 'Change',
-      isButtonInactive: newName === '',
-      onAccept: handleChangeNameAccept,
-    },
+    'drawing-view-name-changer', ChangeNameModal,
+    { defaultName:drawing.name, name:newName, setName:setNewName, onAccept:handleChangeNameAccept },
   )
 
   return (

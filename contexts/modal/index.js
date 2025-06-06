@@ -1,4 +1,5 @@
 export { default as ModalProvider } from './components/ModalProvider'
 export { useModal } from './hooks/modal'
 export { useModalAction } from './hooks/modal_action'
+export { useModalConfig } from './hooks/modal_config'
 export { useModalHider } from './hooks/modal_hider'

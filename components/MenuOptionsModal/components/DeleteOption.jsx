@@ -11,9 +11,7 @@ import { useModal } from '@/contexts/modal'
  * @returns { ReactElement }
  */
 const DeleteOption = () => {
-  const dispatchDeleteWarningModal = useModal(
-    'delete-warning', 'Delete warning', DeleteWarningModal, {}, {},
-  )
+  const dispatchDeleteWarningModal = useModal( 'delete-warning', DeleteWarningModal, {} )
   return (
     <OptionItem name="Delete" icon="trash-bin-outline" onAction={ dispatchDeleteWarningModal } />
   )

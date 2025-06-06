@@ -14,9 +14,7 @@ import { useTheme } from '@/contexts/theme'
  */
 const SelectionMenuButton = () => {
   const { colors } = useTheme()
-  const dispatchMenuOptionModal = useModal(
-    'option-menu-select', 'Select an option', MenuOptionsModal, {}, { hideButtons:true },
-  )
+  const dispatchMenuOptionModal = useModal( 'option-menu-select', MenuOptionsModal, {} )
   const { selectionList } = useSelectionMode()
   const enabled = selectionList.size > 0
   return (

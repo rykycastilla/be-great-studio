@@ -1,5 +1,6 @@
 import DeleteOption from './components/DeleteOption'
 import RenameOption from './components/RenameOption'
+import { useModalConfig } from '@/contexts/modal'
 import { useSelectionMode } from '@/contexts/drawing_list'
 
 /**
@@ -11,6 +12,7 @@ import { useSelectionMode } from '@/contexts/drawing_list'
  */
 const MenuOptionsModal = () => {
   const { selectionList } = useSelectionMode()
+  useModalConfig( { title:'Select an option', hideButtons:true } )
   return (
     <>
       <DeleteOption />
