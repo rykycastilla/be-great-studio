@@ -12,11 +12,15 @@ const CREATE_DRAWING_QUERY = /* sql */ `
     last_modified INTEGER NOT NULL
   )`
 
+/** @type { SQLiteDatabase | null } */ let db = null
+
 /**
  * @returns { Promise<SQLiteDatabase> }
  */
 export async function SQLite() {
-  const db = await openDatabaseAsync( 'be_great_studio.db' )
-  await db.execAsync( CREATE_DRAWING_QUERY )
+  if( db === null ) {
+    db = await openDatabaseAsync( 'be_great_studio.db' )
+    await db.execAsync( CREATE_DRAWING_QUERY )
+  }
   return db
 }
