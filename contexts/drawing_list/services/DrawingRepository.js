@@ -1,4 +1,5 @@
 import { DrawingMapper } from './DrawingMapper'
+import { NameService } from './NameService'
 
 /**
  * @import { Drawing } from '../models'
@@ -10,16 +11,34 @@ export class DrawingRepository {
 
   /** @private @readonly */ drawingDAO
   /** @private @readonly */ thumbnailService
+  /** @private @readonly */ genId
   /** @private @readonly */ mapper
+  /** @private @readonly */ nameService
 
   /**
    * @param { DrawingDAO } drawingDAO
    * @param { ThumbnailService } thumbnailService
-  */
-  constructor( drawingDAO, thumbnailService ) {
+   * @param { () => string } genId
+   */
+  constructor( drawingDAO, thumbnailService, genId ) {
     this.drawingDAO = drawingDAO
     this.thumbnailService = thumbnailService
+    this.genId = genId
     this.mapper = new DrawingMapper()
+    this.nameService = new NameService()
+  }
+
+  /**
+   * @private
+   * @returns { Promise<Set<string>> }
+   */
+  async getNames() {
+    const drawingList = await this.requestAll()
+    /** @type { Set<string> } */ const nameList = new Set()
+    for( const drawing of drawingList ) {
+      nameList.add( drawing.name )
+    }
+    return nameList
   }
 
   /**
@@ -70,6 +89,25 @@ export class DrawingRepository {
     const thumbnail = await this.thumbnailService.save( id, lastModified, data )
     if( oldThumbnail !== '' ) { await this.thumbnailService.delete( oldThumbnail ) }
     await this.drawingDAO.saveItem( { id, name, thumbnail, last_modified:lastModified } )
+  }
+
+  /**
+   * @public
+   * @param { Drawing } drawing
+   */
+  async duplicate( drawing ) {
+    const dto = this.mapper.toDTO( drawing )
+    const { name, thumbnail, last_modified } = dto
+    // Creating new (cloned) data
+    const id = this.genId()
+    const thumbnailClone = await this.thumbnailService.clone( thumbnail, id, last_modified )
+    const nameList = await this.getNames()
+    const autoNumName = this.nameService.autoNum( name, nameList )
+    // Using new data for duplicated structure
+    dto.id = id
+    dto.name = autoNumName
+    dto.thumbnail = thumbnailClone
+    await this.drawingDAO.saveItem( dto )
   }
 
   /**

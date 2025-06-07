@@ -16,7 +16,8 @@ export class SqliteDrawingDAO {
    */
   async readItems() {
     const db = await SQLite()
-    return db.getAllAsync( /* sql */ `SELECT * FROM drawing` )
+    const result = await db.getAllAsync( /* sql */ `SELECT * FROM drawing` )
+    return result
   }
 
   /**

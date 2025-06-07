@@ -1,6 +1,6 @@
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
-import { createToken } from 'create-token'
 import { debounce } from '@/utils/debounce'
+import { genId } from '@/utils/gen_id'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useCallback } from 'react'
@@ -20,7 +20,7 @@ const AddPictureButton = () => {
   const router = useRouter()
 
   const handlePress = useCallback( () => {
-    const id = createToken( 15 )
+    const id = genId()
     router.push( `/drawing/${ id }` )
   }, [ router ] )
 

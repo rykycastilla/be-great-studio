@@ -10,6 +10,7 @@ import { useContext } from 'react'
  * @property { Drawing[] } drawingList
  * @property { ( drawing:Drawing, data:string ) => Promise<void> } saveDrawing
  * @property { ( drawing:Drawing, newProperties:Partial<Drawing> ) => Promise<void> } updateDrawing
+ * @property { ( drawing:Drawing ) => Promise<void> } duplicateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } removeDrawing
  */
 
@@ -17,6 +18,6 @@ import { useContext } from 'react'
  * @returns { DrawingListResult }
  */
 export function useDrawingList() {
-  const { drawingList, saveDrawing, updateDrawing, removeDrawing } = useContext( DrawingListContext )
-  return { drawingList, saveDrawing, updateDrawing, removeDrawing }
+  const { drawingList, saveDrawing, updateDrawing, duplicateDrawing, removeDrawing } = useContext( DrawingListContext )
+  return { drawingList, saveDrawing, updateDrawing, duplicateDrawing, removeDrawing }
 }

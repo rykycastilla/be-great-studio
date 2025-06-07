@@ -68,6 +68,14 @@ const DrawingListProvider = ( props ) => {
       setDrawingList( drawingList )
     }, [ drawingRepository ] )
 
+  const duplicateDrawing = useCallback(
+    /** @type { ( drawing:Drawing ) => Promise<void> } */
+    async( drawing ) => {
+      await drawingRepository.duplicate( drawing )
+      const drawingList = await drawingRepository.requestAll()
+      setDrawingList( drawingList )
+    }, [ drawingRepository ] )
+
   const removeDrawing = useCallback(
     /** @type { ( drawing:Drawing ) => Promise<void> } */
     async( drawing ) => {
@@ -95,6 +103,7 @@ const DrawingListProvider = ( props ) => {
           drawingList,
           saveDrawing,
           updateDrawing,
+          duplicateDrawing,
           removeDrawing,
           loadDrawingThumbnail,
         }

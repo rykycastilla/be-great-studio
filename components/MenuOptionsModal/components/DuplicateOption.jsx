@@ -1,5 +1,5 @@
-import WarningModal from './WarningModal'
 import OptionItem from './OptionItem'
+import WarningModal from './WarningModal'
 import { useCallback } from 'react'
 import { useDrawingList } from '@/contexts/drawing_list'
 import { useModal } from '@/contexts/modal'
@@ -12,32 +12,32 @@ import { useModal } from '@/contexts/modal'
 /**
  * @returns { ReactElement }
  */
-const DeleteOption = () => {
+const DuplicateOption = () => {
 
   const dispatchWarningModal = useModal( 'warning', WarningModal, {} )
-  const { removeDrawing } = useDrawingList()
+  const { duplicateDrawing } = useDrawingList()
 
   const onAccept = useCallback(
     /** @type { ( drawingList:Drawing[] ) => Promise<void> } */
     async( drawingList ) => {
       for( const drawing of drawingList ) {
-        await removeDrawing( drawing )
+        await duplicateDrawing( drawing )
       }
-    }, [ removeDrawing ] )
+    }, [ duplicateDrawing ] )
 
   const onAction = useCallback(
     /** @type { ( drawingList:Drawing[] ) => void } */
     ( drawingList ) => {
-      dispatchWarningModal( 'delete', drawingList, onAccept )
+      dispatchWarningModal( 'duplicate', drawingList, onAccept )
     }, [ dispatchWarningModal, onAccept ] )
 
   return (
     <OptionItem
-      name="Delete"
-      icon="trash-bin-outline"
+      name="Duplicate"
+      icon="copy-outline"
       onAction={ onAction } />
   )
 
 }
 
-export default DeleteOption
+export default DuplicateOption

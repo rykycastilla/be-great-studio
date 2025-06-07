@@ -12,6 +12,15 @@ export class ThumbnailFileSystem {
   /** @readonly */ static BASE64_PREFIX = 'data:image/png;base64,'
 
   /**
+   * @param { string } fileName
+   * @param { number } timeStamp
+   * @returns { string }
+   */
+  resolvePath( fileName, timeStamp ) {
+    return `${ FileSystem.documentDirectory }thumb-${ fileName }-${ timeStamp }.png`
+  }
+
+  /**
    * @private
    * @param { string } path
    * @returns { Promise<boolean> }
@@ -60,10 +69,23 @@ export class ThumbnailFileSystem {
    * @returns { Promise<string> }
    */
   async save( fileName, timeStamp, base64 ) {
-    const path = `${ FileSystem.documentDirectory }thumb-${ fileName }-${ timeStamp }.png`
+    const path = this.resolvePath( fileName, timeStamp )
     const data = base64.replace( ThumbnailFileSystem.BASE64_PREFIX, '' )  // Deleting base64 uri data
     await FileSystem.writeAsStringAsync( path, data, { encoding:FileSystem.EncodingType.Base64 } )
     return path
+  }
+
+  /**
+   * @public
+   * @param { string } from
+   * @param { string } fileName
+   * @param { number } timeStamp
+   * @returns { Promise<string> }
+   */
+  async clone( from, fileName, timeStamp ) {
+    const to = this.resolvePath( fileName, timeStamp )
+    await FileSystem.copyAsync( { from, to } )
+    return to
   }
 
 }

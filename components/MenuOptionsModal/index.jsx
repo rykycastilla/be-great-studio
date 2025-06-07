@@ -1,4 +1,5 @@
 import DeleteOption from './components/DeleteOption'
+import DuplicateOption from './components/DuplicateOption'
 import RenameOption from './components/RenameOption'
 import { useModalConfig } from '@/contexts/modal'
 import { useSelectionMode } from '@/contexts/drawing_list'
@@ -17,6 +18,7 @@ const MenuOptionsModal = () => {
     <>
       <DeleteOption />
       <RenameOption hidden={ selectionList.size !== 1 } />
+      <DuplicateOption />
     </>
   )
 }
