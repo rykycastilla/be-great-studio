@@ -6,6 +6,7 @@ import SelectionMenuButton from './components/SelectionMenuButton'
 import ViewModeButton from './components/ViewModeButton'
 import { DrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
+import { useBack } from '@/hooks/back'
 
 /**
  * @import { ReactElement } from 'react'
@@ -15,7 +16,11 @@ import { View, StyleSheet } from 'react-native'
  * @returns { ReactElement }
  */
 const App = () => {
-  const { isSelectionMode } = useSelectionMode()
+  const { isSelectionMode, setIsSelectionMode } = useSelectionMode()
+  useBack( () => {
+    if( isSelectionMode ) { setIsSelectionMode( false ) }
+    else { return true }
+  } )
   return (
     <AreaView style={ styles.container }>
       <View style={ styles.header }>
