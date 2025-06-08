@@ -9,6 +9,7 @@ import { useTheme } from '@/contexts/theme'
 import { useViewMode } from '../hooks/view_mode'
 
 /**
+ * @import { Drawing } from '../models'
  * @import { ReactElement } from 'react'
  */
 
@@ -27,11 +28,19 @@ const Separator = ( props ) => {
 }
 
 /**
+ * @typedef { object } DrawingListProps
+ * @property { ( item:Drawing ) => void } handleLongPress
+ * @property { () => void } handlePressOut
+ */
+
+/**
+ * @param { DrawingListProps } props
  * @returns { ReactElement }
  */
-const DrawingList = () => {
+const DrawingList = ( props ) => {
 
   // Basic list config
+  const { handleLongPress, handlePressOut } = props
   const [ viewMode ] = useViewMode()
   const { drawingList } = useDrawingList()
   const dimensions = useItemDimensions( viewMode )
@@ -41,7 +50,11 @@ const DrawingList = () => {
   const { colors } = useTheme()
   const router = useRouter()
   const { isSelectionMode, addItem, checkItemIncluded, deleteItem } = useSelectionMode()
-  const config = { dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem }
+  const config = {
+    dimensions, colors, router, isSelectionMode,
+    addItem, checkItemIncluded, deleteItem,
+    handleLongPress, handlePressOut,
+  }
 
   const Item = ( viewMode === 'grid' ) ? GridDrawingItem : ListDrawingItem
 

@@ -1,5 +1,6 @@
 import AddPictureButton from './components/AddPictureButton'
 import AreaView from '@/components/AreaView'
+import ItemPreview from './components/ItemPreview'
 import SelectionButton from './components/SelectionButton'
 import SelectionCounter from './components/SelectionCounter'
 import SelectionMenuButton from './components/SelectionMenuButton'
@@ -12,11 +13,14 @@ import { useBack } from '@/hooks/back'
  * @import { ReactElement } from 'react'
  */
 
+import { usePreview } from './hooks/preview'
+
 /**
  * @returns { ReactElement }
  */
 const App = () => {
   const { isSelectionMode, setIsSelectionMode } = useSelectionMode()
+  const { preview, previewScale, previewOpacity, handleLongPress, handlePressOut } = usePreview()
   useBack( () => {
     if( isSelectionMode ) { setIsSelectionMode( false ) }
     else { return true }
@@ -38,7 +42,8 @@ const App = () => {
           }
         </View>
       </View>
-      <DrawingList />
+      <DrawingList handleLongPress={ handleLongPress } handlePressOut={ handlePressOut } />
+      { ( preview !== null ) && <ItemPreview drawing={ preview } scale={ previewScale } opacity={ previewOpacity } /> }
       { !isSelectionMode && <AddPictureButton /> }
     </AreaView>
   )

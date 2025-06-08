@@ -93,6 +93,7 @@ const ListDrawingItem = ( props ) => {
 
   const {
     dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem,
+    handleLongPress, handlePressOut,
   } = config
 
   const isSelected = checkItemIncluded( id )
@@ -111,6 +112,8 @@ const ListDrawingItem = ( props ) => {
     <AnimatedTouchableOpacity
       style={ [ styles.item, { width, backgroundColor:colors.card, borderColor: colors.border } ] }
       onPress={ isSelectionMode ? toggleSelection : debounce( openDrawing, BUTTON_DEBOUNCE_DELAY ) }
+      onLongPress={ !isSelectionMode ? () => handleLongPress( item ) : undefined }
+      onPressOut={ handlePressOut }
       layout={ Layout.springify() }>
       { isSelectionMode && <ListSelectionCircle isSelected={ isSelected } colors={ colors } /> }
       <Thumbnail src={ thumbnail } size={ 24 } />

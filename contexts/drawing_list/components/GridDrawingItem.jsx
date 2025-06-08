@@ -93,6 +93,7 @@ const GridDrawingItem = ( props ) => {
 
   const {
     dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem,
+    handleLongPress, handlePressOut,
   } = config
 
   const isSelected = checkItemIncluded( id )
@@ -120,6 +121,8 @@ const GridDrawingItem = ( props ) => {
         },
       ] }
       onPress={ isSelectionMode ? toggleSelection : debounce( openDrawing, BUTTON_DEBOUNCE_DELAY ) }
+      onLongPress={ !isSelectionMode ? () => handleLongPress( item ) : undefined }
+      onPressOut={ handlePressOut }
       layout={ Layout.springify() }>
       { isSelectionMode && <GridSelectionCircle isSelected={ isSelected } colors={ colors } /> }
       <Thumbnail src={ thumbnail } size={ width } />
