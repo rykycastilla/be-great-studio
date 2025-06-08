@@ -1,10 +1,10 @@
 import GridDrawingItem from './GridDrawingItem'
 import ListDrawingItem from './ListDrawingItem'
 import { FlatList, StyleSheet, View } from 'react-native'
-import { useDrawingList } from '../hooks/drawing_list'
-import { useSelectionMode } from '../hooks/selection_mode'
 import { useItemDimensions } from '../hooks/item_dimensions'
 import { useRouter } from 'expo-router'
+import { useSelectionMode } from '../hooks/selection_mode'
+import { useSortedList } from '../hooks/sorted_list'
 import { useTheme } from '@/contexts/theme'
 import { useViewMode } from '../hooks/view_mode'
 
@@ -42,7 +42,7 @@ const DrawingList = ( props ) => {
   // Basic list config
   const { handleLongPress, handlePressOut } = props
   const [ viewMode ] = useViewMode()
-  const { drawingList } = useDrawingList()
+  const drawingList = useSortedList()
   const dimensions = useItemDimensions( viewMode )
   const { spacing } = dimensions
 

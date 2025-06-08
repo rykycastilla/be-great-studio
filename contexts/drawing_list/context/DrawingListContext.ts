@@ -1,4 +1,4 @@
-import { Drawing } from '../models'
+import { Drawing, Sort } from '../models'
 
 export interface DrawingListContext {
   viewMode: 'grid' | 'list'
@@ -13,4 +13,6 @@ export interface DrawingListContext {
   duplicateDrawing( drawing:Drawing ): Promise<void>
   removeDrawing( drawing:Drawing ): Promise<void>
   loadDrawingThumbnail( drawing:Drawing ): Promise<string|null>
+  sort: Sort
+  setSort( sort:Sort ): void
 }

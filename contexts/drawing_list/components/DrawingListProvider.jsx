@@ -1,10 +1,11 @@
 import { DrawingListContext } from '../context'
+import { SortCategory } from '../models'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDrawingRepository } from '../hooks/drawing_repository'
 import { useStorageState } from '@/hooks/storage_state'
 
 /**
- * @import { Drawing } from '../models'
+ * @import { Drawing, Sort } from '../models'
  * @import { ReactElement } from 'react'
  */
 
@@ -25,6 +26,7 @@ const DrawingListProvider = ( props ) => {
   const [ isSelectionMode, setIsSelectionMode ] = useState( false )
   const [ selectionList, setSelectionList ] = useState( /** @type { Set<string> } */ ( new Set() ) )
   const [ drawingList, setDrawingList ] = useState( /** @type { Drawing[] } */ ( [] ) )
+  const [ sort, setSort ] = useStorageState( { category:SortCategory.ALPHABETICAL, ascending:true }, 'sort' )
   const drawingRepository = useDrawingRepository()
 
   // Reset selection list on mode changing
@@ -94,18 +96,13 @@ const DrawingListProvider = ( props ) => {
     <DrawingListContext.Provider
       value={
         {
-          viewMode,
-          setViewMode,
-          isSelectionMode,
-          setIsSelectionMode,
-          selectionList,
-          setSelectionList,
+          viewMode, setViewMode,
+          isSelectionMode, setIsSelectionMode,
+          selectionList, setSelectionList,
           drawingList,
-          saveDrawing,
-          updateDrawing,
-          duplicateDrawing,
-          removeDrawing,
+          saveDrawing, updateDrawing, duplicateDrawing, removeDrawing,
           loadDrawingThumbnail,
+          sort, setSort,
         }
       }>
       { children }

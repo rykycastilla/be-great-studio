@@ -4,6 +4,7 @@ import ItemPreview from './components/ItemPreview'
 import SelectionButton from './components/SelectionButton'
 import SelectionCounter from './components/SelectionCounter'
 import SelectionMenuButton from './components/SelectionMenuButton'
+import SortButton from './components/SortButton'
 import ViewModeButton from './components/ViewModeButton'
 import { DrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
@@ -38,7 +39,12 @@ const App = () => {
                   <SelectionMenuButton />
                 </>
               )
-              : <ViewModeButton />
+              : (
+                <>
+                  <SortButton />
+                  <ViewModeButton />
+                </>
+              )
           }
         </View>
       </View>
