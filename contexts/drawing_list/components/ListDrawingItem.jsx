@@ -1,9 +1,10 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
+import PixelatedImage from '@/components/PixelatedImage'
 import SelectionCircle from './SelectionCircle'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
-import { Image, StyleSheet, Text, View } from 'react-native'
 import { Layout } from 'react-native-reanimated'
+import { StyleSheet, Text, View } from 'react-native'
 
 /**
  * @import { Drawing, SharedConfig } from '../models'
@@ -32,7 +33,7 @@ const ListSelectionCircle = ( props ) => {
 
 /**
  * @typedef { object } ThumbnailProps
- * @property { string } src
+ * @property { Drawing } drawing
  * @property { number } size
  */
 
@@ -41,11 +42,11 @@ const ListSelectionCircle = ( props ) => {
  * @returns { ReactElement }
  */
 const Thumbnail = ( props ) => {
-  const { src, size } = props
+  const { drawing, size } = props
   const thumbnailSize = size * 1.5
   return (
     <View style={ [ styles.thumbnailContainer ] }>
-      <Image src={ src } width={ thumbnailSize } height={ thumbnailSize } resizeMode="cover" />
+      <PixelatedImage drawing={ drawing } width={ thumbnailSize } height={ thumbnailSize } />
     </View>
   )
 }
@@ -89,7 +90,7 @@ const Info = ( props ) => {
 const ListDrawingItem = ( props ) => {
 
   const { item, config } = props
-  const { id, name, thumbnail, lastModified } = item
+  const { id, name, lastModified } = item
 
   const {
     dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem,
@@ -116,7 +117,7 @@ const ListDrawingItem = ( props ) => {
       onPressOut={ handlePressOut }
       layout={ Layout.springify() }>
       { isSelectionMode && <ListSelectionCircle isSelected={ isSelected } colors={ colors } /> }
-      <Thumbnail src={ thumbnail } size={ 24 } />
+      <Thumbnail drawing={ item } size={ 24 } />
       <Info name={ name } lastModified={ lastModified } colors={ colors } />
     </AnimatedTouchableOpacity>
   )

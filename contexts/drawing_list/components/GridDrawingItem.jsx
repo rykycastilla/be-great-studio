@@ -1,9 +1,10 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
+import PixelatedImage from '@/components/PixelatedImage'
 import SelectionCircle from './SelectionCircle'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
-import { Image, StyleSheet, Text, View } from 'react-native'
 import { Layout } from 'react-native-reanimated'
+import { StyleSheet, Text, View } from 'react-native'
 
 /**
  * @import { Drawing, SharedConfig } from '../models'
@@ -32,7 +33,7 @@ const GridSelectionCircle = ( props ) => {
 
 /**
  * @typedef { object } ThumbnailProps
- * @property { string } src
+ * @property { Drawing } drawing
  * @property { number } size
  */
 
@@ -41,11 +42,11 @@ const GridSelectionCircle = ( props ) => {
  * @returns { ReactElement }
  */
 const Thumbnail = ( props ) => {
-  const { src, size } = props
+  const { drawing, size } = props
   return (
     <View
       style={ [ styles.thumbnailContainer, { height:size } ] }>
-      <Image src={ src } width={ 90 } height={ 90 } resizeMode="cover" />
+      <PixelatedImage drawing={ drawing } width={ 90 } height={ 90 } />
     </View>
   )
 }
@@ -89,7 +90,7 @@ const Info = ( props ) => {
 const GridDrawingItem = ( props ) => {
 
   const { item, index, config } = props
-  const { id, thumbnail, name, lastModified } = item
+  const { id, name, lastModified } = item
 
   const {
     dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem,
@@ -125,7 +126,7 @@ const GridDrawingItem = ( props ) => {
       onPressOut={ handlePressOut }
       layout={ Layout.springify() }>
       { isSelectionMode && <GridSelectionCircle isSelected={ isSelected } colors={ colors } /> }
-      <Thumbnail src={ thumbnail } size={ width } />
+      <Thumbnail drawing={ item } size={ width } />
       <Info name={ name } lastModified={ lastModified } colors={ colors } />
     </AnimatedTouchableOpacity>
   )

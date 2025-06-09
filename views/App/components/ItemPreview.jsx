@@ -1,6 +1,7 @@
+import PixelatedImage from '@/components/PixelatedImage'
 import Reanimated from 'react-native-reanimated'
 import { BlurView } from 'expo-blur'
-import { Image, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useAnimatedStyle } from 'react-native-reanimated'
 import { useTheme } from '@/contexts/theme'
 
@@ -25,7 +26,6 @@ const AnimatedView = Reanimated.createAnimatedComponent( View )
  */
 const ItemPreview = ( props ) => {
   const { drawing, scale, opacity } = props
-  const { thumbnail } = drawing
   const { colors, theme } = useTheme()
 
   const previewAnimatedStyle = useAnimatedStyle( () => {
@@ -46,7 +46,7 @@ const ItemPreview = ( props ) => {
       </AnimatedView>
       <AnimatedView style={ [ styles.content, { backgroundColor:colors.canvas }, previewAnimatedStyle ] }>
         <View style={ [ styles.imageContainer ] }>
-          <Image src={ thumbnail } width={ 300 } height={ 300 } />
+          <PixelatedImage drawing={ drawing } width={ 300 } height={ 300 } />
         </View>
       </AnimatedView>
     </View>
