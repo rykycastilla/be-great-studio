@@ -1,6 +1,6 @@
-import ScreenTransition from './components/ScreenTransition'
+import SafeContainer from './components/SafeContainer'
 import { StyleSheet, View } from 'react-native'
-import { useTheme } from '@/contexts/theme'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 /**
  * @import { ReactElement, ReactNode } from 'react'
@@ -20,13 +20,14 @@ import { useTheme } from '@/contexts/theme'
 const AreaView = ( props ) => {
   const { children, style } = props
   const containerStyles = ( style instanceof Array ) ? style : [ style ]
-  const { colors } = useTheme()
+  const { top, left, right, bottom } = useSafeAreaInsets()
+  const layout = { top, left, right, bottom }
   return (
-    <ScreenTransition>
-      <View style={ [ styles.view, { backgroundColor:colors.background }, ...containerStyles ] }>
+    <SafeContainer layout={ layout }>
+      <View style={ [ styles.view, ...containerStyles ] }>
         { children }
       </View>
-    </ScreenTransition>
+    </SafeContainer>
   )
 }
 
