@@ -9,12 +9,11 @@ import ViewModeButton from './components/ViewModeButton'
 import { DrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
 import { useBack } from '@/hooks/back'
+import { usePreview } from './hooks/preview'
 
 /**
  * @import { ReactElement } from 'react'
  */
-
-import { usePreview } from './hooks/preview'
 
 /**
  * @returns { ReactElement }
