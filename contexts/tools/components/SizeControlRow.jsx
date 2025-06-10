@@ -13,7 +13,7 @@ import { useCurrentTool } from '../hooks/current_tool'
  */
 const SizeControlRow = () => {
   const currentTool = useCurrentTool()
-  const buttonsDisabled = currentTool === Tool.ERASER || currentTool === Tool.EYE_DROPPER || currentTool === Tool.ZOOM
+  const buttonsDisabled = currentTool === Tool.FILLER || currentTool === Tool.EYE_DROPPER || currentTool === Tool.ZOOM
   return (
     <View
       style={
