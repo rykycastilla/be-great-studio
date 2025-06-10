@@ -1,9 +1,9 @@
 import { Draw } from 'react-native-drawing'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
 import { Resolver } from '@/utils/Resolver'
+import { Size, useColor, useCurrentTool, useCurrentSize } from '@/contexts/tools'
 import { StyleSheet, View } from 'react-native'
 import { useCanvasStyle } from '../hooks/canvas_style'
-import { useCurrentTool } from '@/contexts/tools'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
@@ -35,6 +35,18 @@ const Canvas = forwardRef(
     const canvasStyle = useCanvasStyle( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
     const currentTool = useCurrentTool()
+    const [ color ] = useColor()
+    const currentSize = useCurrentSize()
+
+    /* eslint-disable */
+    const size =
+      ( currentSize === Size.EXTRA_SMALL ) ? 1
+      : ( currentSize === Size.SMALL ) ? 3
+      : ( currentSize === Size.MEDIUM ) ? 5
+      : ( currentSize === Size.BIG ) ? 7
+      : ( currentSize === Size.GIANT ) ? 9
+      : 5  // Using MEDIUM value by default
+    /* eslint-enable */
 
     const avoidingNullContentRef = useRef(
       /** @type { Resolver<void> } */ ( /** @type { unknown } */ ( null ) ),
@@ -76,9 +88,9 @@ const Canvas = forwardRef(
             ref={ drawRef }
             resolution={ 32 }
             antialiasing={ false }
-            color="lightblue"
+            color={ color }
             tool={ currentTool }
-            toolSize={ 2 } />
+            toolSize={ size } />
         </View>
       </View>
     )

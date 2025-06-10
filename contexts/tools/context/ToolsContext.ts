@@ -1,3 +1,4 @@
+import { Size } from '../models'
 import { Tool } from 'react-native-drawing'
 
 export interface ToolsContext {
@@ -6,4 +7,8 @@ export interface ToolsContext {
   setTool( tool:Tool ): void
   auxTool: Tool | null
   setAuxTool( auxTool:Tool|null ): void
+  size: Size
+  setSize( size:Size ): void
+  color: string
+  setColor( color:string ): void
 }

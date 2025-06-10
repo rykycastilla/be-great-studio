@@ -1,4 +1,5 @@
 import Reanimated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
+import SizeControlRow from './SizeControlRow'
 import ToolsButton from './ToolsButton'
 import { Animated, StyleSheet, View } from 'react-native'
 import { useEffect, useRef } from 'react'
@@ -49,6 +50,7 @@ const ToolsArea = () => {
           toolbarAnimatedStyle,
         ] }>
         <Animated.View style={ { opacity:fadeAnim } }>
+          <SizeControlRow />
           <View style={ styles.toolsRow }>
             <ToolsButton />
           </View>
