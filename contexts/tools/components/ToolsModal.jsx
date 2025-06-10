@@ -60,6 +60,8 @@ const ToolsModal = ( props ) => {
       <ToolOption name="Pencil" onSelect={ () => setTool( Tool.SQUARE_DOT_PEN ) } />
       <ToolOption name="Eraser" onSelect={ () => setTool( Tool.ERASER ) } />
       <ToolOption name="Filler" onSelect={ () => setTool( Tool.FILLER ) } />
+      { /** Pencil is used to emulate pencil style because of its effect in pixel art */ }
+      <ToolOption name="Brush" onSelect={ () => setTool( Tool.PENCIL ) } />
     </View>
   )
 }
