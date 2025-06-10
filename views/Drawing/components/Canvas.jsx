@@ -1,8 +1,9 @@
-import { Draw, Tool } from 'react-native-drawing'
+import { Draw } from 'react-native-drawing'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
 import { Resolver } from '@/utils/Resolver'
 import { StyleSheet, View } from 'react-native'
 import { useCanvasStyle } from '../hooks/canvas_style'
+import { useCurrentTool } from '@/contexts/tools'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
@@ -33,6 +34,7 @@ const Canvas = forwardRef(
     const { content, aspectRatio } = props
     const canvasStyle = useCanvasStyle( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
+    const currentTool = useCurrentTool()
 
     const avoidingNullContentRef = useRef(
       /** @type { Resolver<void> } */ ( /** @type { unknown } */ ( null ) ),
@@ -75,7 +77,7 @@ const Canvas = forwardRef(
             resolution={ 32 }
             antialiasing={ false }
             color="lightblue"
-            tool={ Tool.SQUARE_DOT_PEN }
+            tool={ currentTool }
             toolSize={ 2 } />
         </View>
       </View>

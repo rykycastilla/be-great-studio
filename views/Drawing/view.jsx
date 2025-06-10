@@ -5,6 +5,7 @@ import Name from './components/Name'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
 import { StyleSheet, View } from 'react-native'
+import { ToolsArea, ToolsProvider } from '@/contexts/tools'
 import { useCallback, useRef } from 'react'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
@@ -49,22 +50,25 @@ const Drawing = () => {
   }, [ dispatchSaveWarningModal ] )
 
   return (
-    <AreaView style={ styles.container }>
-      <View style={ { flex:1 } }>
-        <View style={ styles.header }>
-          <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
-          <Name drawing={ drawing } />
-          <SaveButton
-            drawing={ drawing }
-            disabled={ savingIsUnnecessary }
-            dataRequester={ requestData }
-            onSave={ handleSave } />
+    <ToolsProvider id={ drawing.id }>
+      <AreaView style={ styles.container }>
+        <View style={ { flex:1 } }>
+          <View style={ styles.header }>
+            <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
+            <Name drawing={ drawing } />
+            <SaveButton
+              drawing={ drawing }
+              disabled={ savingIsUnnecessary }
+              dataRequester={ requestData }
+              onSave={ handleSave } />
+          </View>
+          <View style={ styles.content }>
+            <Canvas ref={ canvasRef } content={ content } aspectRatio="1:1" />
+          </View>
+          <ToolsArea />
         </View>
-        <View style={ styles.content }>
-          <Canvas ref={ canvasRef } content={ content } aspectRatio="1:1" />
-        </View>
-      </View>
-    </AreaView>
+      </AreaView>
+    </ToolsProvider>
   )
 
 }
