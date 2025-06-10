@@ -59,6 +59,7 @@ const ToolsModal = ( props ) => {
     <View style={ styles.modalOptions }>
       <ToolOption name="Pencil" onSelect={ () => setTool( Tool.SQUARE_DOT_PEN ) } />
       <ToolOption name="Eraser" onSelect={ () => setTool( Tool.ERASER ) } />
+      <ToolOption name="Filler" onSelect={ () => setTool( Tool.FILLER ) } />
     </View>
   )
 }

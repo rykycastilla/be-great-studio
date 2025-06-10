@@ -26,6 +26,7 @@ const ToolsButton = () => {
   /** @type { ExpoIcon } */ const icon =
     ( tool === Tool.SQUARE_DOT_PEN ) ? 'pencil'
     : ( tool === Tool.ERASER ) ? 'ellipse-outline'
+    : ( tool === Tool.FILLER ) ? 'color-fill-outline'
     : 'warning-outline'
   /* eslint-enable */
 
