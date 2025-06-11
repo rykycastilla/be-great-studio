@@ -1,7 +1,7 @@
 import { Draw } from 'react-native-drawing'
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { Resolver } from '@/utils/Resolver'
-import { Size, useColor, useCurrentTool, useCurrentSize } from '@/contexts/tools'
+import { Size, useColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { StyleSheet, View } from 'react-native'
 import { useCanvasStyle } from '../hooks/canvas_style'
 
@@ -80,6 +80,22 @@ const Canvas = forwardRef(
       else { avoidingNullContentRef.current.resolve() }
     }, [ content, avoidingNullContentRef ] )
 
+    // Creating history reference
+
+    const undo = useCallback( () => {
+      const draw = /** @type { Draw } */ ( drawRef.current )
+      draw.undo()
+    }, [ drawRef ] )
+
+    const redo = useCallback( () => {
+      const draw = /** @type { Draw } */ ( drawRef.current )
+      draw.redo()
+    }, [ drawRef ] )
+
+    const [ canUndo, setCanUndo ] = useState( false )
+    const [ canRedo, setCanRedo ] = useState( false )
+    useNewHistory( { canUndo, canRedo, undo, redo } )
+
     return (
       <View
         style={ styles.canvasContainer }>
@@ -90,7 +106,12 @@ const Canvas = forwardRef(
             antialiasing={ false }
             color={ color }
             tool={ currentTool }
-            toolSize={ size } />
+            toolSize={ size }
+            onHistoryMove={ ( event ) => {
+              const { canUndo, canRedo } = event
+              setCanUndo( canUndo )
+              setCanRedo( canRedo )
+            } } />
         </View>
       </View>
     )

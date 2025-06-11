@@ -1,3 +1,4 @@
+import HistoryButtons from './HistoryButtons'
 import Reanimated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import SizeControlRow from './SizeControlRow'
 import ToolsButton from './ToolsButton'
@@ -53,6 +54,7 @@ const ToolsArea = () => {
           <SizeControlRow />
           <View style={ styles.toolsRow }>
             <ToolsButton />
+            <HistoryButtons />
           </View>
         </Animated.View>
       </AnimatedView>

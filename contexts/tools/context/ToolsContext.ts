@@ -1,3 +1,4 @@
+import { HistoryService } from '../services'
 import { Size } from '../models'
 import { Tool } from 'react-native-drawing'
 
@@ -11,4 +12,6 @@ export interface ToolsContext {
   setSize( size:Size ): void
   color: string
   setColor( color:string ): void
+  history: HistoryService | null
+  setHistory( history:HistoryService ): void
 }

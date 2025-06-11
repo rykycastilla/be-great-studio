@@ -6,6 +6,7 @@ import { useStorageState } from '@/hooks/storage_state'
 
 /**
  * @import { ReactElement } from 'react'
+ * @import { HistoryService } from '../services'
  */
 
 /**
@@ -25,10 +26,16 @@ const ToolsProvider = ( props ) => {
   const currentTool = ( auxTool !== null ) ? auxTool : tool
   const [ size, setSize ] = useStorageState( Size.MEDIUM, `size-${ id }` )
   const [ color, setColor ] = useStorageState( '#0A84FF', `color-${ id }` )
+  const [ history, setHistory ] = useState( /** @type { HistoryService | null } */ ( null ) )
   return (
     <ToolsContext.Provider
       value={ {
-        currentTool, tool, setTool, auxTool, setAuxTool, size, setSize, color, setColor,
+        currentTool,
+        tool, setTool,
+        auxTool, setAuxTool,
+        size, setSize,
+        color, setColor,
+        history, setHistory,
       } }>
       { children }
     </ToolsContext.Provider>
