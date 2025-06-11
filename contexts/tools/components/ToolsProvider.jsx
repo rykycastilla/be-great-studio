@@ -24,7 +24,7 @@ const ToolsProvider = ( props ) => {
   const [ tool, setTool ] = useStorageState( Tool.SQUARE_DOT_PEN, `tool-${ id }` )
   const [ auxTool, setAuxTool ] = useState( /** @type { Tool | null } */ ( null ) )
   const currentTool = ( auxTool !== null ) ? auxTool : tool
-  const [ size, setSize ] = useStorageState( Size.MEDIUM, `size-${ id }` )
+  const [ size, setSize ] = useStorageState( Size.SMALL, `size-${ id }` )
   const [ color, setColor ] = useStorageState( '#0A84FF', `color-${ id }` )
   const [ history, setHistory ] = useState( /** @type { HistoryService | null } */ ( null ) )
   return (
