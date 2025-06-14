@@ -21,13 +21,13 @@ import { useTools } from '../hooks/tools'
  */
 const ColorButton = ( props ) => {
   const { dispatchColorPicker } = props
-  const [ colorList ] = useColorList()
+  const { colorList, deleteColor } = useColorList()
   const [ color, setColor ] = useColor()
   const { tool, auxTool } = useTools()
   const disabled = ( auxTool !== null ) || ( tool === Tool.ERASER )
   const dispatchColorModal = useModal(
     'color-selection', ColorModal,
-    { colorList, currentColor:color, setCurrentColor:setColor, dispatchColorPicker },
+    { colorList, currentColor:color, setCurrentColor:setColor, dispatchColorPicker, deleteColor },
   )
   return (
     <TouchableOpacity

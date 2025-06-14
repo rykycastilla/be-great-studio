@@ -1,5 +1,6 @@
 import * as Clipboard from 'expo-clipboard'
-import { StyleSheet, ToastAndroid, TouchableOpacity } from 'react-native'
+import SelectionCircle from '@/components/SelectionCircle'
+import { StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import { useLongCallback } from '@/hooks/long_callback'
 import { useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
@@ -13,6 +14,9 @@ import { useTheme } from '@/contexts/theme'
  * @property { string } color
  * @property { string } currentColor
  * @property { ( currentColor:string ) => void } setCurrentColor
+ * @property { boolean } isDeleteMode
+ * @property { boolean } isSelected
+ * @property { () => void } onToggleSelection
  */
 
 /**
@@ -21,7 +25,11 @@ import { useTheme } from '@/contexts/theme'
  */
 const ColorOption = ( props ) => {
 
-  const { color, currentColor, setCurrentColor } = props
+  const {
+    color, currentColor, setCurrentColor, isDeleteMode, isSelected,
+    onToggleSelection:handleToggleSelection,
+  } = props
+
   const { colors } = useTheme()
   const hide = useModalHider()
 
@@ -29,6 +37,11 @@ const ColorOption = ( props ) => {
     await Clipboard.setStringAsync( color )
     ToastAndroid.show( `Copiado: ${ color }`, ToastAndroid.SHORT )
   } )
+
+  const selectColor = () => {
+    setCurrentColor( color )
+    hide()
+  }
 
   return (
     <TouchableOpacity
@@ -40,21 +53,32 @@ const ColorOption = ( props ) => {
           borderWidth: currentColor === color ? 4 : 1,
         },
       ] }
-      onPress={ () => {
-        setCurrentColor( color )
-        hide()
-      } }
-      onLongPress={ handleLongPress } />
+      onPress={ isDeleteMode ? handleToggleSelection : selectColor }
+      onLongPress={ handleLongPress }>
+      {
+        ( isDeleteMode && ( color !== currentColor ) ) &&
+        <View style={ styles.selectionCircle }>
+          <SelectionCircle isSelected={ isSelected } />
+        </View>
+      }
+    </TouchableOpacity>
   )
 
 }
 
 const styles = StyleSheet.create( {
+
   colorOption: {
     width: 50,
     height: 50,
     borderRadius: 25,
   },
+
+  selectionCircle: {
+    top: -5,
+    left: -5,
+  },
+
 } )
 
 export default ColorOption

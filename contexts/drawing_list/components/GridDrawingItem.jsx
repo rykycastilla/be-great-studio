@@ -1,6 +1,6 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
 import PixelatedImage from '@/components/PixelatedImage'
-import SelectionCircle from './SelectionCircle'
+import SelectionCircle from '@/components/SelectionCircle'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { Layout } from 'react-native-reanimated'
@@ -15,7 +15,6 @@ import { StyleSheet, Text, View } from 'react-native'
 /**
  * @typedef { object } GridSelectionCircleProps
  * @property { boolean } isSelected
- * @property { ThemeContext[ 'colors' ] } colors
  */
 
 /**
@@ -23,10 +22,10 @@ import { StyleSheet, Text, View } from 'react-native'
  * @returns { ReactElement }
  */
 const GridSelectionCircle = ( props ) => {
-  const { isSelected, colors } = props
+  const { isSelected } = props
   return (
     <View style={ styles.selectionCircleContainer }>
-      <SelectionCircle isSelected={ isSelected } colors={ colors } />
+      <SelectionCircle isSelected={ isSelected } />
     </View>
   )
 }
@@ -125,7 +124,7 @@ const GridDrawingItem = ( props ) => {
       onLongPress={ !isSelectionMode ? () => handleLongPress( item ) : undefined }
       onPressOut={ handlePressOut }
       layout={ Layout.springify() }>
-      { isSelectionMode && <GridSelectionCircle isSelected={ isSelected } colors={ colors } /> }
+      { isSelectionMode && <GridSelectionCircle isSelected={ isSelected } /> }
       <Thumbnail drawing={ item } size={ width } />
       <Info name={ name } lastModified={ lastModified } colors={ colors } />
     </AnimatedTouchableOpacity>

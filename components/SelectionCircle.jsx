@@ -1,15 +1,14 @@
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, View } from 'react-native'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { ReactElement } from 'react'
- * @import { ThemeContext } from '@/contexts/theme'
  */
 
 /**
  * @typedef { object } SelectionCircleProps
  * @property { boolean } isSelected
- * @property { ThemeContext[ 'colors' ] } colors
  */
 
 /**
@@ -17,7 +16,8 @@ import { StyleSheet, View } from 'react-native'
  * @returns { ReactElement }
  */
 const SelectionCircle = ( props ) => {
-  const { isSelected, colors } = props
+  const { isSelected } = props
+  const { colors } = useTheme()
   return (
     <View
       style={ [

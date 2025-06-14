@@ -1,6 +1,7 @@
-import AddColorButton from './AddColorButton'
 import ColorOption from './ColorOption'
+import EditColorsButton from './EditColorsButton'
 import { StyleSheet, View } from 'react-native'
+import { useEffect, useState } from 'react'
 import { useModalConfig } from '@/contexts/modal'
 
 /**
@@ -9,10 +10,11 @@ import { useModalConfig } from '@/contexts/modal'
 
 /**
  * @typedef { object } ColorModalProps
- * @property { string[] } colorList
+ * @property {string[] } colorList
  * @property { string } currentColor
  * @property { ( currentColor:string ) => void } setCurrentColor
  * @property { ( color:string ) => void } dispatchColorPicker
+ * @property { ( ...colorList:string[] ) => void } deleteColor
  */
 
 /**
@@ -20,8 +22,25 @@ import { useModalConfig } from '@/contexts/modal'
  * @returns { ReactElement }
  */
 const ColorModal = ( props ) => {
-  const { colorList, currentColor, setCurrentColor, dispatchColorPicker } = props
+
+  const { colorList, currentColor, setCurrentColor, dispatchColorPicker, deleteColor } = props
+  const [ isDeleteMode, setIsDeleteMode ] = useState( false )
+  const [ selectionList, setSelectionList ] = useState( /** @type { Set<string> } */ ( new Set() ) )
   useModalConfig( { title:'Select a color', hideButtons:true } )
+
+  // Resetting selection
+  useEffect( () => {
+    setSelectionList( new Set() )
+  }, [ isDeleteMode ] )
+
+  /** @type { ( color:string ) => void } */
+  const handleToggleSelection = ( color ) => {
+    if( color === currentColor ) { return }  // Avoiding selection to delete current color
+    if( selectionList.has( color ) ) { selectionList.delete( color ) }
+    else { selectionList.add( color ) }
+    setSelectionList( new Set( selectionList ) )
+  }
+
   return (
     <View style={ styles.colorGrid }>
       {
@@ -30,12 +49,20 @@ const ColorModal = ( props ) => {
             key={ color }
             color={ color }
             currentColor={ currentColor }
-            setCurrentColor={ setCurrentColor } />
+            setCurrentColor={ setCurrentColor }
+            isDeleteMode={ isDeleteMode }
+            isSelected={ selectionList.has( color ) }
+            onToggleSelection={ () => handleToggleSelection( color ) } />
         ) )
       }
-      <AddColorButton dispatchColorPicker={ () => dispatchColorPicker( currentColor ) } />
+      <EditColorsButton
+        isDeleteMode={ isDeleteMode } onIsDeleteModeChange={ setIsDeleteMode }
+        selectionList={ selectionList }
+        dispatchColorPicker={ () => dispatchColorPicker( currentColor ) }
+        deleteColor={ deleteColor } />
     </View>
   )
+
 }
 
 const styles = StyleSheet.create( {

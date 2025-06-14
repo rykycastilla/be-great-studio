@@ -1,21 +1,20 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
 import PixelatedImage from '@/components/PixelatedImage'
-import SelectionCircle from './SelectionCircle'
+import SelectionCircle from '@/components/SelectionCircle'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { Layout } from 'react-native-reanimated'
 import { StyleSheet, Text, View } from 'react-native'
+import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { Drawing, SharedConfig } from '../models'
  * @import { ReactElement } from 'react'
- * @import { ThemeContext } from '@/contexts/theme'
  */
 
 /**
  * @typedef { object } ListSelectionCircleProps
  * @property { boolean } isSelected
- * @property { ThemeContext[ 'colors' ] } colors
  */
 
 /**
@@ -23,10 +22,10 @@ import { StyleSheet, Text, View } from 'react-native'
  * @returns { ReactElement }
  */
 const ListSelectionCircle = ( props ) => {
-  const { isSelected, colors } = props
+  const { isSelected } = props
   return (
     <View style={ styles.selectionCircleContainer }>
-      <SelectionCircle isSelected={ isSelected } colors={ colors } />
+      <SelectionCircle isSelected={ isSelected } />
     </View>
   )
 }
@@ -55,7 +54,6 @@ const Thumbnail = ( props ) => {
  * @typedef { object } InfoProps
  * @property { string } name
  * @property { Date } lastModified
- * @property { ThemeContext[ 'colors' ] } colors
  */
 
 /**
@@ -63,7 +61,8 @@ const Thumbnail = ( props ) => {
  * @returns { ReactElement }
  */
 const Info = ( props ) => {
-  const { name, lastModified, colors } = props
+  const { name, lastModified } = props
+  const { colors } = useTheme()
   return (
     <View style={ styles.info }>
       <Text style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
@@ -116,9 +115,9 @@ const ListDrawingItem = ( props ) => {
       onLongPress={ !isSelectionMode ? () => handleLongPress( item ) : undefined }
       onPressOut={ handlePressOut }
       layout={ Layout.springify() }>
-      { isSelectionMode && <ListSelectionCircle isSelected={ isSelected } colors={ colors } /> }
+      { isSelectionMode && <ListSelectionCircle isSelected={ isSelected } /> }
       <Thumbnail drawing={ item } size={ 24 } />
-      <Info name={ name } lastModified={ lastModified } colors={ colors } />
+      <Info name={ name } lastModified={ lastModified } />
     </AnimatedTouchableOpacity>
   )
 

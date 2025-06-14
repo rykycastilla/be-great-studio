@@ -1,7 +1,7 @@
 export { default as ToolsArea } from './components/ToolsArea'
 export { default as ToolsProvider } from './components/ToolsProvider'
 export { Size } from './models'
-export { useColorCreation } from './hooks/color_creation'
+export { useColorList } from './hooks/color_list'
 export { useCurrentColor } from './hooks/current_color'
 export { useCurrentSize } from './hooks/current_size'
 export { useCurrentTool } from './hooks/current_tool'
