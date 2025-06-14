@@ -1,12 +1,14 @@
 import AreaView from '@/components/AreaView'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
+import DrawingColorPicker from './components/DrawingColorPicker'
 import Name from './components/Name'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
 import { StyleSheet, View } from 'react-native'
 import { ToolsArea, ToolsProvider } from '@/contexts/tools'
 import { useCallback, useRef } from 'react'
+import { useColorPicker } from './hooks/color_picker'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
 import { useModal } from '@/contexts/modal'
@@ -49,6 +51,9 @@ const Drawing = () => {
     dispatchSaveWarningModal()
   }, [ dispatchSaveWarningModal ] )
 
+  const colorPicker = useColorPicker()
+  const { dispatchColorPicker } = colorPicker
+
   return (
     <ToolsProvider id={ drawing.id }>
       <AreaView style={ styles.container }>
@@ -65,9 +70,10 @@ const Drawing = () => {
           <View style={ styles.content }>
             <Canvas ref={ canvasRef } content={ content } aspectRatio="1:1" />
           </View>
-          <ToolsArea />
+          <ToolsArea dispatchColorPicker={ dispatchColorPicker } />
         </View>
       </AreaView>
+      <DrawingColorPicker { ...colorPicker } />
     </ToolsProvider>
   )
 

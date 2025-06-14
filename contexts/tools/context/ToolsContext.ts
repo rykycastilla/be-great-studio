@@ -10,6 +10,8 @@ export interface ToolsContext {
   setAuxTool( auxTool:Tool|null ): void
   size: Size
   setSize( size:Size ): void
+  colorList: string[]
+  setColorList( colorList:string[] ): void
   color: string
   setColor( color:string ): void
   history: HistoryService | null

@@ -2,6 +2,7 @@ import ColorModal from './ColorModal'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { Tool } from 'react-native-drawing'
 import { useColor } from '../hooks/color'
+import { useColorList } from '../hooks/color_list'
 import { useModal } from '@/contexts/modal'
 import { useTools } from '../hooks/tools'
 
@@ -10,14 +11,23 @@ import { useTools } from '../hooks/tools'
  */
 
 /**
+ * @typedef { object } ColorButtonProps
+ * @property { ( color:string ) => void } dispatchColorPicker
+ */
+
+/**
+ * @param { ColorButtonProps } props
  * @returns { ReactElement }
  */
-const ColorButton = () => {
+const ColorButton = ( props ) => {
+  const { dispatchColorPicker } = props
+  const [ colorList ] = useColorList()
   const [ color, setColor ] = useColor()
   const { tool, auxTool } = useTools()
   const disabled = ( auxTool !== null ) || ( tool === Tool.ERASER )
   const dispatchColorModal = useModal(
-    'color-selection', ColorModal, { currentColor:color, setCurrentColor:setColor },
+    'color-selection', ColorModal,
+    { colorList, currentColor:color, setCurrentColor:setColor, dispatchColorPicker },
   )
   return (
     <TouchableOpacity

@@ -1,7 +1,7 @@
 import { Draw } from 'react-native-drawing'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { Resolver } from '@/utils/Resolver'
-import { Size, useColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
+import { Size, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { StyleSheet, View } from 'react-native'
 import { useCanvasStyle } from '../hooks/canvas_style'
 
@@ -35,7 +35,7 @@ const Canvas = forwardRef(
     const canvasStyle = useCanvasStyle( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
     const currentTool = useCurrentTool()
-    const [ color ] = useColor()
+    const currentColor = useCurrentColor()
     const currentSize = useCurrentSize()
 
     /* eslint-disable */
@@ -104,7 +104,7 @@ const Canvas = forwardRef(
             ref={ drawRef }
             resolution={ 32 }
             antialiasing={ false }
-            color={ color }
+            color={ currentColor }
             tool={ currentTool }
             toolSize={ size }
             onHistoryMove={ ( event ) => {

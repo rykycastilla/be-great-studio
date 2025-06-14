@@ -1,3 +1,4 @@
+import AddColorButton from './AddColorButton'
 import ColorOption from './ColorOption'
 import { StyleSheet, View } from 'react-native'
 import { useModalConfig } from '@/contexts/modal'
@@ -8,8 +9,10 @@ import { useModalConfig } from '@/contexts/modal'
 
 /**
  * @typedef { object } ColorModalProps
+ * @property { string[] } colorList
  * @property { string } currentColor
  * @property { ( currentColor:string ) => void } setCurrentColor
+ * @property { ( color:string ) => void } dispatchColorPicker
  */
 
 /**
@@ -17,46 +20,20 @@ import { useModalConfig } from '@/contexts/modal'
  * @returns { ReactElement }
  */
 const ColorModal = ( props ) => {
-  const { currentColor, setCurrentColor } = props
+  const { colorList, currentColor, setCurrentColor, dispatchColorPicker } = props
   useModalConfig( { title:'Select a color', hideButtons:true } )
   return (
     <View style={ styles.colorGrid }>
-      <ColorOption
-        color="#A60AFF"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#FF0A0A"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#FF840A"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#FFD30A"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#0AFF84"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#0AD3FF"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#0A84FF"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#1A1A1A"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
-      <ColorOption
-        color="#F0F0F0"
-        currentColor={ currentColor }
-        setCurrentColor={ setCurrentColor } />
+      {
+        colorList.map( ( color ) => (
+          <ColorOption
+            key={ color }
+            color={ color }
+            currentColor={ currentColor }
+            setCurrentColor={ setCurrentColor } />
+        ) )
+      }
+      <AddColorButton dispatchColorPicker={ () => dispatchColorPicker( currentColor ) } />
     </View>
   )
 }

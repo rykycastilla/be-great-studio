@@ -1,0 +1,2 @@
+export const DEFAULT_COLOR = '#0A84FF'
+export const COLOR_LIST = [ '#A60AFF', '#FF0A0A', '#FF840A', '#FFD30A', '#0AFF84', '#0AD3FF', DEFAULT_COLOR, '#1A1A1A', '#F0F0F0' ]

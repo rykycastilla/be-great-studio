@@ -14,10 +14,17 @@ import { useTheme } from '@/contexts/theme'
 const AnimatedView = Reanimated.createAnimatedComponent( View )
 
 /**
+ * @typedef { object } ToolsAreaProps
+ * @property { ( color:string ) => void } dispatchColorPicker
+ */
+
+/**
+ * @param { ToolsAreaProps } props
  * @returns { ReactElement }
  */
-const ToolsArea = () => {
+const ToolsArea = ( props ) => {
 
+  const { dispatchColorPicker } = props
   const { theme, colors } = useTheme()
   const fadeAnim = useRef( new Animated.Value( 0 ) ).current
   const toolbarOpacity = useSharedValue( 1 )
@@ -55,7 +62,7 @@ const ToolsArea = () => {
           <SizeControlRow />
           <View style={ styles.toolsRow }>
             <ToolsButton />
-            <ColorButton />
+            <ColorButton dispatchColorPicker={ dispatchColorPicker } />
             <HistoryButtons />
           </View>
         </Animated.View>
