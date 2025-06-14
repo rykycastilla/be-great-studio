@@ -1,7 +1,8 @@
 import { Draw } from 'react-native-drawing'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { Resolver } from '@/utils/Resolver'
-import { Size, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
+import { rgbaToHex } from '@/utils/rgba_to_hex'
+import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { StyleSheet, View } from 'react-native'
 import { useCanvasStyle } from '../hooks/canvas_style'
 
@@ -37,6 +38,7 @@ const Canvas = forwardRef(
     const currentTool = useCurrentTool()
     const currentColor = useCurrentColor()
     const currentSize = useCurrentSize()
+    const { createColor } = useColorList()
 
     /* eslint-disable */
     const size =
@@ -111,6 +113,10 @@ const Canvas = forwardRef(
               const { canUndo, canRedo } = event
               setCanUndo( canUndo )
               setCanRedo( canRedo )
+            } }
+            onEyeDropper={ ( event ) => {
+              const hex = rgbaToHex( event.color )
+              createColor( hex )
             } } />
         </View>
       </View>
