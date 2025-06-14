@@ -4,6 +4,7 @@ import HistoryButtons from './HistoryButtons'
 import Reanimated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
 import SizeControlRow from './SizeControlRow'
 import ToolsButton from './ToolsButton'
+import ZoomButton from './ZoomButton'
 import { Animated, StyleSheet, View } from 'react-native'
 import { useEffect, useRef } from 'react'
 import { useTheme } from '@/contexts/theme'
@@ -65,6 +66,7 @@ const ToolsArea = ( props ) => {
             <ToolsButton />
             <ColorButton dispatchColorPicker={ dispatchColorPicker } />
             <EyeDropperButton />
+            <ZoomButton />
             <HistoryButtons />
           </View>
         </Animated.View>
