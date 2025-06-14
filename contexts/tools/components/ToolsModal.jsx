@@ -71,7 +71,7 @@ const styles = StyleSheet.create( {
   modalOptions: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     gap: 12,
     marginBottom: 20,
     paddingHorizontal: 10,
