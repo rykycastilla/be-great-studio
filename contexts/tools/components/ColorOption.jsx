@@ -1,4 +1,6 @@
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import * as Clipboard from 'expo-clipboard'
+import { StyleSheet, ToastAndroid, TouchableOpacity } from 'react-native'
+import { useLongCallback } from '@/hooks/long_callback'
 import { useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 
@@ -18,9 +20,16 @@ import { useTheme } from '@/contexts/theme'
  * @returns { ReactElement }
  */
 const ColorOption = ( props ) => {
+
   const { color, currentColor, setCurrentColor } = props
   const { colors } = useTheme()
   const hide = useModalHider()
+
+  const handleLongPress = useLongCallback( async() => {
+    await Clipboard.setStringAsync( color )
+    ToastAndroid.show( `Copiado: ${ color }`, ToastAndroid.SHORT )
+  } )
+
   return (
     <TouchableOpacity
       style={ [
@@ -34,8 +43,10 @@ const ColorOption = ( props ) => {
       onPress={ () => {
         setCurrentColor( color )
         hide()
-      } } />
+      } }
+      onLongPress={ handleLongPress } />
   )
+
 }
 
 const styles = StyleSheet.create( {

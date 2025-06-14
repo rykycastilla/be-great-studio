@@ -32,6 +32,7 @@ const ColorInput = ( props ) => {
 
   /** @type { ( value:string ) => void } */
   const handleHexInput = ( value ) => {
+    if( value.startsWith( '#' ) ) { value = value.replace( '#', '' ) }
     const hexRegex = /^[0-9A-Fa-f]{0,6}$/
     if ( hexRegex.test( value ) ) { handleValueChange( value ) }
   }
@@ -50,7 +51,7 @@ const ColorInput = ( props ) => {
         ] }
         value={ value }
         onChangeText={ handleHexInput }
-        maxLength={ 6 }
+        maxLength={ 7 }
         placeholder="FFFFFF"
         placeholderTextColor={ colors.inactive }
         autoCapitalize="characters"
