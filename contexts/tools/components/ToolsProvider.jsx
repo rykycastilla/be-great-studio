@@ -1,4 +1,6 @@
 import { COLOR_LIST, DEFAULT_COLOR } from '../constants'
+import { ConfigKey } from '@/modules/config/models'
+import { ConfigKeyService } from '@/modules/config/services'
 import { Size } from '../models'
 import { Tool } from 'react-native-drawing'
 import { ToolsContext } from '../context'
@@ -23,16 +25,24 @@ import { useStorageState } from '@/hooks/storage_state'
 const ToolsProvider = ( props ) => {
 
   const { children, id } = props
-  const [ size, setSize ] = useStorageState( Size.SMALL, `size-${ id }` )
+  const [ size, setSize ] = useStorageState(
+    Size.SMALL, ConfigKeyService.getConfigKeyFor( id, ConfigKey.SIZE ),
+  )
 
   // Tool config
-  const [ tool, setTool ] = useStorageState( Tool.SQUARE_DOT_PEN, `tool-${ id }` )
+  const [ tool, setTool ] = useStorageState(
+    Tool.SQUARE_DOT_PEN, ConfigKeyService.getConfigKeyFor( id, ConfigKey.TOOL ),
+  )
   const [ auxTool, setAuxTool ] = useState( /** @type { Tool | null } */ ( null ) )
   const currentTool = ( auxTool !== null ) ? auxTool : tool
 
   // Color config
-  const [ colorList, setColorList ] = useStorageState( COLOR_LIST, `color-list-${ id }` )
-  const [ color, setColor ] = useStorageState( DEFAULT_COLOR, `color-${ id }` )
+  const [ colorList, setColorList ] = useStorageState(
+    COLOR_LIST, ConfigKeyService.getConfigKeyFor( id, ConfigKey.COLOR_LIST ),
+  )
+  const [ color, setColor ] = useStorageState(
+    DEFAULT_COLOR, ConfigKeyService.getConfigKeyFor( id, ConfigKey.COLOR ),
+  )
   const [ history, setHistory ] = useState( /** @type { HistoryService | null } */ ( null ) )
 
   return (

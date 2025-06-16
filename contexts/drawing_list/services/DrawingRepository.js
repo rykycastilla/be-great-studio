@@ -2,6 +2,7 @@ import { DrawingMapper } from './DrawingMapper'
 import { NameService } from './NameService'
 
 /**
+ * @import { ConfigRepository } from '@/modules/config/services'
  * @import { Drawing } from '../models'
  * @import { DrawingDAO } from './DrawingDAO'
  * @import { ThumbnailService } from './ThumbnailService'
@@ -14,18 +15,31 @@ export class DrawingRepository {
   /** @private @readonly */ genId
   /** @private @readonly */ mapper
   /** @private @readonly */ nameService
+  /** @private @readonly */ configRepository
 
   /**
    * @param { DrawingDAO } drawingDAO
    * @param { ThumbnailService } thumbnailService
    * @param { () => string } genId
+   * @param { ConfigRepository } configRepository
    */
-  constructor( drawingDAO, thumbnailService, genId ) {
+  constructor( drawingDAO, thumbnailService, genId, configRepository ) {
     this.drawingDAO = drawingDAO
     this.thumbnailService = thumbnailService
     this.genId = genId
     this.mapper = new DrawingMapper()
     this.nameService = new NameService()
+    this.configRepository = configRepository
+    this.collectConfigGarbage()
+  }
+
+  /**
+   * @private
+   */
+  async collectConfigGarbage() {
+    const drawingList = await this.requestAll()
+    const activeIdList = drawingList.map( ( drawing ) => drawing.id )
+    await this.configRepository.collectGarbage( activeIdList )
   }
 
   /**
@@ -103,6 +117,7 @@ export class DrawingRepository {
     const thumbnailClone = await this.thumbnailService.clone( thumbnail, id, last_modified )
     const nameList = await this.getNames()
     const autoNumName = this.nameService.autoNum( name, nameList )
+    await this.configRepository.transfer( drawing.id, id )
     // Using new data for duplicated structure
     dto.id = id
     dto.name = autoNumName
