@@ -88,7 +88,6 @@ export class AsyncStorageConfigDAO {
    */
   async getAll() {
     const keyList = await AsyncStorage.getAllKeys()
-    console.log( keyList.length )
     /** @type { Record<string,ConfigDTO> } */ const configIndex = {}
     for( const key of keyList ) {
       const keyData = ConfigKeyService.extractFromKey( key )
