@@ -10,14 +10,22 @@ import { SQLite } from '@/utils/SQLite'
  */
 export class SqliteDrawingDAO {
 
+  /** @private */ db = SQLite()
+
   /**
    * @public
    * @returns { Promise<DrawingDTO[]> }
    */
   async readItems() {
-    const db = await SQLite()
-    const result = await db.getAllAsync( /* sql */ `SELECT * FROM drawing` )
-    return result
+    const db = await this.db
+    try {
+      const result = await db.getAllAsync( /* sql */ `SELECT * FROM drawing` )
+      return result
+    }
+    catch {
+      this.db = SQLite()
+      return this.readItems()
+    }
   }
 
   /**
@@ -25,12 +33,18 @@ export class SqliteDrawingDAO {
    * @param { DrawingDTO } drawing
    */
   async saveItem( drawing ) {
-    const db = await SQLite()
+    const db = await this.db
     const { id, name, thumbnail, last_modified } = drawing
-    await db.runAsync(
-      /* sql */ `REPLACE INTO drawing (id, name, thumbnail, last_modified) VALUES (?, ?, ?, ?)`,
-      [ id, name, thumbnail, last_modified ],
-    )
+    try {
+      await db.runAsync(
+        /* sql */ `REPLACE INTO drawing (id, name, thumbnail, last_modified) VALUES (?, ?, ?, ?)`,
+        [ id, name, thumbnail, last_modified ],
+      )
+    }
+    catch {
+      this.db = SQLite()
+      await this.saveItem( drawing )
+    }
   }
 
   /**
@@ -38,9 +52,15 @@ export class SqliteDrawingDAO {
    * @param { DrawingDTO } drawing
    */
   async removeItem( drawing ) {
-    const db = await SQLite()
+    const db = await this.db
     const { id } = drawing
-    await db.runAsync( /* sql */ `DELETE FROM drawing WHERE id = ?`, [ id ] )
+    try {
+      await db.runAsync( /* sql */ `DELETE FROM drawing WHERE id = ?`, [ id ] )
+    }
+    catch {
+      this.db = SQLite()
+      await this.removeItem( drawing )
+    }
   }
 
 }

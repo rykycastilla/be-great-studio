@@ -21,6 +21,9 @@ export async function SQLite() {
   if( db === null ) {
     db = await openDatabaseAsync( 'be_great_studio.db' )
     await db.execAsync( CREATE_DRAWING_QUERY )
+    return db
   }
+  await db.closeAsync()
+  db = await openDatabaseAsync( 'be_great_studio.db' )
   return db
 }
