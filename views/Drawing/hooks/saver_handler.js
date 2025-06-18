@@ -41,10 +41,13 @@ export function useSaverHandler( requestImageData ) {
   }, [ disabled, savedData, requestImageData ] )
 
   // Indicating was saved (and it dos not need to be saved again)
-  useEffect( () => {
-    setDisabled( true )
-  }, [ savedData ] )
+  const handleSave = useCallback(
+    /** @type { ( savedData:string ) => void } */
+    ( savedData ) => {
+      setSavedData( savedData )
+      setDisabled( true )
+    }, [] )
 
-  return { disabled, setSavedData }
+  return { disabled, setSavedData:handleSave }
 
 }
