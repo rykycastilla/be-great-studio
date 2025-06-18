@@ -1,13 +1,13 @@
 import * as FileSystem from 'expo-file-system'
 
 /**
- * @import { ThumbnailService } from '../services'
+ * @import { ThumbnailDAO } from '../services'
  */
 
 /**
- * @implements { ThumbnailService }
+ * @implements { ThumbnailDAO }
  */
-export class ThumbnailFileSystem {
+export class ThumbnailFileSystemDAO {
 
   /** @readonly */ static BASE64_PREFIX = 'data:image/png;base64,'
 
@@ -37,16 +37,18 @@ export class ThumbnailFileSystem {
 
   /**
    * @public
-   * @param { string } path
+   * @param { string } id
+   * @param { number } timeStamp
    * @returns { Promise<string|null> }
    */
-  async loadContent( path ) {
+  async get( id, timeStamp ) {
+    const path = this.resolvePath( id, timeStamp )
     const fileExists = await this.checkFileExists( path )
     if( fileExists ) {
       const data = await FileSystem.readAsStringAsync(
         path, { encoding:FileSystem.EncodingType.Base64 },
       )
-      return `${ ThumbnailFileSystem.BASE64_PREFIX }${ data }`
+      return `${ ThumbnailFileSystemDAO.BASE64_PREFIX }${ data }`
     }
     else {
       return null
@@ -55,22 +57,24 @@ export class ThumbnailFileSystem {
 
   /**
    * @public
-   * @param { string } path
+   * @param { string } id
+   * @param { number } timeStamp
    */
-  async delete( path ) {
+  async delete( id, timeStamp ) {
+    const path = this.resolvePath( id, timeStamp )
     await FileSystem.deleteAsync( path, { idempotent:true } )
   }
 
   /**
    * @public
-   * @param { string } fileName
+   * @param { string } id
    * @param { number } timeStamp
    * @param { string } base64
    * @returns { Promise<string> }
    */
-  async save( fileName, timeStamp, base64 ) {
-    const path = this.resolvePath( fileName, timeStamp )
-    const data = base64.replace( ThumbnailFileSystem.BASE64_PREFIX, '' )  // Deleting base64 uri data
+  async save( id, timeStamp, base64 ) {
+    const path = this.resolvePath( id, timeStamp )
+    const data = base64.replace( ThumbnailFileSystemDAO.BASE64_PREFIX, '' )  // Deleting base64 uri data
     await FileSystem.writeAsStringAsync( path, data, { encoding:FileSystem.EncodingType.Base64 } )
     return path
   }

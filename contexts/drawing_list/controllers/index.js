@@ -1,2 +1,2 @@
 export { SqliteDrawingDAO } from './SqliteDrawingDAO'
-export { ThumbnailFileSystem } from './ThumbnailFileSystem'
+export { ThumbnailFileSystemDAO } from './ThumbnailFileSystemDAO'

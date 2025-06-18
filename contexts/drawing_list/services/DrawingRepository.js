@@ -1,68 +1,25 @@
-import { DrawingMapper } from './DrawingMapper'
-import { NameService } from './NameService'
-
 /**
- * @import { ConfigRepository } from '@/modules/config/services'
  * @import { Drawing } from '../models'
  * @import { DrawingDAO } from './DrawingDAO'
- * @import { ThumbnailService } from './ThumbnailService'
+ * @import { DrawingMapper } from './DrawingMapper'
+ * @import { ThumbnailDAO } from './ThumbnailDAO'
  */
 
 export class DrawingRepository {
 
   /** @private @readonly */ drawingDAO
-  /** @private @readonly */ thumbnailService
-  /** @private @readonly */ genId
+  /** @private @readonly */ thumbnailDAO
   /** @private @readonly */ mapper
-  /** @private @readonly */ nameService
-  /** @private @readonly */ configRepository
 
   /**
    * @param { DrawingDAO } drawingDAO
-   * @param { ThumbnailService } thumbnailService
-   * @param { () => string } genId
-   * @param { ConfigRepository } configRepository
+   * @param { ThumbnailDAO } thumbnailDAO
+   * @param { DrawingMapper } mapper
    */
-  constructor( drawingDAO, thumbnailService, genId, configRepository ) {
+  constructor( drawingDAO, thumbnailDAO, mapper ) {
     this.drawingDAO = drawingDAO
-    this.thumbnailService = thumbnailService
-    this.genId = genId
-    this.mapper = new DrawingMapper()
-    this.nameService = new NameService()
-    this.configRepository = configRepository
-    this.collectConfigGarbage()
-  }
-
-  /**
-   * @private
-   */
-  async collectConfigGarbage() {
-    const drawingList = await this.requestAll()
-    const activeIdList = drawingList.map( ( drawing ) => drawing.id )
-    await this.configRepository.collectGarbage( activeIdList )
-  }
-
-  /**
-   * @private
-   * @returns { Promise<Set<string>> }
-   */
-  async getNames() {
-    const drawingList = await this.requestAll()
-    /** @type { Set<string> } */ const nameList = new Set()
-    for( const drawing of drawingList ) {
-      nameList.add( drawing.name )
-    }
-    return nameList
-  }
-
-  /**
-   * @public
-   * @param { Drawing } drawing
-   * @returns { Promise<string|null> }
-   */
-  loadThumbnail( drawing ) {
-    const { thumbnail } = drawing
-    return this.thumbnailService.loadContent( thumbnail )
+    this.thumbnailDAO = thumbnailDAO
+    this.mapper = mapper
   }
 
   /**
@@ -70,13 +27,8 @@ export class DrawingRepository {
    * @returns { Promise<Drawing[]> }
    */
   async requestAll() {
-    const drawingDTOList = await this.drawingDAO.readItems()
-    /** @type { Drawing[] } */ const drawingList = []
-    for( const drawingDTO of drawingDTOList ) {
-      const drawing = this.mapper.toModel( drawingDTO )
-      drawingList.push( drawing )
-    }
-    return drawingList
+    const drawingList = await this.drawingDAO.readItems()
+    return drawingList.map( ( dto ) => this.mapper.toModel( dto ) )
   }
 
   /**
@@ -98,30 +50,10 @@ export class DrawingRepository {
    * @param { string } data
    */
   async save( drawing, data ) {
-    const { id, name, thumbnail:oldThumbnail } = drawing
-    const lastModified = Date.now()
-    const thumbnail = await this.thumbnailService.save( id, lastModified, data )
-    if( oldThumbnail !== '' ) { await this.thumbnailService.delete( oldThumbnail ) }
-    await this.drawingDAO.saveItem( { id, name, thumbnail, last_modified:lastModified } )
-  }
-
-  /**
-   * @public
-   * @param { Drawing } drawing
-   */
-  async duplicate( drawing ) {
     const dto = this.mapper.toDTO( drawing )
-    const { name, thumbnail, last_modified } = dto
-    // Creating new (cloned) data
-    const id = this.genId()
-    const thumbnailClone = await this.thumbnailService.clone( thumbnail, id, last_modified )
-    const nameList = await this.getNames()
-    const autoNumName = this.nameService.autoNum( name, nameList )
-    await this.configRepository.transfer( drawing.id, id )
-    // Using new data for duplicated structure
-    dto.id = id
-    dto.name = autoNumName
-    dto.thumbnail = thumbnailClone
+    if( dto.thumbnail !== '' ) { await this.thumbnailDAO.delete( dto.id, dto.last_modified ) }
+    dto.last_modified = Date.now()
+    dto.thumbnail = await this.thumbnailDAO.save( dto.id, dto.last_modified, data )
     await this.drawingDAO.saveItem( dto )
   }
 
@@ -130,10 +62,10 @@ export class DrawingRepository {
    * @param { Drawing } drawing
    */
   async remove( drawing ) {
-    const { thumbnail } = drawing
     const dto = this.mapper.toDTO( drawing )
+    const { id, last_modified } = dto
     await this.drawingDAO.removeItem( dto )
-    await this.thumbnailService.delete( thumbnail )
+    await this.thumbnailDAO.delete( id, last_modified )
   }
 
 }
