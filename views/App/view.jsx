@@ -4,6 +4,7 @@ import ItemPreview from './components/ItemPreview'
 import SelectionButton from './components/SelectionButton'
 import SelectionCounter from './components/SelectionCounter'
 import SelectionMenuButton from './components/SelectionMenuButton'
+import SettingsButton from './components/SettingsButton'
 import SortButton from './components/SortButton'
 import ViewModeButton from './components/ViewModeButton'
 import { DrawingList, useSelectionMode } from '@/contexts/drawing_list'
@@ -42,6 +43,7 @@ const App = () => {
                 <>
                   <SortButton />
                   <ViewModeButton />
+                  <SettingsButton />
                 </>
               )
           }
