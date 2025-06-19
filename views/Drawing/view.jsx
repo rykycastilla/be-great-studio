@@ -3,6 +3,7 @@ import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
 import DrawingColorPicker from './components/DrawingColorPicker'
 import Name from './components/Name'
+import ResolutionControlButton from './components/ResolutionControlButton'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
 import { StyleSheet, View } from 'react-native'
@@ -68,6 +69,9 @@ const Drawing = () => {
               onSave={ handleSave } />
           </View>
           <View style={ styles.content }>
+            <View style={ styles.canvasControls }>
+              <ResolutionControlButton drawing={ drawing } />
+            </View>
             <Canvas
               ref={ canvasRef }
               content={ content }
@@ -95,6 +99,14 @@ const styles = StyleSheet.create( {
     alignItems: 'center',
     paddingHorizontal: 16,
     paddingVertical: 12,
+  },
+
+  canvasControls: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    marginVertical: 8,
   },
 
   content: {

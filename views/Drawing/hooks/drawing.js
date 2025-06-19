@@ -8,12 +8,15 @@ import { useSettings } from '@/contexts/settings'
  */
 
 /**
- * @typedef { Drawing & { setName( name:string ): void } } InteractiveDrawing
+ * @typedef { Drawing & {
+ * setName( name:string ): void
+ * setResolution( resolution:number ): void
+ * } } InteractiveDrawing
  */
 
 /**
  * @param { Drawing } drawing
- * @returns { InteractiveDrawing }
+ * @returns { Drawing }
  */
 export function useNameSetter( drawing ) {
 
@@ -38,6 +41,20 @@ export function useNameSetter( drawing ) {
 }
 
 /**
+ * @param { Drawing } drawing
+ * @returns { InteractiveDrawing }
+ */
+function useResolutionSetter( drawing ) {
+  const [ resolution, setResolution ] = useState( drawing.resolution )
+  return useMemo( () => {
+    const interactiveDrawing = /** @type { InteractiveDrawing } */ ( { ...drawing } )
+    interactiveDrawing.setResolution = setResolution
+    interactiveDrawing.resolution = resolution
+    return interactiveDrawing
+  }, [ resolution, drawing ] )
+}
+
+/**
  * Gets the drawing object for the specific route
  * @returns { InteractiveDrawing }
  */
@@ -48,7 +65,7 @@ export function useDrawing() {
   const { drawingList } = useDrawingList()
 
   // Getting default resolution
-  const resolution = useMemo( () => {
+  const defaultResolution = useMemo( () => {
     return settings.resolution
   }, [] )  // eslint-disable-line
 
@@ -61,7 +78,8 @@ export function useDrawing() {
 
   // Creating drawing if it doesn't exists
   const drawing = savedDrawing ??
-    { id, name:'New Drawing', thumbnail:'', resolution, lastModified:new Date() }
-  return useNameSetter( drawing )
+    { id, name:'New Drawing', thumbnail:'', resolution:defaultResolution, lastModified:new Date() }
+  const drawingWithNameSetter = useNameSetter( drawing )
+  return useResolutionSetter( drawingWithNameSetter )
 
 }
