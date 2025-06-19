@@ -1,5 +1,6 @@
 import * as SplashScreen from 'expo-splash-screen'
 import SafeAreaProvider from '@/components/SafeAreaProvider'
+import { SettingsProvider } from '@/contexts/settings'
 import { DrawingListProvider } from '@/contexts/drawing_list'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ModalProvider } from '@/contexts/modal'
@@ -34,19 +35,21 @@ const AppLayout = () => {
         <SafeAreaProvider backgroundColor={ backgroundColor }>
           <DrawingListProvider onLoad={ handleDrawingListLoad }>
             <ModalProvider>
-              <Stack
-                screenOptions={ {
-                  headerShown: false,
-                  animationDuration: 250,
-                  gestureEnabled: true,
-                  gestureDirection: 'horizontal',
-                  presentation: 'card',
-                  animation: 'slide_from_right',
-                  contentStyle: {
-                    backgroundColor,
-                  },
-                  animationTypeForReplace: 'push',
-                } } />
+              <SettingsProvider>
+                <Stack
+                  screenOptions={ {
+                    headerShown: false,
+                    animationDuration: 250,
+                    gestureEnabled: true,
+                    gestureDirection: 'horizontal',
+                    presentation: 'card',
+                    animation: 'slide_from_right',
+                    contentStyle: {
+                      backgroundColor,
+                    },
+                    animationTypeForReplace: 'push',
+                  } } />
+              </SettingsProvider>
             </ModalProvider>
           </DrawingListProvider>
         </SafeAreaProvider>

@@ -1,0 +1,22 @@
+{
+  "target": "resolution",
+  "getter": "resolution",
+  "setter": "setResolution",
+  "optionList": [
+    {
+      "value": 16,
+      "preview": "16px",
+      "description": "Ultra Highg pixels"
+    },
+    {
+      "value": 32,
+      "preview": "32px",
+      "description": "Standard Pixel Art"
+    },
+    {
+      "value": 64,
+      "preview": "64px",
+      "description": "Moderated Definition"
+    }
+  ]
+}

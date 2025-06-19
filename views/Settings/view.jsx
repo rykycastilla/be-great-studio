@@ -1,7 +1,9 @@
 import AreaView from '@/components/AreaView'
-import BackButton from '@/components/BackButton'
-import { StyleSheet, Text, View } from 'react-native'
-import { useTheme } from '@/contexts/theme'
+import Header from './components/Header'
+import NavigationItem from './components/NavigationItem'
+import SectionHeader from './components/SectionHeader'
+import { ScrollView, StyleSheet } from 'react-native'
+import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { ReactElement } from 'react'
@@ -10,45 +12,38 @@ import { useTheme } from '@/contexts/theme'
 /**
  * @returns { ReactElement }
  */
-export default function Settings() {
-  const { colors } = useTheme()
+const Settings = () => {
+  const { resolution } = useSettings()
   return (
     <AreaView style={ styles.container }>
-      <View style={ styles.header }>
-        <BackButton />
-        <Text style={ [ styles.title, { color:colors.text } ] }>Settings</Text>
-        <View style={ styles.placeholder } />
-      </View>
+      <Header>Settings</Header>
+      <ScrollView
+        style={ styles.content }
+        contentContainerStyle={ styles.contentContainer }
+        showsVerticalScrollIndicator={ false }
+        bounces={ true }>
+        <SectionHeader>Viewing</SectionHeader>
+        <NavigationItem target="resolution" label="Resolution" value={ `${ resolution }px` } />
+      </ScrollView>
     </AreaView>
   )
 }
 
 const styles = StyleSheet.create( {
 
-  safeArea: {
-    backgroundColor: 'transparent',
-  },
-
   container: {
     flex: 1,
   },
 
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+  content: {
+    flex: 1,
   },
 
-  title: {
-    fontSize: 17,
-    fontWeight: '600',
-    fontFamily: 'System',
-  },
-
-  placeholder: {
-    width: 40,
+  contentContainer: {
+    padding: 16,
+    paddingTop: 8,
   },
 
 } )
+
+export default Settings
