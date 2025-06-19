@@ -68,7 +68,11 @@ const Drawing = () => {
               onSave={ handleSave } />
           </View>
           <View style={ styles.content }>
-            <Canvas ref={ canvasRef } content={ content } aspectRatio="1:1" />
+            <Canvas
+              ref={ canvasRef }
+              content={ content }
+              resolution={ drawing.resolution }
+              aspectRatio="1:1" />
           </View>
           <ToolsArea dispatchColorPicker={ dispatchColorPicker } />
         </View>

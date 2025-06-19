@@ -1,6 +1,7 @@
 import { useDrawingList } from '@/contexts/drawing_list'
 import { useLocalSearchParams } from 'expo-router'
 import { useCallback, useMemo, useState } from 'react'
+import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { Drawing } from '@/contexts/drawing_list'
@@ -30,8 +31,8 @@ export function useNameSetter( drawing ) {
 
   // Using name updater and cached name
   return useMemo( () => {
-    const { id, thumbnail, lastModified } = drawing
-    return { id, name, thumbnail, lastModified, setName:updateName }
+    const { id, thumbnail, resolution, lastModified } = drawing
+    return { id, name, thumbnail, resolution, lastModified, setName:updateName }
   }, [ updateName, name, JSON.stringify( drawing ) ] )  // eslint-disable-line
 
 }
@@ -43,7 +44,13 @@ export function useNameSetter( drawing ) {
 export function useDrawing() {
 
   const { id } = /** @type { { id:string } } */ ( useLocalSearchParams() )
+  const settings = useSettings()
   const { drawingList } = useDrawingList()
+
+  // Getting default resolution
+  const resolution = useMemo( () => {
+    return settings.resolution
+  }, [] )  // eslint-disable-line
 
   // Searching saved drawing
   const savedDrawing = useMemo( () => {
@@ -53,7 +60,8 @@ export function useDrawing() {
   }, [ id, drawingList ] )
 
   // Creating drawing if it doesn't exists
-  const drawing = savedDrawing ?? { id, name:'New Drawing', thumbnail:'', lastModified:new Date() }
+  const drawing = savedDrawing ??
+    { id, name:'New Drawing', thumbnail:'', resolution, lastModified:new Date() }
   return useNameSetter( drawing )
 
 }

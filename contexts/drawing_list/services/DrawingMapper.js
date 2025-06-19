@@ -11,9 +11,9 @@ export class DrawingMapper {
    * @returns { Drawing }
    */
   toModel( dto ) {
-    const { id, name, thumbnail, last_modified } = dto
+    const { id, name, thumbnail, resolution, last_modified } = dto
     // Converting milliseconds to a JS Date
-    return { id, name, thumbnail, lastModified:new Date( last_modified ) }
+    return { id, name, thumbnail, resolution, lastModified:new Date( last_modified ) }
   }
 
   /**
@@ -22,9 +22,9 @@ export class DrawingMapper {
    * @returns { DrawingDTO }
    */
   toDTO( model ) {
-    const { id, name, thumbnail, lastModified } = model
+    const { id, name, thumbnail, resolution, lastModified } = model
     const last_modified = lastModified.getTime()
-    return { id, name, thumbnail, last_modified }
+    return { id, name, thumbnail, resolution, last_modified }
   }
 
 }

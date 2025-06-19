@@ -4,15 +4,39 @@ import { Resolver } from '@/utils/Resolver'
 import { rgbaToHex } from '@/utils/rgba_to_hex'
 import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { StyleSheet, View } from 'react-native'
+import { Table } from '@/utils/Table'
 import { useCanvasStyle } from '../hooks/canvas_style'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
  */
 
+/** @type { Table<Size,number,number> } */ const sizeMatrix = new Table()
+
+sizeMatrix.set( Size.EXTRA_SMALL, 16, 1 )
+sizeMatrix.set( Size.EXTRA_SMALL, 32, 1 )
+sizeMatrix.set( Size.EXTRA_SMALL, 64, 1 )
+
+sizeMatrix.set( Size.SMALL, 16, 2 )
+sizeMatrix.set( Size.SMALL, 32, 3 )
+sizeMatrix.set( Size.SMALL, 64, 5 )
+
+sizeMatrix.set( Size.MEDIUM, 16, 3 )
+sizeMatrix.set( Size.MEDIUM, 32, 5 )
+sizeMatrix.set( Size.MEDIUM, 64, 9 )
+
+sizeMatrix.set( Size.BIG, 16, 4 )
+sizeMatrix.set( Size.BIG, 32, 7 )
+sizeMatrix.set( Size.BIG, 64, 13 )
+
+sizeMatrix.set( Size.GIANT, 16, 5 )
+sizeMatrix.set( Size.GIANT, 32, 9 )
+sizeMatrix.set( Size.GIANT, 64, 18 )
+
 /**
  * @typedef { object } CanvasProps
  * @property { string | null } [ content ]
+ * @property { number } resolution
  * @property { string } aspectRatio
  */
 
@@ -32,23 +56,14 @@ const Canvas = forwardRef(
   /** @type { ( props:CanvasProps, ref:ForwardedRef<CanvasObject|null> ) => ReactElement } */
   ( props, ref ) => {
 
-    const { content, aspectRatio } = props
+    const { content, resolution, aspectRatio } = props
     const canvasStyle = useCanvasStyle( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
     const currentTool = useCurrentTool()
     const currentColor = useCurrentColor()
     const currentSize = useCurrentSize()
     const { createColor } = useColorList()
-
-    /* eslint-disable */
-    const size =
-      ( currentSize === Size.EXTRA_SMALL ) ? 1
-      : ( currentSize === Size.SMALL ) ? 3
-      : ( currentSize === Size.MEDIUM ) ? 5
-      : ( currentSize === Size.BIG ) ? 7
-      : ( currentSize === Size.GIANT ) ? 9
-      : 5  // Using MEDIUM value by default
-    /* eslint-enable */
+    const size = sizeMatrix.get( currentSize, resolution )
 
     const avoidingNullContentRef = useRef(
       /** @type { Resolver<void> } */ ( /** @type { unknown } */ ( null ) ),
@@ -104,7 +119,7 @@ const Canvas = forwardRef(
         <View style={ canvasStyle }>
           <Draw
             ref={ drawRef }
-            resolution={ 32 }
+            resolution={ resolution }
             antialiasing={ false }
             color={ currentColor }
             tool={ currentTool }

@@ -86,13 +86,14 @@ export class DrawingService {
    * @param { Drawing } drawing
    */
   async duplicate( drawing ) {
-    const { last_modified } = this.drawingMapper.toDTO( drawing )
+    const { lastModified } = drawing
+    const { last_modified, resolution } = this.drawingMapper.toDTO( drawing )
     // Creating new (cloned) data
     const id = this.genId()
     const thumbnailData = await this.thumbnailDAO.get( drawing.id, last_modified ) ?? ''
     const nameList = await this.getNames()
     const name = this.nameService.autoNum( drawing.name, nameList )
-    /** @type { Drawing } */ const newDrawing = { id, name, thumbnail:'', lastModified:new Date() }
+    /** @type { Drawing } */ const newDrawing = { id, name, thumbnail:'', resolution, lastModified }
     // Using new data for duplicated structure
     await this.configRepository.transfer( drawing.id, id )
     await this.save( newDrawing, thumbnailData )

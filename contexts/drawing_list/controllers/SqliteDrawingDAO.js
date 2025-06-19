@@ -1,7 +1,6 @@
 import { SQLite } from '@/utils/SQLite'
 
 /**
- * @import { Drawing } from '../models'
  * @import { DrawingDAO, DrawingDTO } from '../services'
  */
 
@@ -34,16 +33,16 @@ export class SqliteDrawingDAO {
    */
   async saveItem( drawing ) {
     const db = await this.db
-    const { id, name, thumbnail, last_modified } = drawing
+    const { id, name, thumbnail, resolution, last_modified } = drawing
     try {
       await db.runAsync(
-        /* sql */ `REPLACE INTO drawing (id, name, thumbnail, last_modified) VALUES (?, ?, ?, ?)`,
-        [ id, name, thumbnail, last_modified ],
+        /* sql */ `REPLACE INTO drawing (id, name, thumbnail, resolution, last_modified) VALUES (?, ?, ?, ?, ?)`,
+        [ id, name, thumbnail, resolution, last_modified ],
       )
     }
     catch {
       this.db = SQLite()
-      await this.saveItem( drawing )
+      // await this.saveItem( drawing )
     }
   }
 

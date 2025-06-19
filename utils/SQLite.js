@@ -9,6 +9,7 @@ const CREATE_DRAWING_QUERY = /* sql */ `
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL,
     thumbnail TEXT NOT NULL UNIQUE,
+    resolution INTEGER NOT NULL,
     last_modified INTEGER NOT NULL
   )`
 

@@ -7,7 +7,7 @@ import { ModalProvider } from '@/contexts/modal'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { ThemeProvider } from '@/contexts/theme'
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useColorScheme } from 'react-native'
 
 /**
@@ -23,9 +23,15 @@ const AppLayout = () => {
 
   const colorScheme = useColorScheme()
   const backgroundColor = colorScheme === 'dark' ? '#000000' : '#FFFFFF'
+  const [ drawingListLoaded, setDrawingListLoaded ] = useState( false )
+  const [ settingsLoaded, setSettingsLoaded ] = useState( false )
+
+  useEffect( () => {
+    if( drawingListLoaded && settingsLoaded ) { SplashScreen.hide() }
+  }, [ drawingListLoaded, settingsLoaded ] )
 
   const handleDrawingListLoad = useCallback( () => {
-    SplashScreen.hide()
+    setDrawingListLoaded( true )
   }, [] )
 
   return (
@@ -35,7 +41,7 @@ const AppLayout = () => {
         <SafeAreaProvider backgroundColor={ backgroundColor }>
           <DrawingListProvider onLoad={ handleDrawingListLoad }>
             <ModalProvider>
-              <SettingsProvider>
+              <SettingsProvider onLoad={ () => setSettingsLoaded( true ) }>
                 <Stack
                   screenOptions={ {
                     headerShown: false,
