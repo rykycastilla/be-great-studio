@@ -9,38 +9,38 @@ import { wait } from '@/utils/wait'
  */
 
 /**
- * @typedef { object } ResolutionOptionProps
- * @property { number } value
- * @property { ( resolution:number ) => void } onResolutionChange
+ * @typedef { object } AspectRatioOptionProps
+ * @property { string } value
+ * @property { ( aspectRatio:string ) => void } onAspectRatioChange
  */
 
 /**
- * @param { ResolutionOptionProps } props
+ * @param { AspectRatioOptionProps } props
  * @returns { ReactElement }
  */
-const ResolutionOption = ( props ) => {
+const AspectRatioOption = ( props ) => {
 
-  const { value, onResolutionChange:setResolution } = props
+  const { value, onAspectRatioChange:setAspectRatio } = props
   const { colors } = useTheme()
   const hide = useModalHider()
-  const dispatchWarningModal = useModal( 'resolution-warning', WarningModal, {} )
+  const dispatchWarningModal = useModal( 'aspect-ratio-warning', WarningModal, {} )
 
-  const handleResolutionSelection = async() => {
+  const handleAspectRatioSelection = async() => {
     hide()
     await wait( 1000 )
     dispatchWarningModal(
-      'Resolution warning',
-      'Are you sure you want to change the resolution of the drawing? This action will reset the changes history and modify the canvas',
-      () => setResolution( value ),
+      'Aspect ratio warning',
+      'Are you sure you want to change the aspect ratio of the drawing? This action will reset the changes history and modify the canvas',
+      () => setAspectRatio( value ),
     )
   }
 
   return (
     <TouchableOpacity
       style={ [ styles.modalOption, { borderColor:colors.border } ] }
-      onPress={ handleResolutionSelection }>
+      onPress={ handleAspectRatioSelection }>
       <Text style={ [ styles.modalOptionText, { color:colors.text } ] }>
-        { value }px
+        { value }
       </Text>
     </TouchableOpacity>
   )
@@ -48,24 +48,24 @@ const ResolutionOption = ( props ) => {
 }
 
 /**
- * @typedef { object } ResolutionModalProps
- * @property { ( resolution:number ) => void } onResolutionChange
+ * @typedef { object } AspectRatioModalProps
+ * @property { ( aspectRatio:string ) => void } onAspectRatioChange
  */
 
 /**
- * @param { ResolutionModalProps } props
+ * @param { AspectRatioModalProps } props
  * @returns { ReactElement }
  */
-const ResolutionModal = ( props ) => {
-  const { onResolutionChange:setResolution } = props
+const AspectRatioModal = ( props ) => {
+  const { onAspectRatioChange:setAspectRatio } = props
   useModalConfig( { title:'Select the resolution', hideButtons:true } )
   return (
     <View style={styles.modalOptions}>
-      { [ 16, 32, 64 ].map( ( resolution ) => (
-        <ResolutionOption
-          key={ resolution }
-          value={ resolution }
-          onResolutionChange={ setResolution } />
+      { [ '1:1', '3:4' ].map( ( aspectRatio ) => (
+        <AspectRatioOption
+          key={ aspectRatio }
+          value={ aspectRatio }
+          onAspectRatioChange={ setAspectRatio } />
       ) ) }
     </View>
   )
@@ -98,4 +98,4 @@ const styles = StyleSheet.create( {
 
 } )
 
-export default ResolutionModal
+export default AspectRatioModal

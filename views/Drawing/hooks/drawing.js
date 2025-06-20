@@ -11,6 +11,7 @@ import { useSettings } from '@/contexts/settings'
  * @typedef { Drawing & {
  * setName( name:string ): void
  * setResolution( resolution:number ): void
+ * setAspectRatio( aspectRatio:string ): void
  * } } InteractiveDrawing
  */
 
@@ -55,6 +56,20 @@ function useResolutionSetter( drawing ) {
 }
 
 /**
+ * @param { Drawing } drawing
+ * @returns { InteractiveDrawing }
+ */
+function useAspectRatioSetter( drawing ) {
+  const [ aspectRatio, setAspectRatio ] = useState( drawing.aspectRatio )
+  return useMemo( () => {
+    const interactiveDrawing = /** @type { InteractiveDrawing } */ ( { ...drawing } )
+    interactiveDrawing.setAspectRatio = setAspectRatio
+    interactiveDrawing.aspectRatio = aspectRatio
+    return interactiveDrawing
+  }, [ aspectRatio, drawing ] )
+}
+
+/**
  * Gets the drawing object for the specific route
  * @returns { InteractiveDrawing }
  */
@@ -82,17 +97,18 @@ export function useDrawing() {
   }, [ id, drawingList ] )
 
   // Creating drawing if it doesn't exists
-  const drawing = savedDrawing ??
-    {
-      id,
-      name:'New Drawing',
-      thumbnail:'',
-      resolution: defaultResolution,
-      aspectRatio: defaultAspectRatio,
-      lastModified: new Date(),
-    }
+  const drawing = savedDrawing ?? {
+    id,
+    name:'New Drawing',
+    thumbnail:'',
+    resolution: defaultResolution,
+    aspectRatio: defaultAspectRatio,
+    lastModified: new Date(),
+  }
 
-  const drawingWithNameSetter = useNameSetter( drawing )
-  return useResolutionSetter( drawingWithNameSetter )
+  let drawingWithSetter = useNameSetter( drawing )
+  drawingWithSetter = useResolutionSetter( drawingWithSetter )
+  drawingWithSetter = useAspectRatioSetter( drawingWithSetter )
+  return /** @type { InteractiveDrawing } */ ( drawingWithSetter )
 
 }

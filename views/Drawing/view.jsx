@@ -1,4 +1,5 @@
 import AreaView from '@/components/AreaView'
+import AspectRatioControlButton from './components/AspectRatioControlButton'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
 import DrawingColorPicker from './components/DrawingColorPicker'
@@ -70,6 +71,7 @@ const Drawing = () => {
           </View>
           <View style={ styles.content }>
             <View style={ styles.canvasControls }>
+              <AspectRatioControlButton drawing={ drawing } />
               <ResolutionControlButton drawing={ drawing } />
             </View>
             <Canvas
