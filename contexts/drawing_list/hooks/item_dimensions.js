@@ -22,7 +22,7 @@ export function useItemDimensions( viewMode ) {
       const itemWidth = ( width - horizontalPadding * 2 - spacing ) / 2
       return {
         width: itemWidth,
-        height: itemWidth * 1.2, // Aspect ratio for thumbnails
+        height: itemWidth,
         spacing,
       }
     }

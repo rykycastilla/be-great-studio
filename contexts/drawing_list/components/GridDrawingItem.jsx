@@ -1,6 +1,7 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
 import PixelatedImage from '@/components/PixelatedImage'
 import SelectionCircle from '@/components/SelectionCircle'
+import { AspectRatioAdapter } from '@/utils/AspectRatioAdapter'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { Layout } from 'react-native-reanimated'
@@ -42,10 +43,12 @@ const GridSelectionCircle = ( props ) => {
  */
 const Thumbnail = ( props ) => {
   const { drawing, size } = props
+  const [ width, height ] = AspectRatioAdapter.adapt( size, drawing.aspectRatio )
+  const [ resolutionWidth, resolutionHeight ] = AspectRatioAdapter.adapt( 90, drawing.aspectRatio )
   return (
     <View
-      style={ [ styles.thumbnailContainer, { height:size } ] }>
-      <PixelatedImage drawing={ drawing } width={ 90 } height={ 90 } />
+      style={ [ styles.thumbnailContainer, { width, height } ] }>
+      <PixelatedImage drawing={ drawing } width={ resolutionWidth } height={ resolutionHeight } />
     </View>
   )
 }
@@ -143,6 +146,7 @@ const styles = StyleSheet.create( {
     shadowRadius: 2,
     elevation: 2,
     position: 'relative',
+    alignItems: 'center',
   },
 
   thumbnailContainer: {
@@ -154,9 +158,11 @@ const styles = StyleSheet.create( {
 
   info: {
     padding: 10,
+    width: '100%',
   },
 
   name: {
+    width: '100%',
     fontSize: 15,
     fontWeight: '500',
     marginBottom: 2,

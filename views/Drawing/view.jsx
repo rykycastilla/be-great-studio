@@ -6,7 +6,7 @@ import Name from './components/Name'
 import ResolutionControlButton from './components/ResolutionControlButton'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
-import { StyleSheet, View } from 'react-native'
+import { Dimensions, StyleSheet, View } from 'react-native'
 import { ToolsArea, ToolsProvider } from '@/contexts/tools'
 import { useCallback, useRef } from 'react'
 import { useColorPicker } from './hooks/color_picker'
@@ -76,7 +76,7 @@ const Drawing = () => {
               ref={ canvasRef }
               content={ content }
               resolution={ drawing.resolution }
-              aspectRatio="1:1" />
+              aspectRatio={ drawing.aspectRatio } />
           </View>
           <ToolsArea dispatchColorPicker={ dispatchColorPicker } />
         </View>
@@ -101,16 +101,18 @@ const styles = StyleSheet.create( {
     paddingVertical: 12,
   },
 
+  content: {
+    minHeight: Dimensions.get( 'window' ).height - 220,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   canvasControls: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
     marginVertical: 8,
-  },
-
-  content: {
-    flex: 1,
   },
 
 } )

@@ -1,6 +1,7 @@
 import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
 import PixelatedImage from '@/components/PixelatedImage'
 import SelectionCircle from '@/components/SelectionCircle'
+import { AspectRatioAdapter } from '@/utils/AspectRatioAdapter'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { Layout } from 'react-native-reanimated'
@@ -42,10 +43,10 @@ const ListSelectionCircle = ( props ) => {
  */
 const Thumbnail = ( props ) => {
   const { drawing, size } = props
-  const thumbnailSize = size * 1.5
+  const [ width, height ] = AspectRatioAdapter.adapt( size, drawing.aspectRatio )
   return (
     <View style={ [ styles.thumbnailContainer ] }>
-      <PixelatedImage drawing={ drawing } width={ thumbnailSize } height={ thumbnailSize } />
+      <PixelatedImage drawing={ drawing } width={ width * 1.5 } height={ height * 1.5 } />
     </View>
   )
 }

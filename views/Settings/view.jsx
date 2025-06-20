@@ -13,7 +13,7 @@ import { useSettings } from '@/contexts/settings'
  * @returns { ReactElement }
  */
 const Settings = () => {
-  const { resolution } = useSettings()
+  const { resolution, aspectRatio } = useSettings()
   return (
     <AreaView style={ styles.container }>
       <Header>Settings</Header>
@@ -24,6 +24,7 @@ const Settings = () => {
         bounces={ true }>
         <SectionHeader>Viewing</SectionHeader>
         <NavigationItem target="resolution" label="Resolution" value={ `${ resolution }px` } />
+        <NavigationItem target="aspect-ratio" label="Aspect Ratio" value={ aspectRatio } />
       </ScrollView>
     </AreaView>
   )

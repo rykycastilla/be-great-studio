@@ -1,11 +1,12 @@
+import { calcAspectRatio } from '@/utils/calc_aspect_ratio'
 import { Draw } from 'react-native-drawing'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
 import { Resolver } from '@/utils/Resolver'
 import { rgbaToHex } from '@/utils/rgba_to_hex'
 import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
-import { StyleSheet, View } from 'react-native'
 import { Table } from '@/utils/Table'
 import { useCanvasStyle } from '../hooks/canvas_style'
+import { View } from 'react-native'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
@@ -114,38 +115,27 @@ const Canvas = forwardRef(
     useNewHistory( { canUndo, canRedo, undo, redo } )
 
     return (
-      <View
-        style={ styles.canvasContainer }>
-        <View style={ canvasStyle }>
-          <Draw
-            ref={ drawRef }
-            resolution={ resolution }
-            antialiasing={ false }
-            color={ currentColor }
-            tool={ currentTool }
-            toolSize={ size }
-            onHistoryMove={ ( event ) => {
-              const { canUndo, canRedo } = event
-              setCanUndo( canUndo )
-              setCanRedo( canRedo )
-            } }
-            onEyeDropper={ ( event ) => {
-              const hex = rgbaToHex( event.color )
-              createColor( hex )
-            } } />
-        </View>
+      <View style={ canvasStyle }>
+        <Draw
+          ref={ drawRef }
+          resolution={ resolution }
+          aspectRatio={ calcAspectRatio( aspectRatio ) }
+          antialiasing={ false }
+          color={ currentColor }
+          tool={ currentTool }
+          toolSize={ size }
+          onHistoryMove={ ( event ) => {
+            const { canUndo, canRedo } = event
+            setCanUndo( canUndo )
+            setCanRedo( canRedo )
+          } }
+          onEyeDropper={ ( event ) => {
+            const hex = rgbaToHex( event.color )
+            createColor( hex )
+          } } />
       </View>
     )
 
   } )
-
-const styles = StyleSheet.create( {
-  canvasContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-  },
-} )
 
 export default Canvas

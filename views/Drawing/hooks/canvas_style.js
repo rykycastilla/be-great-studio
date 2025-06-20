@@ -15,12 +15,8 @@ function calcHeightWithAspectRatio( width, aspectRatio ) {
   switch ( aspectRatio ) {
   case '3:4':
     return ( width * 4 ) / 3
-  case '4:3':
-    return ( width * 3 ) / 4
   case '9:16':
     return ( width * 16 ) / 9
-  case '16:9':
-    return ( width * 9 ) / 16
   }
   return width  // default: 1:1
 }
@@ -39,6 +35,7 @@ function getCanvasStyle( aspectRatio, theme, colors ) {
   return {
     width,
     height,
+    marginBottom: 16,
     backgroundColor: theme === 'dark' ? '#000000' : '#FFFFFF',
     borderWidth: 1,
     borderColor: theme === 'dark' ? colors.border : colors.border,
@@ -46,7 +43,6 @@ function getCanvasStyle( aspectRatio, theme, colors ) {
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: theme === 'dark' ? 0.25 : 0.15,
     shadowRadius: 6,
-    elevation: 8,
   }
 }
 

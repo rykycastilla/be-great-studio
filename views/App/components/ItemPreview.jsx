@@ -1,5 +1,6 @@
 import PixelatedImage from '@/components/PixelatedImage'
 import Reanimated from 'react-native-reanimated'
+import { AspectRatioAdapter } from '@/utils/AspectRatioAdapter'
 import { BlurView } from 'expo-blur'
 import { StyleSheet, View } from 'react-native'
 import { useAnimatedStyle } from 'react-native-reanimated'
@@ -27,6 +28,8 @@ const AnimatedView = Reanimated.createAnimatedComponent( View )
 const ItemPreview = ( props ) => {
   const { drawing, scale, opacity } = props
   const { colors, theme } = useTheme()
+  const width = 350
+  const height = AspectRatioAdapter.calcHeight( width, drawing.aspectRatio )
 
   const previewAnimatedStyle = useAnimatedStyle( () => {
     return { transform:[ { scale:scale.value } ], opacity:opacity.value }
@@ -44,10 +47,8 @@ const ItemPreview = ( props ) => {
           tint={ theme === 'dark' ? 'dark' : 'light' }
           style={ styles.blur } />
       </AnimatedView>
-      <AnimatedView style={ [ styles.content, { backgroundColor:colors.canvas }, previewAnimatedStyle ] }>
-        <View style={ [ styles.imageContainer ] }>
-          <PixelatedImage drawing={ drawing } width={ 300 } height={ 300 } />
-        </View>
+      <AnimatedView style={ [ styles.content, { backgroundColor:colors.canvas, width, height }, previewAnimatedStyle ] }>
+        <PixelatedImage drawing={ drawing } width={ width } height={ height } />
       </AnimatedView>
     </View>
   )
@@ -71,9 +72,6 @@ const styles = StyleSheet.create( {
   },
 
   content: {
-    width: '80%',
-    maxWidth: 300,
-    backgroundColor: 'white',
     borderRadius: 16,
     overflow: 'hidden',
     shadowColor: '#000',
@@ -81,27 +79,6 @@ const styles = StyleSheet.create( {
     shadowOpacity: 0.3,
     shadowRadius: 20,
     elevation: 15,
-  },
-
-  imageContainer: {
-    width: '100%',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  info: {
-    padding: 16,
-  },
-
-  name: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-
-  date: {
-    fontSize: 14,
   },
 
 } )

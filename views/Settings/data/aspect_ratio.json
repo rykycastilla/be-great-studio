@@ -1,0 +1,17 @@
+{
+  "target": "aspect-ratio",
+  "getter": "aspectRatio",
+  "setter": "setAspectRatio",
+  "optionList": [
+    {
+      "value": "1:1",
+      "preview": "1:1",
+      "description": "Perfect Square"
+    },
+    {
+      "value": "3:4",
+      "preview": "3:4",
+      "description": "Candybar"
+    }
+  ]
+}

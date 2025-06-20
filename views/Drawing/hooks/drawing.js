@@ -34,8 +34,8 @@ export function useNameSetter( drawing ) {
 
   // Using name updater and cached name
   return useMemo( () => {
-    const { id, thumbnail, resolution, lastModified } = drawing
-    return { id, name, thumbnail, resolution, lastModified, setName:updateName }
+    const { id, thumbnail, resolution, aspectRatio, lastModified } = drawing
+    return { id, name, thumbnail, resolution, aspectRatio, lastModified, setName:updateName }
   }, [ updateName, name, JSON.stringify( drawing ) ] )  // eslint-disable-line
 
 }
@@ -69,6 +69,11 @@ export function useDrawing() {
     return settings.resolution
   }, [] )  // eslint-disable-line
 
+  // Getting default resolution
+  const defaultAspectRatio = useMemo( () => {
+    return settings.aspectRatio
+    }, [] )  // eslint-disable-line
+
   // Searching saved drawing
   const savedDrawing = useMemo( () => {
     for( const drawing of drawingList ) {
@@ -78,7 +83,15 @@ export function useDrawing() {
 
   // Creating drawing if it doesn't exists
   const drawing = savedDrawing ??
-    { id, name:'New Drawing', thumbnail:'', resolution:defaultResolution, lastModified:new Date() }
+    {
+      id,
+      name:'New Drawing',
+      thumbnail:'',
+      resolution: defaultResolution,
+      aspectRatio: defaultAspectRatio,
+      lastModified: new Date(),
+    }
+
   const drawingWithNameSetter = useNameSetter( drawing )
   return useResolutionSetter( drawingWithNameSetter )
 
