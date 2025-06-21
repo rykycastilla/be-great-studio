@@ -13,6 +13,7 @@ import { useCallback, useRef } from 'react'
 import { useColorPicker } from './hooks/color_picker'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
+import { useMinHeight } from './hooks/min_height'
 import { useModal } from '@/contexts/modal'
 import { useSaverHandler } from './hooks/saver_handler'
 
@@ -30,6 +31,10 @@ const Drawing = () => {
   const canvasRef = useRef( /** @type { CanvasObject | null } */ ( null ) )
   const content = useContent()
   const drawing = useDrawing()
+
+  const {
+    minHeightExceed, minHeightStyle, handleLayout,
+  } = useMinHeight( Dimensions.get( 'window' ).height - 220 )
 
   const requestData = useCallback( async() => {
     const canvas = canvasRef.current
@@ -69,7 +74,8 @@ const Drawing = () => {
               dataRequester={ requestData }
               onSave={ handleSave } />
           </View>
-          <View style={ styles.content }>
+          { /* Calculating if content has a safe height (to avoid collisions with tools area) */ }
+          <View style={ [ styles.content, minHeightStyle ] } onLayout={ handleLayout }>
             <View style={ styles.canvasControls }>
               <AspectRatioControlButton drawing={ drawing } />
               <ResolutionControlButton drawing={ drawing } />
@@ -80,7 +86,8 @@ const Drawing = () => {
               resolution={ drawing.resolution }
               aspectRatio={ drawing.aspectRatio } />
           </View>
-          <ToolsArea dispatchColorPicker={ dispatchColorPicker } />
+          { /* If min height was exceed the content will collide with tools area, to avoid it, the tools area must collapse */ }
+          <ToolsArea collapsable={ minHeightExceed } dispatchColorPicker={ dispatchColorPicker } />
         </View>
       </AreaView>
       <DrawingColorPicker { ...colorPicker } />
@@ -104,7 +111,6 @@ const styles = StyleSheet.create( {
   },
 
   content: {
-    minHeight: Dimensions.get( 'window' ).height - 220,
     justifyContent: 'center',
     alignItems: 'center',
   },

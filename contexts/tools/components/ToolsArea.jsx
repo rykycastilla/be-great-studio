@@ -1,22 +1,18 @@
-import ColorButton from './ColorButton'
-import EyeDropperButton from './EyeDropperButton'
-import HistoryButtons from './HistoryButtons'
-import Reanimated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated'
-import SizeControlRow from './SizeControlRow'
-import ToolsButton from './ToolsButton'
-import ZoomButton from './ZoomButton'
-import { Animated, StyleSheet, View } from 'react-native'
-import { useEffect, useRef } from 'react'
-import { useTheme } from '@/contexts/theme'
+import CollapsedToolsArea from './CollapsedToolsArea'
+import HiderButton from './HiderButton'
+import ToolsAreaCard from './ToolsAreaCard'
+import { Easing, runOnJS, withTiming } from 'react-native-reanimated'
+import { StyleSheet, View } from 'react-native'
+import { useSharedValue } from 'react-native-reanimated'
+import { useLayoutEffect, useState } from 'react'
 
 /**
  * @import { ReactElement } from 'react'
  */
 
-const AnimatedView = Reanimated.createAnimatedComponent( View )
-
 /**
  * @typedef { object } ToolsAreaProps
+ * @property { boolean } collapsable
  * @property { ( color:string ) => void } dispatchColorPicker
  */
 
@@ -26,58 +22,71 @@ const AnimatedView = Reanimated.createAnimatedComponent( View )
  */
 const ToolsArea = ( props ) => {
 
-  const { dispatchColorPicker } = props
-  const { theme, colors } = useTheme()
-  const fadeAnim = useRef( new Animated.Value( 0 ) ).current
+  const { collapsable, dispatchColorPicker } = props
+  const [ toolbarExpanded, setToolbarExpanded ] = useState( true )
+  const isToolbarExpanded = toolbarExpanded || !collapsable
+  const [ isAnimationComplete, setIsAnimationComplete ] = useState( true )
   const toolbarOpacity = useSharedValue( 1 )
   const toolbarScale = useSharedValue( 1 )
   const toolbarTranslateY = useSharedValue( 0 )
+  const collapsedToolbarOpacity = useSharedValue( 0 )
+  const collapsedToolbarScale = useSharedValue( 0.5 )
+  const collapsedToolbarTranslateY = useSharedValue( 20 )
 
-  const toolbarAnimatedStyle = useAnimatedStyle( () => {
-    return {
-      opacity: toolbarOpacity.value,
-      transform: [ { scale:toolbarScale.value }, { translateY:toolbarTranslateY.value }],
-      display: toolbarOpacity.value === 0 ? 'none' : 'flex',
-    }
-  } )
+  const collapseToolbar = () => {
+    setIsAnimationComplete( false )
+    // Animating toolbar fading
+    toolbarScale.value = withTiming( 0.8, { duration: 200, easing: Easing.out( Easing.ease ) } )
+    toolbarTranslateY.value = withTiming( 20, { duration: 200 } )
+    toolbarOpacity.value = withTiming( 0, { duration: 200 }, () => {
+      // Animating collpased bar showing
+      collapsedToolbarScale.value = withTiming( 1, { duration: 250, easing: Easing.elastic( 1.2 ) } )
+      collapsedToolbarTranslateY.value = withTiming( 0, { duration: 250 } )
+      collapsedToolbarOpacity.value = withTiming( 1, { duration: 250 } )
+    } )
+  }
 
-  useEffect( () => {
-    Animated.timing( fadeAnim, {
-      toValue: 1,
-      duration: 200,
-      useNativeDriver: true,
-    } ).start()
-  }, [ fadeAnim ] )
+  const expandToolbar = () => {
+    setIsAnimationComplete( false )
+    // Animating collpased toolbar hiding
+    collapsedToolbarScale.value = withTiming( 0.5, { duration: 200 } )
+    collapsedToolbarTranslateY.value = withTiming( 20, { duration: 200 } )
+    collapsedToolbarOpacity.value = withTiming( 0, { duration: 200 }, () => {
+      // Animating expanded toolbar showing
+      toolbarScale.value = withTiming( 1, { duration: 250, easing: Easing.elastic( 1.1 ) } )
+      toolbarTranslateY.value = withTiming( 0, { duration: 250 } )
+      toolbarOpacity.value = withTiming( 1, { duration: 250 }, () => {
+        runOnJS( setIsAnimationComplete )( true )
+      } )
+    } )
+  }
+
+  useLayoutEffect( () => {
+    if( isToolbarExpanded ) { expandToolbar() }
+    else { collapseToolbar() }
+  }, [ isToolbarExpanded ] )  // eslint-disable-line
 
   return (
     <View style={ styles.toolsContainerWrapper }>
-      <AnimatedView
-        style={ [
-          styles.toolsContainer,
-          {
-            backgroundColor: colors.card,
-            shadowColor: theme === 'dark' ? 'rgba(0,0,0,0.5)' : 'rgba(0,0,0,0.2)',
-          },
-          toolbarAnimatedStyle,
-        ] }>
-        <Animated.View style={ { opacity:fadeAnim } }>
-          <SizeControlRow />
-          <View style={ styles.toolsRow }>
-            <ToolsButton />
-            <ColorButton dispatchColorPicker={ dispatchColorPicker } />
-            <EyeDropperButton />
-            <ZoomButton />
-            <HistoryButtons />
-          </View>
-        </Animated.View>
-      </AnimatedView>
+      {
+        ( isToolbarExpanded && isAnimationComplete && collapsable ) &&
+        <HiderButton onHide={ () => setToolbarExpanded( false ) } />
+      }
+      <ToolsAreaCard
+        opacity={ toolbarOpacity }
+        scale={ toolbarScale }
+        translateY={ toolbarTranslateY }
+        dispatchColorPicker={ dispatchColorPicker } />
+      <CollapsedToolsArea
+        opacity={ collapsedToolbarOpacity }
+        scale={ collapsedToolbarScale }
+        translateY={ collapsedToolbarTranslateY }
+        onShowToolsArea={ () => setToolbarExpanded( true ) } />
     </View>
-
   )
 }
 
 const styles = StyleSheet.create( {
-
   toolsContainerWrapper: {
     position: 'absolute',
     bottom: 16,
@@ -86,24 +95,6 @@ const styles = StyleSheet.create( {
     alignItems: 'center',
     zIndex: 100,
   },
-
-  toolsContainer: {
-    width: '100%',
-    padding: 16,
-    borderRadius: 24,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    elevation: 8,
-    zIndex: 110,
-  },
-
-  toolsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-
 } )
 
 export default ToolsArea
