@@ -1,4 +1,5 @@
 import WarningModal from './WarningModal'
+import { optionList } from '@/views/Settings/data/aspect_ratio.json'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useModal, useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
@@ -61,10 +62,10 @@ const AspectRatioModal = ( props ) => {
   useModalConfig( { title:'Select the resolution', hideButtons:true } )
   return (
     <View style={styles.modalOptions}>
-      { [ '1:1', '3:4' ].map( ( aspectRatio ) => (
+      { optionList.map( ( { value } ) => (
         <AspectRatioOption
-          key={ aspectRatio }
-          value={ aspectRatio }
+          key={ value }
+          value={ value }
           onAspectRatioChange={ setAspectRatio } />
       ) ) }
     </View>

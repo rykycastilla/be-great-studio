@@ -1,4 +1,5 @@
 import WarningModal from './WarningModal'
+import { optionList } from '@/views/Settings/data/resolution.json'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useModal, useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
@@ -61,10 +62,10 @@ const ResolutionModal = ( props ) => {
   useModalConfig( { title:'Select the resolution', hideButtons:true } )
   return (
     <View style={styles.modalOptions}>
-      { [ 16, 32, 64 ].map( ( resolution ) => (
+      { optionList.map( ( { value } ) => (
         <ResolutionOption
-          key={ resolution }
-          value={ resolution }
+          key={ value }
+          value={ value }
           onResolutionChange={ setResolution } />
       ) ) }
     </View>
