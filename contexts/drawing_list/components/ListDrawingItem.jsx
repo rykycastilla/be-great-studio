@@ -53,8 +53,7 @@ const Thumbnail = ( props ) => {
 
 /**
  * @typedef { object } InfoProps
- * @property { string } name
- * @property { Date } lastModified
+ * @property { Drawing } drawing
  */
 
 /**
@@ -62,15 +61,16 @@ const Thumbnail = ( props ) => {
  * @returns { ReactElement }
  */
 const Info = ( props ) => {
-  const { name, lastModified } = props
+  const { drawing } = props
+  const { name, lastModified, resolution, aspectRatio } = drawing
   const { colors } = useTheme()
   return (
     <View style={ styles.info }>
       <Text style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
         { name }
       </Text>
-      <Text style={ [ styles.date, { color:colors.inactive } ] }>
-        { lastModified.toLocaleDateString() }
+      <Text style={ [ styles.extraInfo, { color:colors.inactive } ] }>
+        { lastModified.toLocaleDateString() }   { resolution }px { aspectRatio }
       </Text>
     </View>
   )
@@ -90,7 +90,7 @@ const Info = ( props ) => {
 const ListDrawingItem = ( props ) => {
 
   const { item, config } = props
-  const { id, name, lastModified } = item
+  const { id } = item
 
   const {
     dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem,
@@ -118,7 +118,7 @@ const ListDrawingItem = ( props ) => {
       layout={ Layout.springify() }>
       { isSelectionMode && <ListSelectionCircle isSelected={ isSelected } /> }
       <Thumbnail drawing={ item } size={ 24 } />
-      <Info name={ name } lastModified={ lastModified } />
+      <Info drawing={ item } />
     </AnimatedTouchableOpacity>
   )
 
@@ -160,7 +160,7 @@ const styles = StyleSheet.create( {
     marginBottom: 2,
   },
 
-  date: {
+  extraInfo: {
     fontSize: 12,
   },
 

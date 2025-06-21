@@ -55,8 +55,7 @@ const Thumbnail = ( props ) => {
 
 /**
  * @typedef { object } InfoProps
- * @property { string } name
- * @property { Date } lastModified
+ * @property { Drawing } drawing
  * @property { ThemeContext[ 'colors' ] } colors
  */
 
@@ -65,15 +64,21 @@ const Thumbnail = ( props ) => {
  * @returns { ReactElement }
  */
 const Info = ( props ) => {
-  const { name, lastModified, colors } = props
+  const { drawing, colors } = props
+  const { name, lastModified, resolution, aspectRatio } = drawing
   return (
     <View style={ styles.info }>
       <Text style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
         { name }
       </Text>
-      <Text style={ [ styles.date, { color:colors.inactive } ] }>
-        { lastModified.toLocaleDateString() }
-      </Text>
+      <View style={ styles.extraInfoContainer }>
+        <Text style={ [ styles.extraInfo, { color:colors.inactive } ] }>
+          { lastModified.toLocaleDateString() }
+        </Text>
+        <Text style={ [ styles.extraInfo, { color:colors.inactive } ] }>
+          { resolution }px { aspectRatio }
+        </Text>
+      </View>
     </View>
   )
 }
@@ -92,7 +97,7 @@ const Info = ( props ) => {
 const GridDrawingItem = ( props ) => {
 
   const { item, index, config } = props
-  const { id, name, lastModified } = item
+  const { id } = item
 
   const {
     dimensions, colors, router, isSelectionMode, addItem, checkItemIncluded, deleteItem,
@@ -129,7 +134,7 @@ const GridDrawingItem = ( props ) => {
       layout={ Layout.springify() }>
       { isSelectionMode && <GridSelectionCircle isSelected={ isSelected } /> }
       <Thumbnail drawing={ item } size={ width } />
-      <Info name={ name } lastModified={ lastModified } colors={ colors } />
+      <Info drawing={ item } colors={ colors } />
     </AnimatedTouchableOpacity>
   )
 
@@ -168,7 +173,12 @@ const styles = StyleSheet.create( {
     marginBottom: 2,
   },
 
-  date: {
+  extraInfoContainer: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+
+  extraInfo: {
     fontSize: 12,
   },
 
