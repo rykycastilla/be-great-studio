@@ -65,6 +65,8 @@ export class DrawingService {
   }
 
   /**
+   * Save the drawing and its image data.
+   * `lastUpdate` property is automatically updated using it
    * @public
    * @param { Drawing } drawing
    * @param { string } data
@@ -86,17 +88,16 @@ export class DrawingService {
    * @param { Drawing } drawing
    */
   async duplicate( drawing ) {
-    const { aspectRatio, lastModified } = drawing
-    const { last_modified, resolution } = this.drawingMapper.toDTO( drawing )
+    const dto = this.drawingMapper.toDTO( drawing )
     // Creating new (cloned) data
-    const id = this.genId()
-    const thumbnailData = await this.thumbnailDAO.get( drawing.id, last_modified ) ?? ''
+    dto.id = this.genId()
+    const thumbnailData = await this.thumbnailDAO.get( drawing.id, dto.last_modified ) ?? ''
     const nameList = await this.getNames()
-    const name = this.nameService.autoNum( drawing.name, nameList )
-    /** @type { Drawing } */ const newDrawing = { id, name, thumbnail:'', resolution, aspectRatio, lastModified }
+    dto.name = this.nameService.autoNum( drawing.name, nameList )
+    const newDrawing = this.drawingMapper.toModel( dto )
     // Using new data for duplicated structure
-    await this.configRepository.transfer( drawing.id, id )
     await this.save( newDrawing, thumbnailData )
+    await this.configRepository.transfer( drawing.id, newDrawing.id )
   }
 
   /**

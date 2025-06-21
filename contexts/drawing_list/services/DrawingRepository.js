@@ -45,6 +45,8 @@ export class DrawingRepository {
   }
 
   /**
+   * Save the drawing and its image data.
+   * `lastUpdate` property is automatically updated using it
    * @public
    * @param { Drawing } drawing
    * @param { string } data
