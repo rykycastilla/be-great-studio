@@ -27,32 +27,34 @@ const App = () => {
     else { return true }
   } )
   return (
-    <AreaView style={ styles.container }>
-      <View style={ styles.header }>
-        <SelectionButton />
-        <View style={ styles.headerButtons }>
-          {
-            isSelectionMode
-              ? (
-                <>
-                  <SelectionCounter />
-                  <SelectionMenuButton />
-                </>
-              )
-              : (
-                <>
-                  <SortButton />
-                  <ViewModeButton />
-                  <SettingsButton />
-                </>
-              )
-          }
+    <>
+      <AreaView style={ styles.container }>
+        <View style={ styles.header }>
+          <SelectionButton />
+          <View style={ styles.headerButtons }>
+            {
+              isSelectionMode
+                ? (
+                  <>
+                    <SelectionCounter />
+                    <SelectionMenuButton />
+                  </>
+                )
+                : (
+                  <>
+                    <SortButton />
+                    <ViewModeButton />
+                    <SettingsButton />
+                  </>
+                )
+            }
+          </View>
         </View>
-      </View>
-      <DrawingList handleLongPress={ handleLongPress } handlePressOut={ handlePressOut } />
+        <DrawingList handleLongPress={ handleLongPress } handlePressOut={ handlePressOut } />
+        { !isSelectionMode && <AddPictureButton /> }
+      </AreaView>
       { ( preview !== null ) && <ItemPreview drawing={ preview } scale={ previewScale } opacity={ previewOpacity } /> }
-      { !isSelectionMode && <AddPictureButton /> }
-    </AreaView>
+    </>
   )
 }
 
