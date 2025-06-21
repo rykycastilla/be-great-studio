@@ -64,8 +64,6 @@ const styles = StyleSheet.create( {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 14,
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'rgba(0,0,0,0.1)',
   },
 
   optionText: {
