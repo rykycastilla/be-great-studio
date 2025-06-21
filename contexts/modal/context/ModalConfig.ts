@@ -3,5 +3,5 @@ export interface ModalConfig {
   acceptButtonTitle?: string
   isButtonInactive?: boolean
   hideButtons?: boolean
-  onAccept?: () => void
+  // onAccept?: () => void
 }

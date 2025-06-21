@@ -21,17 +21,16 @@ const ModalProvider = ( props ) => {
 
   const { children } = props
   const [ config, setConfig ] = useState( /** @type { ModalConfig } */ ( { title:'' } ) )
-  const { title, acceptButtonTitle, isButtonInactive, hideButtons, onAccept:runConfigAction } = config
+  const { title, acceptButtonTitle, isButtonInactive, hideButtons } = config
   const [ modalArgs, setModalArgs ] = useState(
     /** @type { unknown[] } */ ( /** @type { unknown } */ ( undefined ) ),
   )
   const [ actionRef, setActionRef ] = useState( /** @type { ActionRef } */ ( {} ) )
 
   const onAccept = useCallback( () => {
-    if( runConfigAction !== undefined ) { runConfigAction() }
     const runHookAction = actionRef.current
     if( runHookAction !== undefined ) { runHookAction() }
-  }, [ runConfigAction, actionRef ] )
+  }, [ actionRef ] )
 
   const [ componentRef, setComponentRef ] = useState(
     { Component:DefaultComponent, props:{} },
