@@ -1,13 +1,12 @@
 import ToolsModal from './ToolsModal'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, TouchableOpacity } from 'react-native'
-import { Tool } from 'react-native-drawing'
 import { useModal } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
+import { useToolIcon } from '../hooks/tool_icon'
 import { useTools } from '../hooks/tools'
 
 /**
- * @import { ExpoIcon } from '@/types/ExpoIcon'
  * @import { ReactElement } from 'react'
  */
 
@@ -19,18 +18,8 @@ const ToolsButton = () => {
   const { colors } = useTheme()
   const { tool, setTool, auxTool } = useTools()
   const disabled = auxTool !== null
-
   const dispatchToolsModal = useModal( 'tools-selection', ToolsModal, {} )
-
-  /* eslint-disable */
-  /** @type { ExpoIcon } */ const icon =
-    ( tool === Tool.SQUARE_DOT_PEN ) ? 'pencil'
-    : ( tool === Tool.ERASER ) ? 'ellipse-outline'
-    : ( tool === Tool.FILLER ) ? 'color-fill-outline'
-    : ( tool === Tool.PENCIL ) ? 'brush-outline'
-    : 'warning-outline'
-  /* eslint-enable */
-
+  const icon = useToolIcon( tool )
   return (
     <TouchableOpacity
       style={ [

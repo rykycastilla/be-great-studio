@@ -1,7 +1,9 @@
+import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Tool } from 'react-native-drawing'
 import { useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
+import { useToolIcon } from '../hooks/tool_icon'
 
 /**
  * @import { ReactElement } from 'react'
@@ -10,7 +12,8 @@ import { useTheme } from '@/contexts/theme'
 /**
  * @typedef { object } ToolOptionProps
  * @property { string } name
- * @property { () => void } onSelect
+ * @property { Tool } tool
+ * @property { ( tool:Tool ) => void } onToolChange
  */
 
 /**
@@ -18,9 +21,10 @@ import { useTheme } from '@/contexts/theme'
  * @returns { ReactElement }
  */
 const ToolOption = ( props ) => {
-  const { name, onSelect } = props
+  const { name, tool, onToolChange:setTool } = props
   const { colors } = useTheme()
   const hide = useModalHider()
+  const icon = useToolIcon( tool )
   return (
     <TouchableOpacity
       style={[
@@ -32,9 +36,10 @@ const ToolOption = ( props ) => {
         },
       ]}
       onPress={ () => {
-        onSelect()
+        setTool( tool )
         hide()
       } }>
+      <Ionicons name={ icon } size={ 18 } color="#FFFFFF" />
       <Text style={ [ styles.modalOptionText, { color:colors.text } ] }>
         { name }
       </Text>
@@ -57,11 +62,11 @@ const ToolsModal = ( props ) => {
   useModalConfig( { title:'Select a tool', hideButtons:true } )
   return (
     <View style={ styles.modalOptions }>
-      <ToolOption name="Pencil" onSelect={ () => setTool( Tool.SQUARE_DOT_PEN ) } />
-      <ToolOption name="Eraser" onSelect={ () => setTool( Tool.ERASER ) } />
-      <ToolOption name="Filler" onSelect={ () => setTool( Tool.FILLER ) } />
+      <ToolOption name="Pencil" tool={ Tool.SQUARE_DOT_PEN } onToolChange={ setTool } />
+      <ToolOption name="Eraser" tool={ Tool.ERASER } onToolChange={ setTool } />
+      <ToolOption name="Filler" tool={ Tool.FILLER } onToolChange={ setTool } />
       { /** Pencil is used to emulate pencil style because of its effect in pixel art */ }
-      <ToolOption name="Brush" onSelect={ () => setTool( Tool.PENCIL ) } />
+      <ToolOption name="Brush" tool={ Tool.PENCIL } onToolChange={ setTool } />
     </View>
   )
 }
@@ -76,6 +81,7 @@ const styles = StyleSheet.create( {
     marginBottom: 20,
     paddingHorizontal: 10,
   },
+
   modalOption: {
     paddingHorizontal: 16,
     paddingVertical: 10,
@@ -83,9 +89,12 @@ const styles = StyleSheet.create( {
     borderWidth: 1,
     minWidth: 70,
     alignItems: 'center',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
   },
 
   modalOptionText: {
+    marginLeft: 8,
     fontSize: 16,
     fontWeight: '500',
   },
