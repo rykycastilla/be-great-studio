@@ -19,7 +19,9 @@ const SectionHeader = ( props ) => {
   const { colors } = useTheme()
   return (
     <>
-      <Text style={ [ styles.sectionHeader, { color:colors.inactive } ] }>{ title }</Text>
+      <Text style={ [ styles.sectionHeader, { color:colors.inactive } ] }>
+        { title.toUpperCase() }
+      </Text>
     </>
   )
 }
