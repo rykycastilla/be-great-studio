@@ -31,14 +31,14 @@ export function usePreview() {
     ( item ) => {
       setPreview( item )
       previewScale.value = withSpring( 1, { damping:15 } )
-      previewOpacity.value = withTiming( 1, { duration:200 } )
+      previewOpacity.value = withTiming( 1, { duration:50 } )
     } )
 
   const handlePressOut = useCallback( async() => {
     if ( preview !== null ) {
       previewScale.value = withSpring( 0.8, { damping:15 } )
-      previewOpacity.value = withTiming( 0, { duration:200 } )
-      await wait( 200 )
+      previewOpacity.value = withTiming( 0, { duration:50 } )
+      await wait( 50 )
       setPreview( null )
     }
   }, [ preview, previewScale, previewOpacity ] )
