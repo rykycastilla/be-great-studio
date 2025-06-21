@@ -31,13 +31,15 @@ export function useNameSetter( drawing ) {
       setName( name )
       // Only updating database if the instance was already saved
       if( drawing.thumbnail !== '' ) { updateDrawing( drawing, { name } ) }
-    }, [ updateDrawing, JSON.stringify( drawing ) ] )  // eslint-disable-line
+    }, [ updateDrawing, drawing ] )
 
   // Using name updater and cached name
   return useMemo( () => {
-    const { id, thumbnail, resolution, aspectRatio, lastModified } = drawing
-    return { id, name, thumbnail, resolution, aspectRatio, lastModified, setName:updateName }
-  }, [ updateName, name, JSON.stringify( drawing ) ] )  // eslint-disable-line
+    /** @type { any } */ const interactiveDrawing = { ...drawing }
+    interactiveDrawing.name = name
+    interactiveDrawing.setName = updateName
+    return interactiveDrawing
+  }, [ updateName, name, drawing ] )
 
 }
 
@@ -48,7 +50,7 @@ export function useNameSetter( drawing ) {
 function useResolutionSetter( drawing ) {
   const [ resolution, setResolution ] = useState( drawing.resolution )
   return useMemo( () => {
-    const interactiveDrawing = /** @type { InteractiveDrawing } */ ( { ...drawing } )
+    const interactiveDrawing = /** @type { any } */ ( { ...drawing } )
     interactiveDrawing.setResolution = setResolution
     interactiveDrawing.resolution = resolution
     return interactiveDrawing
@@ -62,7 +64,7 @@ function useResolutionSetter( drawing ) {
 function useAspectRatioSetter( drawing ) {
   const [ aspectRatio, setAspectRatio ] = useState( drawing.aspectRatio )
   return useMemo( () => {
-    const interactiveDrawing = /** @type { InteractiveDrawing } */ ( { ...drawing } )
+    const interactiveDrawing = /** @type { any } */ ( { ...drawing } )
     interactiveDrawing.setAspectRatio = setAspectRatio
     interactiveDrawing.aspectRatio = aspectRatio
     return interactiveDrawing
@@ -96,19 +98,23 @@ export function useDrawing() {
     }
   }, [ id, drawingList ] )
 
-  // Creating drawing if it doesn't exists
-  const drawing = savedDrawing ?? {
-    id,
-    name:'New Drawing',
-    thumbnail:'',
-    resolution: defaultResolution,
-    aspectRatio: defaultAspectRatio,
-    lastModified: new Date(),
-  }
+  const defaultDrawing = useMemo( () => {
+    return  {
+      id,
+      name: 'New Drawing',
+      thumbnail: '',
+      resolution: defaultResolution,
+      aspectRatio: defaultAspectRatio,
+      lastModified: new Date(),
+    }
+  }, [ id, defaultResolution, defaultAspectRatio ] )
 
-  let drawingWithSetter = useNameSetter( drawing )
-  drawingWithSetter = useResolutionSetter( drawingWithSetter )
-  drawingWithSetter = useAspectRatioSetter( drawingWithSetter )
-  return /** @type { InteractiveDrawing } */ ( drawingWithSetter )
+  // Using new drawing if it doesn't exists
+  const drawing = savedDrawing ?? defaultDrawing
+
+  let intercativeDrawing = useNameSetter( drawing )
+  intercativeDrawing = useResolutionSetter( intercativeDrawing )
+  intercativeDrawing = useAspectRatioSetter( intercativeDrawing )
+  return /** @type { InteractiveDrawing } */ ( intercativeDrawing )
 
 }
