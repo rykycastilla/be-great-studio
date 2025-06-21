@@ -1,2 +1,5 @@
 export { default } from './view'
+export { default as ContribuitorsView } from './components/ContribuitorsView'
+export { default as LicenseView } from './components/LicenseView'
+export { default as OpenSourceLicensesView } from './components/OpenSourceLicensesView'
 export { default as SelectionMenu } from './components/SelectionMenu'

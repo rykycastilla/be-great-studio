@@ -11,7 +11,7 @@ import { useTheme } from '@/contexts/theme'
  * @typedef { object } NavigationItemProps
  * @property { string } target
  * @property { string } label
- * @property { string } value
+ * @property { string } [ value ]
  */
 
 /**

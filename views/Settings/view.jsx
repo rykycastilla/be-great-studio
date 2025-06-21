@@ -25,6 +25,10 @@ const Settings = () => {
         <SectionHeader>Viewing</SectionHeader>
         <NavigationItem target="resolution" label="Resolution" value={ `${ resolution }px` } />
         <NavigationItem target="aspect-ratio" label="Aspect Ratio" value={ aspectRatio } />
+        <SectionHeader>Legal</SectionHeader>
+        <NavigationItem target="license" label="License" />
+        <NavigationItem target="op-licenses" label="Open Source Licenses" />
+        <NavigationItem target="contribuitors" label="Contribuitors" />
       </ScrollView>
     </AreaView>
   )
