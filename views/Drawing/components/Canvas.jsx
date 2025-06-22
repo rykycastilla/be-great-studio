@@ -1,3 +1,4 @@
+import TouchableView from '@/components/TouchableView'
 import { calcAspectRatio } from '@/utils/calc_aspect_ratio'
 import { Draw } from 'react-native-drawing'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
@@ -6,10 +7,10 @@ import { rgbaToHex } from '@/utils/rgba_to_hex'
 import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { Table } from '@/utils/Table'
 import { useCanvasStyle } from '../hooks/canvas_style'
-import { View } from 'react-native'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
+ * @import { LayoutChangeEvent } from 'react-native'
  */
 
 /** @type { Table<Size,number,number> } */ const sizeMatrix = new Table()
@@ -64,7 +65,7 @@ const Canvas = forwardRef(
     const currentColor = useCurrentColor()
     const currentSize = useCurrentSize()
     const { createColor } = useColorList()
-    const size = sizeMatrix.get( currentSize, resolution )
+    const size = /** @type { number } */ ( sizeMatrix.get( currentSize, resolution ) )
 
     const avoidingNullContentRef = useRef(
       /** @type { Resolver<void> } */ ( /** @type { unknown } */ ( null ) ),
@@ -98,6 +99,16 @@ const Canvas = forwardRef(
       else { avoidingNullContentRef.current.resolve() }
     }, [ content, avoidingNullContentRef ] )
 
+    // Using touch indicator size
+    const [ width, setWidth ] = useState( 0 )
+    const indicatorSize = size / resolution * width
+
+    /** @type { ( event:LayoutChangeEvent ) => void } */
+    const handleLayout = useCallback( ( event ) => {
+      const { layout } = event.nativeEvent
+      setWidth( layout.width )
+    }, [] )
+
     // Creating history reference
 
     const undo = useCallback( () => {
@@ -115,7 +126,10 @@ const Canvas = forwardRef(
     useNewHistory( { canUndo, canRedo, undo, redo } )
 
     return (
-      <View style={ canvasStyle }>
+      <TouchableView
+        touchIndicatorSize={ indicatorSize }
+        style={ canvasStyle }
+        onLayout={ handleLayout }>
         <Draw
           ref={ drawRef }
           resolution={ resolution }
@@ -133,7 +147,7 @@ const Canvas = forwardRef(
             const hex = rgbaToHex( event.color )
             createColor( hex )
           } } />
-      </View>
+      </TouchableView>
     )
 
   } )
