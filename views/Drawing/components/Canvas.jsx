@@ -7,6 +7,7 @@ import { rgbaToHex } from '@/utils/rgba_to_hex'
 import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { Table } from '@/utils/Table'
 import { useCanvasStyle } from '../hooks/canvas_style'
+import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
@@ -125,9 +126,12 @@ const Canvas = forwardRef(
     const [ canRedo, setCanRedo ] = useState( false )
     useNewHistory( { canUndo, canRedo, undo, redo } )
 
+    const { showTouchCursor } = useSettings()
+
     return (
       <TouchableView
         touchIndicatorSize={ indicatorSize }
+        disabled={ !showTouchCursor }
         style={ canvasStyle }
         onLayout={ handleLayout }>
         <Draw

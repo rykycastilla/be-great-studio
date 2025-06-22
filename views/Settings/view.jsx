@@ -2,6 +2,7 @@ import AreaView from '@/components/AreaView'
 import Header from './components/Header'
 import NavigationItem from './components/NavigationItem'
 import SectionHeader from './components/SectionHeader'
+import SwitchItem from './components/SwitchItem'
 import { ScrollView, StyleSheet } from 'react-native'
 import { useSettings } from '@/contexts/settings'
 
@@ -13,7 +14,7 @@ import { useSettings } from '@/contexts/settings'
  * @returns { ReactElement }
  */
 const Settings = () => {
-  const { resolution, aspectRatio } = useSettings()
+  const { resolution, aspectRatio, showTouchCursor, setShowTouchCursor } = useSettings()
   return (
     <AreaView style={ styles.container }>
       <Header>Settings</Header>
@@ -25,6 +26,11 @@ const Settings = () => {
         <SectionHeader>Viewing</SectionHeader>
         <NavigationItem target="resolution" label="Resolution" value={ `${ resolution }px` } />
         <NavigationItem target="aspect-ratio" label="Aspect Ratio" value={ aspectRatio } />
+        <SectionHeader>Drawing Area</SectionHeader>
+        <SwitchItem
+          label="Touch Cursor"
+          isActive={ showTouchCursor }
+          onIsActiveChange={ setShowTouchCursor } />
         <SectionHeader>Legal</SectionHeader>
         <NavigationItem target="license" label="License" />
         <NavigationItem target="op-licenses" label="Open Source Licenses" />

@@ -14,13 +14,13 @@ import { View } from 'react-native'
  * @returns { ReactElement }
  */
 const TouchableView = ( props ) => {
-  const { touchIndicatorSize, children, ...viewProps } = props
+  const { touchIndicatorSize, disabled, children, ...viewProps } = props
   const [ touchList, setTouchList ] = useState( /** @type { Touch[] } */ ( [] ) )
   const responder = useTouchableViewResponder( setTouchList )
   return (
-    <View { ...viewProps } { ...responder }>
+    <View { ...viewProps } { ...( disabled ? {} : responder ) }>
       { children }
-      <TouchList data={ touchList } touchSize={ touchIndicatorSize } />
+      { !disabled && <TouchList data={ touchList } touchSize={ touchIndicatorSize } /> }
     </View>
   )
 }
