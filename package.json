@@ -34,7 +34,9 @@
     "react-native-webview": "13.13.5",
     "react-native-screens": "~4.11.1",
     "react-native-svg": "15.11.2",
-    "expo-clipboard": "~7.1.4"
+    "expo-clipboard": "~7.1.4",
+    "expo-asset": "~11.1.5",
+    "@expo/metro-config": "~0.20.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

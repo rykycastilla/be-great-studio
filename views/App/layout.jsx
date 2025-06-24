@@ -4,6 +4,7 @@ import { SettingsProvider } from '@/contexts/settings'
 import { DrawingListProvider } from '@/contexts/drawing_list'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ModalProvider } from '@/contexts/modal'
+import { OffscreenBrowserProvider } from '@/utils/OffscreenBrowser'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { ThemeProvider } from '@/contexts/theme'
@@ -55,6 +56,7 @@ const AppLayout = () => {
                     },
                     animationTypeForReplace: 'push',
                   } } />
+                <OffscreenBrowserProvider />
               </SettingsProvider>
             </ModalProvider>
           </DrawingListProvider>

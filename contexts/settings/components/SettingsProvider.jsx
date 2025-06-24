@@ -8,7 +8,7 @@ import { useStorageState } from '@/hooks/storage_state'
 
 /**
  * @typedef { object } SettingsContextProps
- * @property { ReactElement } children
+ * @property { ReactElement[] | ReactElement } children
  * @property { () => void } onLoad
  */
 

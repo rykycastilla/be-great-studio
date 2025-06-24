@@ -8,6 +8,8 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    "allowArbitraryExtensions": true,
+
     "allowJs": true,
     "checkJs": true,
     
@@ -21,5 +23,6 @@
     "**/*.ts",
     "**/*.js",
     "**/*.jsx"
-  ]
+  ],
+  "exclude": [ "assets/browser" ]
 }
