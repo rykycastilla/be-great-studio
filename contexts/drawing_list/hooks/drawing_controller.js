@@ -4,6 +4,7 @@ import { DrawingMapper } from '../services/DrawingMapper'
 import { DrawingRepository } from '../services/DrawingRepository'
 import { DrawingService } from '../services/DrawingService'
 import { genId } from '@/utils/gen_id'
+import { SharingFactory } from '@/modules/share/controllers'
 import { SqliteDrawingDAO } from '../controllers/SqliteDrawingDAO'
 import { ThumbnailFileSystemDAO } from '../controllers/ThumbnailFileSystemDAO'
 import { ThumbnailService } from '../services/ThumbnailService'
@@ -21,6 +22,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
  * @property { ( drawing:Drawing, newProperties:Partial<Drawing> ) => Promise<void> } updateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } duplicateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } removeDrawing
+ * @property { ( drawing:Drawing ) => Promise<void> } shareDrawing
  * @property { ( drawing:Drawing ) => Promise<string|null> } loadDrawingThumbnail
  */
 
@@ -48,8 +50,9 @@ export function useDrawingController() {
     const drawingRepository = new DrawingRepository( drawingDAO, thumbnailDAO, drawingMapper )
     const configDAO = new AsyncStorageConfigDAO()
     const configRepository = new ConfigRepository( configDAO )
+    const sharingService = SharingFactory.createInstance()
     return new DrawingService(
-      drawingRepository, configRepository, thumbnailDAO, drawingMapper, genId,
+      drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId,
     )
   }, [ thumbnailDAO, drawingMapper ] )
 
@@ -97,6 +100,12 @@ export function useDrawingController() {
       await updateDrawingList()
     }, [ drawingService, updateDrawingList ] )
 
+  const shareDrawing = useCallback(
+    /** @type { ( drawing:Drawing ) => Promise<void> } */
+    async( drawing ) => {
+      await drawingService.share( drawing )
+    }, [ drawingService ] )
+
   const loadDrawingThumbnail = useCallback(
     /** @type { ( drawing:Drawing ) => Promise<string|null> } */
     ( drawing ) => {
@@ -107,6 +116,7 @@ export function useDrawingController() {
     drawingList, loadingList,
     saveDrawing, updateDrawing, removeDrawing,
     duplicateDrawing,
+    shareDrawing,
     loadDrawingThumbnail,
   }
 

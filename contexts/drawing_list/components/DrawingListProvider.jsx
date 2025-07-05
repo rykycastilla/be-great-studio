@@ -30,7 +30,7 @@ const DrawingListProvider = ( props ) => {
   const {
     drawingList, loadingList,
     saveDrawing, updateDrawing, removeDrawing,
-    duplicateDrawing, loadDrawingThumbnail,
+    duplicateDrawing, shareDrawing, loadDrawingThumbnail,
   } = useDrawingController()
 
   // Reset selection list on mode changing
@@ -57,7 +57,7 @@ const DrawingListProvider = ( props ) => {
           isSelectionMode, setIsSelectionMode,
           selectionList, setSelectionList,
           drawingList,
-          saveDrawing, updateDrawing, duplicateDrawing, removeDrawing,
+          saveDrawing, updateDrawing, duplicateDrawing, shareDrawing, removeDrawing,
           loadDrawingThumbnail,
           sort, setSort,
         }

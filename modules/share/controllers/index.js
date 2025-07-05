@@ -1,0 +1,1 @@
+export { SharingFactory } from './SharingFactory'

@@ -5,6 +5,7 @@ import { NameService } from './NameService'
  * @import { Drawing } from '../models/Drawing'
  * @import { DrawingRepository } from './DrawingRepository'
  * @import { DrawingMapper } from './DrawingMapper'
+ * @import { SharingService } from '@/modules/share/services'
  * @import { ThumbnailDAO } from './ThumbnailDAO'
 */
 
@@ -16,21 +17,24 @@ export class DrawingService {
   /** @private @readonly */ drawingMapper
   /** @private @readonly */ genId
   /** @private @readonly */ nameService
+  /** @private @readonly */ sharingService
 
   /**
    * @param { DrawingRepository } drawingRepository
    * @param { ConfigRepository } configRepository
    * @param { ThumbnailDAO } thumbnailDAO
    * @param { DrawingMapper } drawingMapper
+   * @param { SharingService } sharingService
    * @param { () => string } genId
    */
-  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, genId ) {
+  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId ) {
     this.drawingRepository = drawingRepository
     this.configRepository = configRepository
     this.thumbnailDAO = thumbnailDAO
     this.drawingMapper = drawingMapper
     this.genId = genId
     this.nameService = new NameService()
+    this.sharingService = sharingService
   }
 
   /**
@@ -98,6 +102,18 @@ export class DrawingService {
     // Using new data for duplicated structure
     await this.save( newDrawing, thumbnailData )
     await this.configRepository.transfer( drawing.id, newDrawing.id )
+  }
+
+  /**
+   * Share a drawing to another application
+   * @public
+   * @param { Drawing } drawing
+   */
+  async share( drawing ) {
+    const { id, last_modified } = this.drawingMapper.toDTO( drawing )
+    const data = await this.thumbnailDAO.get( id, last_modified )
+    if( data === null ) { return }
+    await this.sharingService.share( data )
   }
 
   /**
