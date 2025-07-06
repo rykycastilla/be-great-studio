@@ -21,7 +21,7 @@ const OffscreenBrowser = ( props ) => {
 
   const { driver } = props
   const bridge = useDriver( driver )
-  /** @type { false } */ const DEBUG = true
+  /** @type { false } */ const DEBUG = false
 
   return (
     <View style={ styles.offscreenBrowser }>
