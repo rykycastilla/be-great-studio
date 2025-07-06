@@ -1,10 +1,11 @@
 import * as SplashScreen from 'expo-splash-screen'
 import SafeAreaProvider from '@/components/SafeAreaProvider'
-import { SettingsProvider } from '@/contexts/settings'
 import { DrawingListProvider } from '@/contexts/drawing_list'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { ModalProvider } from '@/contexts/modal'
 import { OffscreenBrowserProvider } from '@/utils/OffscreenBrowser'
+import { SettingsProvider } from '@/contexts/settings'
+import { SharingInfoProvider } from '@/contexts/sharing_info'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { ThemeProvider } from '@/contexts/theme'
@@ -26,10 +27,11 @@ const AppLayout = () => {
   const backgroundColor = colorScheme === 'dark' ? '#000000' : '#FFFFFF'
   const [ drawingListLoaded, setDrawingListLoaded ] = useState( false )
   const [ settingsLoaded, setSettingsLoaded ] = useState( false )
+  const [ sharingInfoLoaded, setSharingInfoLoaded ] = useState( false )
 
   useEffect( () => {
-    if( drawingListLoaded && settingsLoaded ) { SplashScreen.hide() }
-  }, [ drawingListLoaded, settingsLoaded ] )
+    if( drawingListLoaded && settingsLoaded && sharingInfoLoaded ) { SplashScreen.hide() }
+  }, [ drawingListLoaded, settingsLoaded, sharingInfoLoaded ] )
 
   const handleDrawingListLoad = useCallback( () => {
     setDrawingListLoaded( true )
@@ -40,26 +42,28 @@ const AppLayout = () => {
       <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
       <ThemeProvider>
         <SafeAreaProvider backgroundColor={ backgroundColor }>
-          <DrawingListProvider onLoad={ handleDrawingListLoad }>
-            <ModalProvider>
-              <SettingsProvider onLoad={ () => setSettingsLoaded( true ) }>
-                <Stack
-                  screenOptions={ {
-                    headerShown: false,
-                    animationDuration: 250,
-                    gestureEnabled: true,
-                    gestureDirection: 'horizontal',
-                    presentation: 'card',
-                    animation: 'slide_from_right',
-                    contentStyle: {
-                      backgroundColor,
-                    },
-                    animationTypeForReplace: 'push',
-                  } } />
-                <OffscreenBrowserProvider />
-              </SettingsProvider>
-            </ModalProvider>
-          </DrawingListProvider>
+          <SharingInfoProvider onLoadInfo={ () => setSharingInfoLoaded( true ) }>
+            <DrawingListProvider onLoad={ handleDrawingListLoad }>
+              <ModalProvider>
+                <SettingsProvider onLoad={ () => setSettingsLoaded( true ) }>
+                  <Stack
+                    screenOptions={ {
+                      headerShown: false,
+                      animationDuration: 250,
+                      gestureEnabled: true,
+                      gestureDirection: 'horizontal',
+                      presentation: 'card',
+                      animation: 'slide_from_right',
+                      contentStyle: {
+                        backgroundColor,
+                      },
+                      animationTypeForReplace: 'push',
+                    } } />
+                  <OffscreenBrowserProvider />
+                </SettingsProvider>
+              </ModalProvider>
+            </DrawingListProvider>
+          </SharingInfoProvider>
         </SafeAreaProvider>
       </ThemeProvider>
     </GestureHandlerRootView>

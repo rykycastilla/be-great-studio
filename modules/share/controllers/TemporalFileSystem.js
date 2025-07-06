@@ -9,7 +9,6 @@ import * as FileSystem from 'expo-file-system'
  */
 export class TemporalFileSystem {
 
-  /** @private */ static tempFilesIdTop = 0
   /** @private */ static BASE64_PATTERN = /^data:([^/]+)\/([^;]+);base64,/
 
   /**
@@ -27,23 +26,24 @@ export class TemporalFileSystem {
 
   /**
    * @private
+   * @param { string } name
    * @param { string } ext  File extension
    * @returns { string }
    */
-  genPath( ext ) {
-    const tempFileId = TemporalFileSystem.tempFilesIdTop++
-    return `${ FileSystem.cacheDirectory }temp-${ tempFileId }.${ ext }`
+  genPath( name, ext ) {
+    return `${ FileSystem.cacheDirectory }${ name }.${ ext }`
   }
 
   /**
    * @public
    * @param { string } data
+   * @param { string } name
    * @param { FileExistenceCallback } callback
    */
-  async use( data, callback ) {
+  async use( data, name, callback ) {
     // Creating temp file
     const { extension, content } = this.processFile( data )
-    const path = this.genPath( extension )
+    const path = this.genPath( name, extension )
     await FileSystem.writeAsStringAsync( path, content, { encoding:FileSystem.EncodingType.Base64 } )
     // Using temp file within callback context
     try { await callback( path ) }

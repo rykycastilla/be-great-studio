@@ -20,10 +20,11 @@ export class SharingService {
   /**
    * Takes Base64 data and share it using the default system interface
    * @public
+   * @param { string } name
    * @param { string } data
    */
-  async share( data ) {
-    await this.temporalFilesService.use( data, async( filePath ) => {
+  async share( name, data ) {
+    await this.temporalFilesService.use( data, name, async( filePath ) => {
       await this.sharingMenuService.launch( filePath )
     } )
   }

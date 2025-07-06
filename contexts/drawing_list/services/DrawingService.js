@@ -110,10 +110,11 @@ export class DrawingService {
    * @param { Drawing } drawing
    */
   async share( drawing ) {
+    const { name } = drawing
     const { id, last_modified } = this.drawingMapper.toDTO( drawing )
     const data = await this.thumbnailDAO.get( id, last_modified )
     if( data === null ) { return }
-    await this.sharingService.share( data )
+    await this.sharingService.share( name, data )
   }
 
   /**
