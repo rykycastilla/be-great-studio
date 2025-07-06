@@ -10,7 +10,7 @@ import { useCallback, useState } from 'react'
 
 /**
  * @typedef { object } ModalProviderProps
- * @property { ReactElement } children
+ * @property { ReactElement | ReactElement[] } children
  */
 
 /**

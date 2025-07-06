@@ -18,6 +18,7 @@ export class DrawingService {
   /** @private @readonly */ genId
   /** @private @readonly */ nameService
   /** @private @readonly */ sharingService
+  /** @private @readonly */ convertImage
 
   /**
    * @param { DrawingRepository } drawingRepository
@@ -26,8 +27,9 @@ export class DrawingService {
    * @param { DrawingMapper } drawingMapper
    * @param { SharingService } sharingService
    * @param { () => string } genId
+   * @param { ( data:string, resolution:number ) => Promise<string> } convertImage
    */
-  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId ) {
+  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId, convertImage ) {
     this.drawingRepository = drawingRepository
     this.configRepository = configRepository
     this.thumbnailDAO = thumbnailDAO
@@ -35,6 +37,7 @@ export class DrawingService {
     this.genId = genId
     this.nameService = new NameService()
     this.sharingService = sharingService
+    this.convertImage = convertImage
   }
 
   /**
@@ -108,12 +111,16 @@ export class DrawingService {
    * Share a drawing to another application
    * @public
    * @param { Drawing } drawing
+   * @param { number } toResolution
    */
-  async share( drawing ) {
+  async share( drawing, toResolution ) {
     const { name } = drawing
+    // Extracting image data
     const { id, last_modified } = this.drawingMapper.toDTO( drawing )
-    const data = await this.thumbnailDAO.get( id, last_modified )
+    let data = await this.thumbnailDAO.get( id, last_modified )
     if( data === null ) { return }
+    // Converting image
+    data = await this.convertImage( data, toResolution )
     await this.sharingService.share( name, data )
   }
 

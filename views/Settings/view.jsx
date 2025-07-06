@@ -3,6 +3,7 @@ import Header from './components/Header'
 import NavigationItem from './components/NavigationItem'
 import SectionHeader from './components/SectionHeader'
 import SwitchItem from './components/SwitchItem'
+import { REAL_EXPORT_RESOLUTION_REF } from '@/constants'
 import { ScrollView, StyleSheet } from 'react-native'
 import { useSettings } from '@/contexts/settings'
 
@@ -14,7 +15,7 @@ import { useSettings } from '@/contexts/settings'
  * @returns { ReactElement }
  */
 const Settings = () => {
-  const { resolution, aspectRatio, showTouchCursor, setShowTouchCursor } = useSettings()
+  const { resolution, aspectRatio, showTouchCursor, setShowTouchCursor, exportResolution } = useSettings()
   return (
     <AreaView style={ styles.container }>
       <Header>Settings</Header>
@@ -31,6 +32,11 @@ const Settings = () => {
           label="Touch Cursor"
           isActive={ showTouchCursor }
           onIsActiveChange={ setShowTouchCursor } />
+        <SectionHeader>Exporting</SectionHeader>
+        <NavigationItem
+          target="export-resolution"
+          label="Resolution"
+          value={ exportResolution === REAL_EXPORT_RESOLUTION_REF ? 'Real' : `${ exportResolution }px` } />
         <SectionHeader>Legal</SectionHeader>
         <NavigationItem target="license" label="License" />
         <NavigationItem target="op-licenses" label="Open Source Licenses" />

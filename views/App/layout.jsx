@@ -43,9 +43,9 @@ const AppLayout = () => {
       <ThemeProvider>
         <SafeAreaProvider backgroundColor={ backgroundColor }>
           <SharingInfoProvider onLoadInfo={ () => setSharingInfoLoaded( true ) }>
-            <DrawingListProvider onLoad={ handleDrawingListLoad }>
-              <ModalProvider>
-                <SettingsProvider onLoad={ () => setSettingsLoaded( true ) }>
+            <SettingsProvider onLoad={ () => setSettingsLoaded( true ) }>
+              <DrawingListProvider onLoad={ handleDrawingListLoad }>
+                <ModalProvider>
                   <Stack
                     screenOptions={ {
                       headerShown: false,
@@ -60,9 +60,9 @@ const AppLayout = () => {
                       animationTypeForReplace: 'push',
                     } } />
                   <OffscreenBrowserProvider />
-                </SettingsProvider>
-              </ModalProvider>
-            </DrawingListProvider>
+                </ModalProvider>
+              </DrawingListProvider>
+            </SettingsProvider>
           </SharingInfoProvider>
         </SafeAreaProvider>
       </ThemeProvider>

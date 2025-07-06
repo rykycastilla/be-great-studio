@@ -4,15 +4,20 @@ import { DrawingMapper } from '../services/DrawingMapper'
 import { DrawingRepository } from '../services/DrawingRepository'
 import { DrawingService } from '../services/DrawingService'
 import { genId } from '@/utils/gen_id'
+import { ImageConverter } from '@/utils/ImageConverter'
+import { REAL_EXPORT_RESOLUTION_REF } from '@/constants'
 import { SharingFactory } from '@/modules/share/controllers'
 import { SqliteDrawingDAO } from '../controllers/SqliteDrawingDAO'
 import { ThumbnailFileSystemDAO } from '../controllers/ThumbnailFileSystemDAO'
 import { ThumbnailService } from '../services/ThumbnailService'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { Drawing } from '../models/Drawing'
  */
+
+const converter = new ImageConverter()
 
 /**
  * @typedef { object } DrawingControllerResult
@@ -32,6 +37,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 export function useDrawingController() {
 
   const [ drawingList, setDrawingList ] = useState( /** @type { Drawing[] } */ ( [] ) )
+  const { exportResolution } = useSettings()
 
   const thumbnailDAO = useMemo( () => {
     return new ThumbnailFileSystemDAO()
@@ -53,6 +59,7 @@ export function useDrawingController() {
     const sharingService = SharingFactory.createInstance()
     return new DrawingService(
       drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId,
+      ( data, resolution ) => converter.convert( data, resolution ),
     )
   }, [ thumbnailDAO, drawingMapper ] )
 
@@ -103,8 +110,13 @@ export function useDrawingController() {
   const shareDrawing = useCallback(
     /** @type { ( drawing:Drawing ) => Promise<void> } */
     async( drawing ) => {
-      await drawingService.share( drawing )
-    }, [ drawingService ] )
+      // Calculating selected resolution t be exported
+      const toResolution = exportResolution !== REAL_EXPORT_RESOLUTION_REF
+        ? exportResolution
+        : drawing.resolution  // Real resolution used
+      // Sharing
+      await drawingService.share( drawing, toResolution )
+    }, [ drawingService, exportResolution ] )
 
   const loadDrawingThumbnail = useCallback(
     /** @type { ( drawing:Drawing ) => Promise<string|null> } */

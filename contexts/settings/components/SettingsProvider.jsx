@@ -22,12 +22,14 @@ const ConfigProvider = ( props ) => {
   const [ resolution, setResolution, loadingResolution ] = useStorageState( 32, 'config-resolution' )
   const [ aspectRatio, setAspectRatio, loadingAspectRatio ] = useStorageState( '3:4', 'config-aspect-ratio' )
   const [ showTouchCursor, setShowTouchCursor, loadingShowTouchCursor ] = useStorageState( true, 'config-show-touch-cursor' )
+  const [ exportResolution, setExportResolution, loadingExportResolution ] = useStorageState( 540, 'config-export-resolution' )
 
   useEffect( () => {
     const fn = async() => {
       await loadingResolution
       await loadingAspectRatio
       await loadingShowTouchCursor
+      await loadingExportResolution
       handleLoad()
     }
     fn()
@@ -35,7 +37,12 @@ const ConfigProvider = ( props ) => {
 
   return (
     <SettingsContext.Provider value={
-      { resolution, setResolution, aspectRatio, setAspectRatio, showTouchCursor, setShowTouchCursor } }>
+      {
+        resolution, setResolution,
+        aspectRatio, setAspectRatio,
+        showTouchCursor, setShowTouchCursor,
+        exportResolution, setExportResolution,
+      } }>
       { children }
     </SettingsContext.Provider>
   )

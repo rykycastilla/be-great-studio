@@ -1,0 +1,27 @@
+{
+  "target": "export-resolution",
+  "getter": "exportResolution",
+  "setter": "setExportResolution",
+  "optionList": [
+  {
+      "value": 1,
+      "preview": "Real",
+      "description": "Ultra low resolution without re-scaling"
+    },
+    {
+      "value": 360,
+      "preview": "360px",
+      "description": "Low Definition"
+    },
+    {
+      "value": 540,
+      "preview": "540px",
+      "description": "Standard Definition"
+    },
+    {
+      "value": 720,
+      "preview": "720px",
+      "description": "High Definition"
+    }
+  ]
+}
