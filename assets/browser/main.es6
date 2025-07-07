@@ -4,7 +4,7 @@
 /// <reference path="NativeBridge.d.ts" />
 
 export function main() {
-  NativeBridge.onCall( 'convert-image', convertImage )
+  NativeBridge.onCall( 'prepare-png', preparePng )
 }
 
 /**
@@ -19,7 +19,7 @@ export function main() {
  * @property { number } resolution
  * @returns { Promise<string> }
  */
-function convertImage( args ) {
+function preparePng( args ) {
   const { data, resolution } = args
   return ImageConverter.convert( data, resolution )
 }

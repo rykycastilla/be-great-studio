@@ -4,7 +4,7 @@ import { DrawingMapper } from '../services/DrawingMapper'
 import { DrawingRepository } from '../services/DrawingRepository'
 import { DrawingService } from '../services/DrawingService'
 import { genId } from '@/utils/gen_id'
-import { ImageConverter } from '@/utils/ImageConverter'
+import { ImageConverterBS } from '@/modules/image_converter/controllers'
 import { REAL_EXPORT_RESOLUTION_REF } from '@/constants'
 import { SharingFactory } from '@/modules/share/controllers'
 import { SqliteDrawingDAO } from '../controllers/SqliteDrawingDAO'
@@ -16,8 +16,6 @@ import { useSettings } from '@/contexts/settings'
 /**
  * @import { Drawing } from '../models/Drawing'
  */
-
-const converter = new ImageConverter()
 
 /**
  * @typedef { object } DrawingControllerResult
@@ -57,9 +55,9 @@ export function useDrawingController() {
     const configDAO = new AsyncStorageConfigDAO()
     const configRepository = new ConfigRepository( configDAO )
     const sharingService = SharingFactory.createInstance()
+    const converter = ImageConverterBS.getInstance()
     return new DrawingService(
-      drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId,
-      ( data, resolution ) => converter.convert( data, resolution ),
+      drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, converter, genId,
     )
   }, [ thumbnailDAO, drawingMapper ] )
 

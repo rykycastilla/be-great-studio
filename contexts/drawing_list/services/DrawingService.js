@@ -5,6 +5,7 @@ import { NameService } from './NameService'
  * @import { Drawing } from '../models/Drawing'
  * @import { DrawingRepository } from './DrawingRepository'
  * @import { DrawingMapper } from './DrawingMapper'
+ * @import { ImageConverter } from '@/modules/image_converter/services'
  * @import { SharingService } from '@/modules/share/services'
  * @import { ThumbnailDAO } from './ThumbnailDAO'
 */
@@ -18,7 +19,7 @@ export class DrawingService {
   /** @private @readonly */ genId
   /** @private @readonly */ nameService
   /** @private @readonly */ sharingService
-  /** @private @readonly */ convertImage
+  /** @private @readonly */ imageConverter
 
   /**
    * @param { DrawingRepository } drawingRepository
@@ -26,10 +27,10 @@ export class DrawingService {
    * @param { ThumbnailDAO } thumbnailDAO
    * @param { DrawingMapper } drawingMapper
    * @param { SharingService } sharingService
+   * @param { ImageConverter } imageConverter
    * @param { () => string } genId
-   * @param { ( data:string, resolution:number ) => Promise<string> } convertImage
    */
-  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId, convertImage ) {
+  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, imageConverter, genId ) {
     this.drawingRepository = drawingRepository
     this.configRepository = configRepository
     this.thumbnailDAO = thumbnailDAO
@@ -37,7 +38,7 @@ export class DrawingService {
     this.genId = genId
     this.nameService = new NameService()
     this.sharingService = sharingService
-    this.convertImage = convertImage
+    this.imageConverter = imageConverter
   }
 
   /**
@@ -120,7 +121,7 @@ export class DrawingService {
     let data = await this.thumbnailDAO.get( id, last_modified )
     if( data === null ) { return }
     // Converting image
-    data = await this.convertImage( data, toResolution )
+    data = await this.imageConverter.convert( data, toResolution )
     await this.sharingService.share( name, data )
   }
 
