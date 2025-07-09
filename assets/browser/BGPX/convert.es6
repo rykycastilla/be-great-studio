@@ -18,7 +18,7 @@ async function convert( data, name, aspectRatio, date ) {
   const ctx = /** @type { OffscreenCanvasRenderingContext2D } */ ( canvas.getContext( '2d' ) )
   ctx.drawImage( image, 0, 0 )
   const { data:binaryImage } = ctx.getImageData( 0, 0, width, height )
-  const bgpx = new _BGPX.Bgpx( name, width, aspectRatio, date, binaryImage )
+  const bgpx = _BGPX.encode( name, width, aspectRatio, date, binaryImage )
   const convertedData = _BGPX.bgpxToBase64( bgpx )
   return convertedData
 }

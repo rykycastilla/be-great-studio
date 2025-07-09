@@ -1,5 +1,8 @@
 declare namespace _BGPX {
 
+  let MAGIC_NUMBER: string
+  let BASE64_PREFIX: string
+
   class ByteStreamUtility {
 
     static readonly MAX_BYTE_SIZE: number
@@ -19,22 +22,17 @@ declare namespace _BGPX {
 
   }
 
-  class Bgpx {
+  /**
+   * Transforms a Canvas image data binary array to a BGPX binary file
+   */
+  function encode(
+    name:string, resolution:number, aspectRatio:string, date:number, imageData:Uint8ClampedArray,
+  ): Uint8ClmapedArray
 
-    static readonly MAGIC_NUMBER: string
-    readonly name: string
-    readonly resolution: number
-    readonly aspectRatio: string
-    readonly date: number
-    readonly data: Uint8ClampedArray
-
-    constructor(
-      name: string, resolution: number, aspectRatio: string, date: number, imageData:Uint8ClampedArray,
-    )
-
-  }
-
-  function bgpxToBase64( bgpx:Bgpx ): string
+  /**
+   * Transforms a BGPX binary file to a base64 url
+   */
+  function bgpxToBase64( bgpx:Uint8ClampedArray ): string
 
 }
 
