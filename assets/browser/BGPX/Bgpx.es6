@@ -6,7 +6,6 @@ class Bgpx {
 
   /** @readonly */ static MAGIC_NUMBER = 'BGPX'
   
-  /** @readonly */ id
   /** @readonly */ name
   /** @readonly */ resolution
   /** @readonly */ aspectRatio
@@ -14,15 +13,13 @@ class Bgpx {
   /** @readonly @type { Uint8ClampedArray } */ #data
 
   /**
-   * @param { string } id
    * @param { string } name
    * @param { number } resolution
    * @param { string } aspectRatio
    * @param { number } date
    * @param { Uint8ClampedArray } imageData
    */
-  constructor( id, name, resolution, aspectRatio, date, imageData ) {
-    this.id = id
+  constructor( name, resolution, aspectRatio, date, imageData ) {
     this.name = name
     this.resolution = resolution
     this.aspectRatio = aspectRatio
@@ -37,7 +34,6 @@ class Bgpx {
   buildHeader( byteList ) {
     const bytesUtility = new _BGPX.ByteStreamUtility( byteList )
     bytesUtility.appendString( Bgpx.MAGIC_NUMBER )
-    bytesUtility.appendString( this.id, true )
     bytesUtility.appendString( this.name, true )
     bytesUtility.addInt( this.resolution, 2 )
     bytesUtility.appendString( this.aspectRatio, true )

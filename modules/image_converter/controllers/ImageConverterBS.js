@@ -42,8 +42,8 @@ export class ImageConverterBS {
       dataConverted = await this.browser.call( 'prepare-png', { data, resolution } )
     }
     else if( format === Format.BGPX ) {
-      const [ id, name, aspectRatio, date ] = /** @type { [ String, String, String, number ] } */ ( restArgs )
-      dataConverted = await this.browser.call( 'convert-bgpx', { data, id, name, aspectRatio, date } )
+      const [ name, aspectRatio, date ] = /** @type { [ String, String, String, number ] } */ ( restArgs )
+      dataConverted = await this.browser.call( 'convert-bgpx', { data, name, aspectRatio, date } )
     }
     return dataConverted
   }

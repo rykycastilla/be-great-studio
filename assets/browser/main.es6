@@ -29,7 +29,6 @@ function preparePng( args ) {
 /**
  * @typedef { object } ConvertBgpxArgs
  * @property { string } data
- * @property { string } id
  * @property { string } name
  * @property { string } aspectRatio  `${ number }:${ number }` pattern
  * @property { number } date
@@ -40,8 +39,8 @@ function preparePng( args ) {
  * @returns { Promise<string> }
  */
 function convertBgpx( args ) {
-  const { data, id, name, aspectRatio, date } = args
-  return BGPX.convert( data, id, name, aspectRatio, date )
+  const { data, name, aspectRatio, date } = args
+  return BGPX.convert( data, name, aspectRatio, date )
 }
 
 window.addEventListener( 'load', main )

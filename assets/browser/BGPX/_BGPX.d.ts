@@ -22,7 +22,6 @@ declare namespace _BGPX {
   class Bgpx {
 
     static readonly MAGIC_NUMBER: string
-    readonly id: string
     readonly name: string
     readonly resolution: number
     readonly aspectRatio: string
@@ -30,8 +29,7 @@ declare namespace _BGPX {
     readonly data: Uint8ClampedArray
 
     constructor(
-      id: string, name: string, resolution: number, aspectRatio: string, date: number,
-      imageData:Uint8ClampedArray,
+      name: string, resolution: number, aspectRatio: string, date: number, imageData:Uint8ClampedArray,
     )
 
   }
