@@ -1,3 +1,5 @@
+import { Format } from '@/modules/image_converter/models'
+
 export interface SettingsContext {
   resolution: number
   setResolution( resolution:number ): void
@@ -7,4 +9,6 @@ export interface SettingsContext {
   setShowTouchCursor( showTouchCursor:boolean ): void
   exportResolution: number
   setExportResolution( exportResolution:number ): void
+  exportFormat: Format
+  setExportFormat( exportFormat:Format ): void
 }

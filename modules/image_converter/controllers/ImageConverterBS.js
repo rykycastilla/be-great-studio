@@ -1,5 +1,12 @@
-import imageConverter from '@/assets/browser/ImageConverter.es6'
+import Bgpx from '@/assets/browser/BGPX/Bgpx.es6'
+import ByteStreamUtility from '@/assets/browser/BGPX/ByteStreamUtility.es6'
+import bgpxToBase64 from '@/assets/browser/BGPX/bgpx_to_base64.es6'
+import BGPX from '@/assets/browser/BGPX/index.es6'
+import convert from '@/assets/browser/BGPX/convert.es6'
+import ImageUtils from '@/assets/browser/ImageUtils.es6'
 import main from '@/assets/browser/main.es6'
+import PNG from '@/assets/browser/PNG.es6'
+import { Format } from '../models/Format'
 import { OffscreenBrowser } from '@/utils/OffscreenBrowser'
 
 /**
@@ -13,7 +20,9 @@ import { OffscreenBrowser } from '@/utils/OffscreenBrowser'
 export class ImageConverterBS {
 
   /** @private @type { ImageConverterBS | null } */ static instance = null
-  /** @private @readonly */ browser = new OffscreenBrowser( imageConverter, main )
+  /** @private @readonly */ browser = new OffscreenBrowser(
+    BGPX, ImageUtils, PNG, Bgpx, ByteStreamUtility, bgpxToBase64, convert, main,
+  )
 
   /**
    * @private
@@ -22,17 +31,26 @@ export class ImageConverterBS {
 
   /**
    * @public
-   * @param { string } imageData
-   * @param { number } resolution
+   * @param { [ string, Format, ...unknown[] ] } args
    * @returns { Promise<string> }
    */
-  convert( imageData, resolution ) {
-    return this.browser.call( 'prepare-png', { data:imageData, resolution } )
+  async convert( ...args ) {
+    const [ data, format, ...restArgs ] = args
+    let dataConverted = ''  // Never must be returned this value
+    if( format === Format.PNG  ) {
+      const [ resolution ] = /** @type { [ number ] } */ ( restArgs )
+      dataConverted = await this.browser.call( 'prepare-png', { data, resolution } )
+    }
+    else if( format === Format.BGPX ) {
+      const [ id, name, aspectRatio, date ] = /** @type { [ String, String, String, number ] } */ ( restArgs )
+      dataConverted = await this.browser.call( 'convert-bgpx', { data, id, name, aspectRatio, date } )
+    }
+    return dataConverted
   }
 
   /**
    * @public
-   * @returns { ImageConverterBS }
+   * @returns { ImageConverter }
    */
   static getInstance() {
     if( ImageConverterBS.instance === null ) { ImageConverterBS.instance = new ImageConverterBS() }

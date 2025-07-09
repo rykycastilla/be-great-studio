@@ -1,10 +1,12 @@
 // @ts-check
 
-/// <reference path="ImageConverter.d.ts" />
+/// <reference path="./BGPX/BGPX.d.ts" />
 /// <reference path="NativeBridge.d.ts" />
+/// <reference path="./PNG.d.ts" />
 
 export function main() {
   NativeBridge.onCall( 'prepare-png', preparePng )
+  NativeBridge.onCall( 'convert-bgpx', convertBgpx )
 }
 
 /**
@@ -21,7 +23,25 @@ export function main() {
  */
 function preparePng( args ) {
   const { data, resolution } = args
-  return ImageConverter.convert( data, resolution )
+  return PNG.reScale( data, resolution )
+}
+
+/**
+ * @typedef { object } ConvertBgpxArgs
+ * @property { string } data
+ * @property { string } id
+ * @property { string } name
+ * @property { string } aspectRatio  `${ number }:${ number }` pattern
+ * @property { number } date
+ */
+
+/**
+ * @param { ConvertBgpxArgs } args
+ * @returns { Promise<string> }
+ */
+function convertBgpx( args ) {
+  const { data, id, name, aspectRatio, date } = args
+  return BGPX.convert( data, id, name, aspectRatio, date )
 }
 
 window.addEventListener( 'load', main )

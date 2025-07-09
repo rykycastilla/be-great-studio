@@ -1,0 +1,17 @@
+{
+  "target": "export-format",
+  "getter": "exportFormat",
+  "setter": "setExportFormat",
+  "optionList": [
+  {
+      "value": 0,
+      "preview": "PNG",
+      "description": "Standard Portable Network Graphics"
+    },
+      {
+      "value": 1,
+      "preview": "BGPX",
+      "description": "BeGreat Pixel file to save metadata"
+    }
+  ]
+}

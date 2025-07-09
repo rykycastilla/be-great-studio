@@ -1,24 +1,12 @@
 // @ts-check
 
-/// <reference path="./ImageConverter.d.ts" />
+/// <reference path="./PNG.d.ts" />
+/// <reference path="./ImageUtils.d.ts" />
 
 /**
- * @namespace ImageConverter
+ * @namespace PNG
  */
-Object.assign( window, { ImageConverter:{} } )
-
-/**
- * @param { string } data
- * @returns { Promise<HTMLImageElement> }
- */
-function buildImage( data ) {
-  const image = new Image()
-  /** @type { Promise<HTMLImageElement> } */ const buildingImage = new Promise( ( resolve ) => {
-    image.onload = () => resolve( image )
-  } )
-  image.src = data
-  return buildingImage
-}
+Object.assign( window, { PNG:{} } )
 
 /**
  * @param { HTMLImageElement } image
@@ -46,12 +34,12 @@ async function extractImageData( canvas ) {
 }
 
 /**
- * @param { string } data
+ * @param { string } base64Url
  * @param { number } resolution
  * @returns { Promise<string> }
  */
-async function convert( data, resolution ) {
-  const image = await buildImage( data )
+async function reScale( base64Url, resolution ) {
+  const image = await ImageUtils.buildImage( base64Url )
   const [ scaledWidth, scaledHeight ] = scale( image, resolution )
   const canvas = new OffscreenCanvas( scaledWidth, scaledHeight )
   // Re-scaling image
@@ -64,4 +52,4 @@ async function convert( data, resolution ) {
 }
 
 export {}
-ImageConverter.convert = convert
+PNG.reScale = reScale

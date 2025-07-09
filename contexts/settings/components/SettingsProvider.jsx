@@ -1,3 +1,4 @@
+import { Format } from '@/modules/image_converter/models'
 import { SettingsContext } from '../context'
 import { useEffect } from 'react'
 import { useStorageState } from '@/hooks/storage_state'
@@ -23,6 +24,7 @@ const ConfigProvider = ( props ) => {
   const [ aspectRatio, setAspectRatio, loadingAspectRatio ] = useStorageState( '3:4', 'config-aspect-ratio' )
   const [ showTouchCursor, setShowTouchCursor, loadingShowTouchCursor ] = useStorageState( true, 'config-show-touch-cursor' )
   const [ exportResolution, setExportResolution, loadingExportResolution ] = useStorageState( 540, 'config-export-resolution' )
+  const [ exportFormat, setExportFormat, loadingExportFormat ] = useStorageState( Format.PNG, 'config-export-format' )
 
   useEffect( () => {
     const fn = async() => {
@@ -30,6 +32,7 @@ const ConfigProvider = ( props ) => {
       await loadingAspectRatio
       await loadingShowTouchCursor
       await loadingExportResolution
+      await loadingExportFormat
       handleLoad()
     }
     fn()
@@ -42,6 +45,7 @@ const ConfigProvider = ( props ) => {
         aspectRatio, setAspectRatio,
         showTouchCursor, setShowTouchCursor,
         exportResolution, setExportResolution,
+        exportFormat, setExportFormat,
       } }>
       { children }
     </SettingsContext.Provider>

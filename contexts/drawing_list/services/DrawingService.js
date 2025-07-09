@@ -3,9 +3,9 @@ import { NameService } from './NameService'
 /**
  * @import { ConfigRepository } from '@/modules/config/services'
  * @import { Drawing } from '../models/Drawing'
+ * @import { DrawingDTO } from '../services/DrawingDTO'
  * @import { DrawingRepository } from './DrawingRepository'
  * @import { DrawingMapper } from './DrawingMapper'
- * @import { ImageConverter } from '@/modules/image_converter/services'
  * @import { SharingService } from '@/modules/share/services'
  * @import { ThumbnailDAO } from './ThumbnailDAO'
 */
@@ -19,7 +19,6 @@ export class DrawingService {
   /** @private @readonly */ genId
   /** @private @readonly */ nameService
   /** @private @readonly */ sharingService
-  /** @private @readonly */ imageConverter
 
   /**
    * @param { DrawingRepository } drawingRepository
@@ -27,10 +26,9 @@ export class DrawingService {
    * @param { ThumbnailDAO } thumbnailDAO
    * @param { DrawingMapper } drawingMapper
    * @param { SharingService } sharingService
-   * @param { ImageConverter } imageConverter
    * @param { () => string } genId
    */
-  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, imageConverter, genId ) {
+  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId ) {
     this.drawingRepository = drawingRepository
     this.configRepository = configRepository
     this.thumbnailDAO = thumbnailDAO
@@ -38,7 +36,6 @@ export class DrawingService {
     this.genId = genId
     this.nameService = new NameService()
     this.sharingService = sharingService
-    this.imageConverter = imageConverter
   }
 
   /**
@@ -112,16 +109,17 @@ export class DrawingService {
    * Share a drawing to another application
    * @public
    * @param { Drawing } drawing
-   * @param { number } toResolution
+   * @param { ( data:string, drawing:DrawingDTO ) => Promise<string> } [ convert ]
    */
-  async share( drawing, toResolution ) {
+  async share( drawing, convert ) {
     const { name } = drawing
     // Extracting image data
-    const { id, last_modified } = this.drawingMapper.toDTO( drawing )
+    const dto = this.drawingMapper.toDTO( drawing )
+    const { id, last_modified } = dto
     let data = await this.thumbnailDAO.get( id, last_modified )
     if( data === null ) { return }
     // Converting image
-    data = await this.imageConverter.convert( data, toResolution )
+    if( convert !== undefined ) { data = await convert( data, dto ) }
     await this.sharingService.share( name, data )
   }
 

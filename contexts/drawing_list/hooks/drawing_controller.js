@@ -3,6 +3,7 @@ import { ConfigRepository } from '@/modules/config/services'
 import { DrawingMapper } from '../services/DrawingMapper'
 import { DrawingRepository } from '../services/DrawingRepository'
 import { DrawingService } from '../services/DrawingService'
+import { Format } from '@/modules/image_converter/models'
 import { genId } from '@/utils/gen_id'
 import { ImageConverterBS } from '@/modules/image_converter/controllers'
 import { REAL_EXPORT_RESOLUTION_REF } from '@/constants'
@@ -15,7 +16,10 @@ import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { Drawing } from '../models/Drawing'
+   @import { DrawingDTO } from '../services/DrawingDTO'
  */
+
+const imageConverter = ImageConverterBS.getInstance()
 
 /**
  * @typedef { object } DrawingControllerResult
@@ -35,7 +39,7 @@ import { useSettings } from '@/contexts/settings'
 export function useDrawingController() {
 
   const [ drawingList, setDrawingList ] = useState( /** @type { Drawing[] } */ ( [] ) )
-  const { exportResolution } = useSettings()
+  const { exportResolution, exportFormat } = useSettings()
 
   const thumbnailDAO = useMemo( () => {
     return new ThumbnailFileSystemDAO()
@@ -55,9 +59,8 @@ export function useDrawingController() {
     const configDAO = new AsyncStorageConfigDAO()
     const configRepository = new ConfigRepository( configDAO )
     const sharingService = SharingFactory.createInstance()
-    const converter = ImageConverterBS.getInstance()
     return new DrawingService(
-      drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, converter, genId,
+      drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId,
     )
   }, [ thumbnailDAO, drawingMapper ] )
 
@@ -105,16 +108,29 @@ export function useDrawingController() {
       await updateDrawingList()
     }, [ drawingService, updateDrawingList ] )
 
-  const shareDrawing = useCallback(
-    /** @type { ( drawing:Drawing ) => Promise<void> } */
-    async( drawing ) => {
+  const convertImage = useCallback(
+    /** @type { ( data:string, drawing:DrawingDTO ) => Promise<string> } */
+    async( data, drawing ) => {
+      const { id, name, aspect_ratio, last_modified } = drawing
       // Calculating selected resolution t be exported
       const toResolution = exportResolution !== REAL_EXPORT_RESOLUTION_REF
         ? exportResolution
         : drawing.resolution  // Real resolution used
-      // Sharing
-      await drawingService.share( drawing, toResolution )
-    }, [ drawingService, exportResolution ] )
+      let result = ''
+      if( exportFormat === Format.PNG ) {
+        result = await imageConverter.convert( data, Format.PNG, toResolution )
+      }
+      else if( exportFormat == Format.BGPX ) {
+        result = await imageConverter.convert( data, Format.BGPX, id, name, aspect_ratio, last_modified )
+      }
+      return result
+    }, [ exportResolution, exportFormat ] )
+
+  const shareDrawing = useCallback(
+    /** @type { ( drawing:Drawing ) => Promise<void> } */
+    async( drawing ) => {
+      await drawingService.share( drawing, convertImage )
+    }, [ drawingService, convertImage ] )
 
   const loadDrawingThumbnail = useCallback(
     /** @type { ( drawing:Drawing ) => Promise<string|null> } */

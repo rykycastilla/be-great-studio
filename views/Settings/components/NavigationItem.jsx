@@ -12,6 +12,7 @@ import { useTheme } from '@/contexts/theme'
  * @property { string } target
  * @property { string } label
  * @property { string } [ value ]
+ * @property { boolean } [ disabled ]
  */
 
 /**
@@ -19,18 +20,19 @@ import { useTheme } from '@/contexts/theme'
  * @returns { ReactElement }
  */
 const NavigationItem = ( props ) => {
-  const { target, label, value } = props
+  const { target, label, value, disabled } = props
   const { colors } = useTheme()
   const router = useRouter()
   return (
     <TouchableOpacity
       style={ [ styles.settingItem, { backgroundColor:colors.card, borderColor:colors.border } ] }
       onPress={ () => router.push( `/settings/${ target }` ) }
+      disabled={ disabled }
       activeOpacity={ 0.7 }>
-      <Text style={ [ styles.settingLabel, { color:colors.text } ] }>{ label }</Text>
+      <Text style={ [ styles.settingLabel, { color:( disabled ? colors.inactive : colors.text ) } ] }>{ label }</Text>
       <View style={ styles.valueContainer }>
         <Text style={ [ styles.valueText, { color:colors.inactive } ] }>{ value }</Text>
-        <Ionicons name="chevron-forward" size={ 20 } color={ colors.inactive } />
+        { !disabled && <Ionicons name="chevron-forward" size={ 20 } color={ colors.inactive } /> }
       </View>
     </TouchableOpacity>
   )
