@@ -1,12 +1,9 @@
-import ByteStreamUtility from '@/assets/browser/BGPX/ByteStreamUtility.es6'
-import bgpxToBase64 from '@/assets/browser/BGPX/bgpx_to_base64.es6'
-import BGPX from '@/assets/browser/BGPX/index.es6'
-import constants from '@/assets/browser/BGPX/constants.es6'
-import convert from '@/assets/browser/BGPX/convert.es6'
-import encode from '@/assets/browser/BGPX/encode.es6'
+import BGPX from '@/assets/browser/BGPX.es6'
+import BufferedURL from '@/assets/browser/BufferedURL.es6'
 import ImageUtils from '@/assets/browser/ImageUtils.es6'
 import main from '@/assets/browser/main.es6'
 import PNG from '@/assets/browser/PNG.es6'
+import PngMetadata from '@/assets/browser/PngMetadata.es6'
 import { Format } from '../models/Format'
 import { OffscreenBrowser } from '@/utils/OffscreenBrowser'
 
@@ -22,7 +19,7 @@ export class ImageConverterBS {
 
   /** @private @type { ImageConverterBS | null } */ static instance = null
   /** @private @readonly */ browser = new OffscreenBrowser(
-    BGPX, ImageUtils, PNG, ByteStreamUtility, bgpxToBase64, constants, convert, encode, main,
+    BGPX, BufferedURL, ImageUtils, PNG, PngMetadata, main,
   )
 
   /**
@@ -43,8 +40,8 @@ export class ImageConverterBS {
       dataConverted = await this.browser.call( 'prepare-png', { data, resolution } )
     }
     else if( format === Format.BGPX ) {
-      const [ name, aspectRatio, date ] = /** @type { [ String, String, String, number ] } */ ( restArgs )
-      dataConverted = await this.browser.call( 'convert-bgpx', { data, name, aspectRatio, date } )
+      const [ name, resolution, aspectRatio, date ] = /** @type { [ string, number, string, string, number ] } */ ( restArgs )
+      dataConverted = await this.browser.call( 'convert-bgpx', { data, name, resolution, aspectRatio, date } )
     }
     return dataConverted
   }

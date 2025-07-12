@@ -111,7 +111,7 @@ export function useDrawingController() {
   const convertImage = useCallback(
     /** @type { ( data:string, drawing:DrawingDTO ) => Promise<string> } */
     async( data, drawing ) => {
-      const { name, aspect_ratio, last_modified } = drawing
+      const { name, resolution, aspect_ratio, last_modified } = drawing
       // Calculating selected resolution t be exported
       const toResolution = exportResolution !== REAL_EXPORT_RESOLUTION_REF
         ? exportResolution
@@ -121,7 +121,7 @@ export function useDrawingController() {
         result = await imageConverter.convert( data, Format.PNG, toResolution )
       }
       else if( exportFormat == Format.BGPX ) {
-        result = await imageConverter.convert( data, Format.BGPX, name, aspect_ratio, last_modified )
+        result = await imageConverter.convert( data, Format.BGPX, name, resolution, aspect_ratio, last_modified )
       }
       return result
     }, [ exportResolution, exportFormat ] )

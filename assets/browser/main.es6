@@ -1,8 +1,8 @@
 // @ts-check
 
-/// <reference path="./BGPX/BGPX.d.ts" />
 /// <reference path="NativeBridge.d.ts" />
 /// <reference path="./PNG.d.ts" />
+/// <reference path="./PngMetadata.d.ts" />
 
 export function main() {
   NativeBridge.onCall( 'prepare-png', preparePng )
@@ -30,6 +30,7 @@ function preparePng( args ) {
  * @typedef { object } ConvertBgpxArgs
  * @property { string } data
  * @property { string } name
+ * @property { number } resolution
  * @property { string } aspectRatio  `${ number }:${ number }` pattern
  * @property { number } date
  */
@@ -39,8 +40,10 @@ function preparePng( args ) {
  * @returns { Promise<string> }
  */
 function convertBgpx( args ) {
-  const { data, name, aspectRatio, date } = args
-  return BGPX.convert( data, name, aspectRatio, date )
+  const { data, name, resolution, aspectRatio, date } = args
+  return BGPX.encode( data, name, resolution, aspectRatio, date )
 }
 
 window.addEventListener( 'load', main )
+
+export {}
