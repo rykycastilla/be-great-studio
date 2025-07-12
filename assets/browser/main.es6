@@ -7,6 +7,7 @@
 export function main() {
   NativeBridge.onCall( 'prepare-png', preparePng )
   NativeBridge.onCall( 'convert-bgpx', convertBgpx )
+  NativeBridge.onCall( 'decode-bgpx', decodeBgpx )
 }
 
 /**
@@ -42,6 +43,20 @@ function preparePng( args ) {
 function convertBgpx( args ) {
   const { data, name, resolution, aspectRatio, date } = args
   return BGPX.encode( data, name, resolution, aspectRatio, date )
+}
+
+/**
+ * @typedef { object } DecodeBgpxArgs
+ * @property { string } data
+ */
+
+/**
+ * @param { DecodeBgpxArgs } args
+ * @returns { ReturnType<typeof BGPX.decode> }
+ */
+function decodeBgpx( args ) {
+  const { data } = args
+  return BGPX.decode( data )
 }
 
 window.addEventListener( 'load', main )

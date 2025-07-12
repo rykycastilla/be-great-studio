@@ -1,1 +1,1 @@
-export { ImageConverter } from './ImageConverter'
+export { ImageConverter, BgpxProperties } from './ImageConverter'

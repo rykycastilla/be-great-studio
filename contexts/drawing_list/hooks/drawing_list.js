@@ -12,6 +12,7 @@ import { useContext } from 'react'
  * @property { ( drawing:Drawing, newProperties:Partial<Drawing> ) => Promise<void> } updateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } duplicateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } shareDrawing
+ * @property { ( bgpxData:string ) => Promise<void> } importDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } removeDrawing
  */
 
@@ -19,6 +20,6 @@ import { useContext } from 'react'
  * @returns { DrawingListResult }
  */
 export function useDrawingList() {
-  const { drawingList, saveDrawing, updateDrawing, duplicateDrawing, shareDrawing, removeDrawing } = useContext( DrawingListContext )
-  return { drawingList, saveDrawing, updateDrawing, duplicateDrawing, shareDrawing, removeDrawing }
+  const { drawingList, saveDrawing, updateDrawing, duplicateDrawing, shareDrawing, removeDrawing, importDrawing } = useContext( DrawingListContext )
+  return { drawingList, saveDrawing, updateDrawing, duplicateDrawing, shareDrawing, importDrawing, removeDrawing }
 }

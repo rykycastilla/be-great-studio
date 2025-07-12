@@ -8,7 +8,7 @@ import { Format } from '../models/Format'
 import { OffscreenBrowser } from '@/utils/OffscreenBrowser'
 
 /**
- * @import { ImageConverter } from '../services'
+ * @import { BgpxProperties, ImageConverter } from '../services'
  */
 
 /**
@@ -44,6 +44,14 @@ export class ImageConverterBS {
       dataConverted = await this.browser.call( 'convert-bgpx', { data, name, resolution, aspectRatio, date } )
     }
     return dataConverted
+  }
+
+  /**
+   * @param { string } bgpxImageData
+   * @returns { Promise<BgpxProperties|undefined> }
+   */
+  decode( bgpxImageData ) {
+    return this.browser.call( 'decode-bgpx', { data:bgpxImageData } )
   }
 
   /**

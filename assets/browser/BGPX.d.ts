@@ -15,4 +15,9 @@ declare namespace BGPX {
     base64Url: string
   }
 
+  /**
+   * Converts a BGPX base64 url to a PNG base64 url and recovers its metadata
+   */
+  function decode( bgpxUrl:string ): Promise<Bgpx>
+
 }

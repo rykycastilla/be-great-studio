@@ -30,6 +30,7 @@ const imageConverter = ImageConverterBS.getInstance()
  * @property { ( drawing:Drawing ) => Promise<void> } duplicateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } removeDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } shareDrawing
+ * @property { ( bgpxData:string ) => Promise<void> } importDrawing
  * @property { ( drawing:Drawing ) => Promise<string|null> } loadDrawingThumbnail
  */
 
@@ -138,11 +139,25 @@ export function useDrawingController() {
       return thumbnailService.loadThumbnail( drawing )
     }, [ thumbnailService ] )
 
+  const importDrawing = useCallback(
+    /** @type { ( bgpxData:string ) => Promise<void> } */
+    async( bgpxData ) => {
+      const result = await imageConverter.decode( bgpxData )
+      if( result === undefined ) { return }
+      const { name, resolution, aspectRatio, date, base64Url } = result
+      const id = genId()
+      /** @type { DrawingDTO } */ const drawingDto = {
+        id, name, resolution, aspect_ratio:aspectRatio, last_modified:date, thumbnail:'',
+      }
+      const drawing = drawingMapper.toModel( drawingDto )
+      await saveDrawing( drawing, base64Url )
+    }, [ drawingMapper, saveDrawing ] )
+
   return {
     drawingList, loadingList,
     saveDrawing, updateDrawing, removeDrawing,
     duplicateDrawing,
-    shareDrawing,
+    shareDrawing, importDrawing,
     loadDrawingThumbnail,
   }
 
