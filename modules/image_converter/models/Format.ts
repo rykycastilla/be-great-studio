@@ -1,4 +1,5 @@
 export enum Format {
-  PNG,
   BGPX,
+  PNG,
+  JPEG,
 }

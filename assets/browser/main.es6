@@ -1,11 +1,13 @@
 // @ts-check
 
+/// <reference path="./BGPX.d.ts" />
+/// <reference path="./ImageUtils.d.ts" />
 /// <reference path="NativeBridge.d.ts" />
-/// <reference path="./PNG.d.ts" />
 /// <reference path="./PngMetadata.d.ts" />
 
 export function main() {
   NativeBridge.onCall( 'prepare-png', preparePng )
+  NativeBridge.onCall( 'convert-to-jpeg', convertToJpeg )
   NativeBridge.onCall( 'convert-bgpx', convertBgpx )
   NativeBridge.onCall( 'decode-bgpx', decodeBgpx )
 }
@@ -18,13 +20,20 @@ export function main() {
 
 /**
  * @param { ConvertImageArgs } args
- * @property { string } data
- * @property { number } resolution
  * @returns { Promise<string> }
  */
 function preparePng( args ) {
   const { data, resolution } = args
-  return PNG.reScale( data, resolution )
+  return ImageUtils.convert( data, 'png', resolution )
+}
+
+/**
+ * @param { ConvertImageArgs } args
+ * @returns { Promise<string> }
+ */
+function convertToJpeg( args ) {
+  const { data, resolution } = args
+  return ImageUtils.convert( data, 'jpeg', resolution )
 }
 
 /**

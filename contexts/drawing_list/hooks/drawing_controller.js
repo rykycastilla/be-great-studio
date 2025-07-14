@@ -118,11 +118,11 @@ export function useDrawingController() {
         ? exportResolution
         : drawing.resolution  // Real resolution used
       let result = ''
-      if( exportFormat === Format.PNG ) {
-        result = await imageConverter.convert( data, Format.PNG, toResolution )
-      }
-      else if( exportFormat == Format.BGPX ) {
+      if( exportFormat == Format.BGPX ) {
         result = await imageConverter.convert( data, Format.BGPX, name, resolution, aspect_ratio, last_modified )
+      }
+      else {
+        result = await imageConverter.convert( data, exportFormat, toResolution )
       }
       return result
     }, [ exportResolution, exportFormat ] )

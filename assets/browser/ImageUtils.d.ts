@@ -1,9 +1,8 @@
 declare namespace ImageUtils {
 
   /**
-   * Creates an offscreen HTML Image reference
-   * @param src  Source to be loaded as image
+   * Converts the base64url image using the specified format (and resolution)
    */
-  function buildImage( src:string ): Promise<HTMLImageElement>
+  function convert( base64Url:string, format:string, resolution:number ): Promise<string>
 
 }

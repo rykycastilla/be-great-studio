@@ -2,7 +2,6 @@ import BGPX from '@/assets/browser/BGPX.es6'
 import BufferedURL from '@/assets/browser/BufferedURL.es6'
 import ImageUtils from '@/assets/browser/ImageUtils.es6'
 import main from '@/assets/browser/main.es6'
-import PNG from '@/assets/browser/PNG.es6'
 import PngMetadata from '@/assets/browser/PngMetadata.es6'
 import { Format } from '../models/Format'
 import { OffscreenBrowser } from '@/utils/OffscreenBrowser'
@@ -19,7 +18,7 @@ export class ImageConverterBS {
 
   /** @private @type { ImageConverterBS | null } */ static instance = null
   /** @private @readonly */ browser = new OffscreenBrowser(
-    BGPX, BufferedURL, ImageUtils, PNG, PngMetadata, main,
+    BGPX, BufferedURL, ImageUtils, PngMetadata, main,
   )
 
   /**
@@ -38,6 +37,10 @@ export class ImageConverterBS {
     if( format === Format.PNG  ) {
       const [ resolution ] = /** @type { [ number ] } */ ( restArgs )
       dataConverted = await this.browser.call( 'prepare-png', { data, resolution } )
+    }
+    else if( format === Format.JPEG  ) {
+      const [ resolution ] = /** @type { [ number ] } */ ( restArgs )
+      dataConverted = await this.browser.call( 'convert-to-jpeg', { data, resolution } )
     }
     else if( format === Format.BGPX ) {
       const [ name, resolution, aspectRatio, date ] = /** @type { [ string, number, string, string, number ] } */ ( restArgs )
