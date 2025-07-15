@@ -8,20 +8,22 @@ import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { ReactElement } from 'react'
+ * @import { Setting } from '../models/Setting'
  */
 
 /**
+ * @typedef { object } ContentProps
+ * @property { Setting } setting
+ */
+
+/**
+ * @param { ContentProps } props
  * @returns { ReactElement[] | null }
  */
-const Content = () => {
+const Content = ( props ) => {
 
-  const { selection_menu } = /** @type { { selection_menu:string } } */ ( useGlobalSearchParams() )
+  const { setting } = props
   const settingsData = /** @type { Record<string,any> } */ ( useSettings() )
-  const setting = SettingsIndex[ selection_menu ]
-
-  if( setting === undefined ) {
-    return null
-  }
 
   const { getter, setter } = setting
   const selected = /** @type { any } */ ( settingsData[ getter ] )
@@ -40,18 +42,26 @@ const Content = () => {
 }
 
 /**
- * @returns { ReactElement }
+ * @returns { ReactElement | null }
  */
 const SelectionMenu = () => {
+
+  const { selection_menu } = /** @type { { selection_menu:string } } */ ( useGlobalSearchParams() )
+  const setting = SettingsIndex[ selection_menu ]
+
+  if( setting === undefined ) {
+    return null
+  }
+
   return (
     <AreaView style={ styles.container }>
-      <Header>Resolution</Header>
+      <Header>{ setting.title }</Header>
       <ScrollView
         style={ styles.content }
         contentContainerStyle={ styles.contentContainer }
         showsVerticalScrollIndicator={ false }
         bounces={ true }>
-        <Content />
+        <Content setting={ setting } />
       </ScrollView>
     </AreaView>
   )

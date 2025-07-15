@@ -1,5 +1,6 @@
 {
   "target": "aspect-ratio",
+  "title": "Aspect Ratio",
   "getter": "aspectRatio",
   "setter": "setAspectRatio",
   "optionList": [

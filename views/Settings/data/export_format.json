@@ -1,5 +1,6 @@
 {
   "target": "export-format",
+  "title": "Format",
   "getter": "exportFormat",
   "setter": "setExportFormat",
   "optionList": [
