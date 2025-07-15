@@ -56,6 +56,7 @@ const styles = StyleSheet.create( {
   },
 
   description: {
+    maxWidth: 300,
     fontSize: 14,
     marginTop: 2,
   },
