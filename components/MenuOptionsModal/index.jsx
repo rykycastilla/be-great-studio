@@ -17,12 +17,11 @@ const MenuOptionsModal = () => {
   const { selectionList } = useSelectionMode()
   useModalConfig( { title:'Select an option', hideButtons:true } )
   const sharing = useSharingInfo()
-  const onlyOne = selectionList.size === 1
   return (
     <>
-      <ShareOption hidden={ !onlyOne && sharing.isAvailable } />
+      <ShareOption hidden={ !sharing.isAvailable } />
       <DeleteOption />
-      <RenameOption hidden={ !onlyOne } />
+      <RenameOption hidden={ selectionList.size > 1 } />
       <DuplicateOption />
     </>
   )

@@ -1,14 +1,14 @@
 import { NameService } from './NameService'
+import { SharingService } from './SharingService'
 
 /**
  * @import { ConfigRepository } from '@/modules/config/services'
  * @import { Drawing } from '../models/Drawing'
- * @import { DrawingDTO } from '../services/DrawingDTO'
  * @import { DrawingRepository } from './DrawingRepository'
  * @import { DrawingMapper } from './DrawingMapper'
- * @import { SharingService } from '@/modules/share/services'
+ * @import { SharingService as SystemSharingService } from '@/modules/share/services'
  * @import { ThumbnailDAO } from './ThumbnailDAO'
-*/
+ */
 
 export class DrawingService {
 
@@ -25,17 +25,17 @@ export class DrawingService {
    * @param { ConfigRepository } configRepository
    * @param { ThumbnailDAO } thumbnailDAO
    * @param { DrawingMapper } drawingMapper
-   * @param { SharingService } sharingService
+   * @param { SystemSharingService } systemSharingService
    * @param { () => string } genId
    */
-  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, sharingService, genId ) {
+  constructor( drawingRepository, configRepository, thumbnailDAO, drawingMapper, systemSharingService, genId ) {
     this.drawingRepository = drawingRepository
     this.configRepository = configRepository
     this.thumbnailDAO = thumbnailDAO
     this.drawingMapper = drawingMapper
     this.genId = genId
     this.nameService = new NameService()
-    this.sharingService = sharingService
+    this.sharingService = new SharingService( drawingMapper, thumbnailDAO, systemSharingService )
   }
 
   /**
@@ -89,6 +89,14 @@ export class DrawingService {
   }
 
   /**
+   * @returns { SharingService[ 'share' ] }
+   */
+  get share() {
+    // @ts-expect-error Cloning the method of the dependency
+    return ( ...args ) => this.sharingService.share( ...args )
+  }
+
+  /**
    * @public
    * @param { Drawing } drawing
    */
@@ -103,24 +111,6 @@ export class DrawingService {
     // Using new data for duplicated structure
     await this.save( newDrawing, thumbnailData )
     await this.configRepository.transfer( drawing.id, newDrawing.id )
-  }
-
-  /**
-   * Share a drawing to another application
-   * @public
-   * @param { Drawing } drawing
-   * @param { ( data:string, drawing:DrawingDTO ) => Promise<string> } [ convert ]
-   */
-  async share( drawing, convert ) {
-    const { name } = drawing
-    // Extracting image data
-    const dto = this.drawingMapper.toDTO( drawing )
-    const { id, last_modified } = dto
-    let data = await this.thumbnailDAO.get( id, last_modified )
-    if( data === null ) { return }
-    // Converting image
-    if( convert !== undefined ) { data = await convert( data, dto ) }
-    await this.sharingService.share( name, data )
   }
 
   /**

@@ -16,7 +16,7 @@ import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { Drawing } from '../models/Drawing'
-   @import { DrawingDTO } from '../services/DrawingDTO'
+ * @import { DrawingDTO } from '../services/DrawingDTO'
  */
 
 const imageConverter = ImageConverterBS.getInstance()
@@ -30,6 +30,7 @@ const imageConverter = ImageConverterBS.getInstance()
  * @property { ( drawing:Drawing ) => Promise<void> } duplicateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } removeDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } shareDrawing
+ * @property { ( drawing:Drawing[] ) => Promise<void> } shareDrawing
  * @property { ( bgpxData:string ) => Promise<void> } importDrawing
  * @property { ( drawing:Drawing ) => Promise<string|null> } loadDrawingThumbnail
  */
@@ -128,9 +129,9 @@ export function useDrawingController() {
     }, [ exportResolution, exportFormat ] )
 
   const shareDrawing = useCallback(
-    /** @type { ( drawing:Drawing ) => Promise<void> } */
+    /** @type { ( drawing:Drawing|Drawing[] ) => Promise<void> } */
     async( drawing ) => {
-      await drawingService.share( drawing, convertImage )
+      await drawingService.share( /** @type { Drawing } */ ( drawing ), convertImage )
     }, [ drawingService, convertImage ] )
 
   const loadDrawingThumbnail = useCallback(

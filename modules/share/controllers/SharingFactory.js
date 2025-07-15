@@ -1,6 +1,7 @@
 import { ExpoSharingMenu } from './ExpoSharingMenu'
 import { SharingService } from '../services/SharingService'
 import { TemporalFileSystem } from './TemporalFileSystem'
+import { ZipGroup } from './ZipGroup'
 
 /**
  * @abstract
@@ -15,7 +16,7 @@ export class SharingFactory {
   static createInstance() {
     const temporalFilesService = new TemporalFileSystem()
     const sharingMenuService = new ExpoSharingMenu()
-    return new SharingService( temporalFilesService, sharingMenuService )
+    return new SharingService( temporalFilesService, sharingMenuService, ZipGroup )
   }
 
 }

@@ -24,8 +24,13 @@ const ShareOption = ( props ) => {
   const onAction = useCallback(
     /** @type { ( drawingList:Drawing[] ) => void } */
     ( drawingList ) => {
-      const [ drawing ] = /** @type { [ Drawing ] } */ ( drawingList )
-      shareDrawing( drawing )
+      if( drawingList.length === 1 ) {
+        const [ drawing ] = /** @type { [ Drawing ] } */ ( drawingList )
+        shareDrawing( drawing )
+      }
+      else {
+        shareDrawing( drawingList )
+      }
     }, [ shareDrawing ] )
 
   return (

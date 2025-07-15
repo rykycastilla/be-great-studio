@@ -12,7 +12,7 @@ export interface DrawingListContext {
   updateDrawing( drawing:Drawing, newProperties:Partial<Drawing> ): Promise<void>
   duplicateDrawing( drawing:Drawing ): Promise<void>
   removeDrawing( drawing:Drawing ): Promise<void>
-  shareDrawing( drawing:Drawing ): Promise<void>
+  shareDrawing( drawing:Drawing|Drawing[] ): Promise<void>
   importDrawing( bgpxData:string ): Promise<void>
   loadDrawingThumbnail( drawing:Drawing ): Promise<string|null>
   sort: Sort

@@ -11,7 +11,7 @@ import { useContext } from 'react'
  * @property { ( drawing:Drawing, data:string ) => Promise<void> } saveDrawing
  * @property { ( drawing:Drawing, newProperties:Partial<Drawing> ) => Promise<void> } updateDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } duplicateDrawing
- * @property { ( drawing:Drawing ) => Promise<void> } shareDrawing
+ * @property { ( drawing:Drawing|Drawing[] ) => Promise<void> } shareDrawing
  * @property { ( bgpxData:string ) => Promise<void> } importDrawing
  * @property { ( drawing:Drawing ) => Promise<void> } removeDrawing
  */
