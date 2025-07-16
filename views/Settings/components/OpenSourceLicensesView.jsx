@@ -37,6 +37,8 @@ const OpenSourceLicensesView = () => {
       <Header>Open Source Licenses</Header>
       <View style={ styles.content }>
         <Lib name="Expo" license="MIT" />
+        <Lib name="JSZip" license="MIT" />
+        <Lib name="PNG Metadata" license="MIT" />
         <Lib name="React" license="MIT" />
         <Lib name="React Native" license="MIT" />
         <Lib name="React Native Skia" license="MIT" />
