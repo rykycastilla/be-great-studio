@@ -1,6 +1,7 @@
 import OptionItem from './OptionItem'
 import { useCallback } from 'react'
 import { useDrawingList } from '@/contexts/drawing_list'
+import { useLoader } from '@/contexts/loader'
 
 /**
  * @import { Drawing } from '@/contexts/drawing_list'
@@ -20,18 +21,21 @@ const ShareOption = ( props ) => {
 
   const { hidden } = props
   const { shareDrawing } = useDrawingList()
+  const addTask = useLoader()
 
   const onAction = useCallback(
     /** @type { ( drawingList:Drawing[] ) => void } */
     ( drawingList ) => {
+      /** @type { Promise<void> | undefined } */ let sharingTask
       if( drawingList.length === 1 ) {
         const [ drawing ] = /** @type { [ Drawing ] } */ ( drawingList )
-        shareDrawing( drawing )
+        sharingTask = shareDrawing( drawing )
       }
       else {
-        shareDrawing( drawingList )
+        sharingTask = shareDrawing( drawingList )
       }
-    }, [ shareDrawing ] )
+      addTask( sharingTask )
+    }, [ addTask, shareDrawing ] )
 
   return (
     <OptionItem

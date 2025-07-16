@@ -51,8 +51,8 @@ const SaveButton = ( props ) => {
       onPress={ handleSave }>
       {
         isSaving
-          ? <ActivityIndicator size="small" color={colors.primary} />
-          : <Ionicons name="save-outline" size={22} color={colors.primary} />
+          ? <ActivityIndicator size="small" color={ colors.primary } />
+          : <Ionicons name="save-outline" size={ 22 } color={ colors.primary } />
       }
     </TouchableOpacity>
   )
