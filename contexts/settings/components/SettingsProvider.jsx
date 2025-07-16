@@ -24,7 +24,7 @@ const ConfigProvider = ( props ) => {
   const [ aspectRatio, setAspectRatio, loadingAspectRatio ] = useStorageState( '3:4', 'config-aspect-ratio' )
   const [ showTouchCursor, setShowTouchCursor, loadingShowTouchCursor ] = useStorageState( true, 'config-show-touch-cursor' )
   const [ exportResolution, setExportResolution, loadingExportResolution ] = useStorageState( 540, 'config-export-resolution' )
-  const [ exportFormat, setExportFormat, loadingExportFormat ] = useStorageState( Format.PNG, 'config-export-format' )
+  const [ exportFormat, setExportFormat, loadingExportFormat ] = useStorageState( Format.BGPX, 'config-export-format' )
 
   useEffect( () => {
     const fn = async() => {
