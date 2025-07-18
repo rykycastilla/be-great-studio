@@ -7,6 +7,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useCallback, useState } from 'react'
 import { useDrawingList } from '@/contexts/drawing_list'
+import { useLoader } from '@/contexts/loader'
 import { useLongCallback } from '@/hooks/long_callback'
 import { useRouter } from 'expo-router'
 import { useTheme } from '@/contexts/theme'
@@ -50,7 +51,8 @@ function useAddButtonToggle() {
 
   const [ isImporting, setIsImporting ] = useState( false )
   const router = useRouter()
-  const handleImporting = useBgpxPicker()
+  const importIt = useBgpxPicker()
+  const addTask = useLoader()
 
   const toggleState = useLongCallback( () => {
     setIsImporting( ( isImporting ) => !isImporting )
@@ -60,6 +62,11 @@ function useAddButtonToggle() {
     const id = IdService.create()
     router.push( `/drawing/${ id }` )
   }, [ router ] )
+
+  const handleImporting = useCallback( () => {
+    const importingDrawing = importIt()
+    addTask( importingDrawing )
+  }, [ importIt, addTask ] )
 
   /** @type { AddState } */ const creation = {
     icon:'add', handle:handleCreation,

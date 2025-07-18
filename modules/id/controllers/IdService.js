@@ -10,9 +10,7 @@ export class IdService {
    * @returns { string }
    */
   static create() {
-    const result = uuid.v4()
-    console.log( result )
-    return result
+    return uuid.v4()
   }
 
 }
