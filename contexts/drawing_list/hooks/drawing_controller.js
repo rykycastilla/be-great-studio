@@ -4,7 +4,7 @@ import { DrawingMapper } from '../services/DrawingMapper'
 import { DrawingRepository } from '../services/DrawingRepository'
 import { DrawingService } from '../services/DrawingService'
 import { Format } from '@/modules/image_converter/models'
-import { genId } from '@/utils/gen_id'
+import { IdService } from '@/modules/id/controllers'
 import { ImageConverterBS } from '@/modules/image_converter/controllers'
 import { REAL_EXPORT_RESOLUTION_REF } from '@/constants'
 import { SharingFactory } from '@/modules/share/controllers'
@@ -18,6 +18,8 @@ import { useSettings } from '@/contexts/settings'
  * @import { Drawing } from '../models/Drawing'
  * @import { DrawingDTO } from '../services/DrawingDTO'
  */
+
+/** @type { () => string } */ const genId = () => IdService.create()
 
 const imageConverter = ImageConverterBS.getInstance()
 

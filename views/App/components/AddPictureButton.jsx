@@ -1,7 +1,7 @@
 import * as FileSystem from 'expo-file-system'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
-import { genId } from '@/utils/gen_id'
+import { IdService } from '@/modules/id/controllers'
 import { getDocumentAsync } from 'expo-document-picker'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, TouchableOpacity } from 'react-native'
@@ -57,7 +57,7 @@ function useAddButtonToggle() {
   } )
 
   const handleCreation = useCallback( () => {
-    const id = genId()
+    const id = IdService.create()
     router.push( `/drawing/${ id }` )
   }, [ router ] )
 
