@@ -1,6 +1,7 @@
 import AreaView from '@/components/AreaView'
 import Header from './Header'
-import { StyleSheet, Text, View } from 'react-native'
+import { LicenseList } from '../models/LicenseList'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -14,17 +15,33 @@ import { useTheme } from '@/contexts/theme'
  */
 
 /**
- * @param { LibProps } props
  * @returns { ReactElement }
  */
-const Lib = ( props ) => {
-  const { name, license } = props
+const Separator = () => {
+  const { colors } = useTheme()
+  return <View style={ [ styles.separator, { borderColor:colors.inactive } ] } />
+}
+
+/**
+ * @typedef { object } LicenseProps
+ * @property { string } lib
+ * @property { string } name
+ * @property { string } description
+ */
+
+/**
+ * @param { LicenseProps } props
+ * @returns { ReactElement }
+ */
+const License = ( props ) => {
+  const { lib, name, description } = props
   const { colors } = useTheme()
   return (
-    <Text style={ styles.licenseText }>
-      <Text style={ { color:colors.text } }>{ name }</Text>
-      <Text style={ { color:colors.inactive } }> - { license }</Text>
-    </Text>
+    <View style={ styles.licenseContainer }>
+      <Text style={ [ styles.libName, { color:colors.text } ] }>{ lib }</Text>
+      <Text style={ [ styles.licenseName, { color:colors.text } ] }>{ name }</Text>
+      <Text style={ [ styles.licenseText, { color:colors.inactive } ] }>{ description }</Text>
+    </View>
   )
 }
 
@@ -35,33 +52,54 @@ const OpenSourceLicensesView = () => {
   return (
     <AreaView>
       <Header>Open Source Licenses</Header>
-      <View style={ styles.content }>
-        <Lib name="Expo" license="MIT" />
-        <Lib name="JSZip" license="MIT" />
-        <Lib name="PNG Metadata" license="MIT" />
-        <Lib name="React" license="MIT" />
-        <Lib name="React Native" license="MIT" />
-        <Lib name="React Native Skia" license="MIT" />
-        <Lib name="RN Drawing" license="MIT" />
-      </View>
+      <ScrollView>
+        { LicenseList.map( ( license, index ) => {
+          const { lib, name, description } = license
+          return (
+            <>
+              <License
+                key={ lib }
+                lib={ lib }
+                name={ name }
+                description={ description } />
+              { ( index < ( LicenseList.length - 1 ) ) && <Separator key={ String( index ) } /> }
+            </>
+          )
+        } ) }
+      </ScrollView>
     </AreaView>
   )
 }
 
 const styles = StyleSheet.create( {
 
-  content: {
-    flex: 1,
-    padding: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
+  licenseContainer: {
+    marginTop: 32,
+    marginLeft: 12,
+    marginRight: 12,
+    marginBottom: 16,
+  },
+
+  libName: {
+    fontSize: 20,
+  },
+
+  licenseName: {
+    marginTop: 18,
+    fontSize: 16,
   },
 
   licenseText: {
-    fontSize: 18,
-    fontWeight: '600',
-    textAlign: 'center',
-    marginBottom: 16,
+    marginTop: 16,
+    fontSize: 16,
+    textAlign: 'justify',
+  },
+
+  separator: {
+    width: '100%',
+    marginLeft: 12,
+    marginRight: 12,
+    borderWidth: 1,
   },
 
 } )
