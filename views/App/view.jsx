@@ -20,12 +20,15 @@ import { usePreview } from './hooks/preview'
  * @returns { ReactElement }
  */
 const App = () => {
+
   const { isSelectionMode, setIsSelectionMode } = useSelectionMode()
   const { preview, previewScale, previewOpacity, handleLongPress, handlePressOut } = usePreview()
+
   useBack( () => {
     if( isSelectionMode ) { setIsSelectionMode( false ) }
     else { return true }
   } )
+
   return (
     <>
       <AreaView style={ styles.container }>
@@ -56,6 +59,7 @@ const App = () => {
       { ( preview !== null ) && <ItemPreview drawing={ preview } scale={ previewScale } opacity={ previewOpacity } /> }
     </>
   )
+
 }
 
 const styles = StyleSheet.create( {
