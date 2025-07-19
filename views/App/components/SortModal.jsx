@@ -1,6 +1,7 @@
 import SortIcon from './SortIcon'
 import { SortCategory, useSort } from '@/contexts/drawing_list'
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 
@@ -44,20 +45,21 @@ const Item = ( props ) => {
  * @returns { ReactElement }
  */
 const SortModal = () => {
-  useModalConfig( { title:'Sorting', hideButtons:true } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'sorting' ), hideButtons:true } )
   return (
     <>
       <Item category={ SortCategory.ALPHABETICAL } ascending={ true }>
-        Alphabetical (Ascending)
+        { t( 'alphabetical-ascending' ) }
       </Item>
       <Item category={ SortCategory.ALPHABETICAL } ascending={ false }>
-        Alphabetical (Descending)
+        { t( 'alphabetical-descending' ) }
       </Item>
       <Item category={ SortCategory.DATE } ascending={ true }>
-        By Date (Ascending)
+        { t( 'by-date-ascending' ) }
       </Item>
       <Item category={ SortCategory.DATE } ascending={ false }>
-        By Date (Descending)
+        { t( 'by-date-descending' ) }
       </Item>
     </>
   )

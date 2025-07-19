@@ -1,1 +1,22 @@
-{}
+{
+  "select": "Select",
+  "cancel": "Cancel",
+  "selected-singular": "selected",
+  "selected-plural": "selected",
+  "select-option": "Select an option",
+  "share": "Share",
+  "delete": "Delete",
+  "rename": "Rename",
+  "duplicate": "Duplicate",
+  "sorting": "Sorting",
+  "warning-option-title": "$1 warning",
+  "warning-action-delete": "delete",
+  "warning-action-duplicate": "duplicate",
+  "warning-single-element": "element",
+  "warning-many-elements": "elements", 
+  "option-warning": "Area you sure y want to $1 $2 $3",
+  "alphabetical-ascending": "Alphabetical (Ascending)",
+  "alphabetical-descending": "Alphabetical (Descending)",
+  "by-date-ascending": "By Date (Ascending)",
+  "by-date-descending": "By Date (Descending)"
+}

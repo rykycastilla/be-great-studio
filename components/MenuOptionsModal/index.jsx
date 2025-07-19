@@ -2,6 +2,7 @@ import DeleteOption from './components/DeleteOption'
 import DuplicateOption from './components/DuplicateOption'
 import RenameOption from './components/RenameOption'
 import ShareOption from './components/ShareOption'
+import { useLanguage } from '@/contexts/language'
 import { useModalConfig } from '@/contexts/modal'
 import { useSelectionMode } from '@/contexts/drawing_list'
 import { useSharingInfo } from '@/contexts/sharing_info'
@@ -15,7 +16,8 @@ import { useSharingInfo } from '@/contexts/sharing_info'
  */
 const MenuOptionsModal = () => {
   const { selectionList } = useSelectionMode()
-  useModalConfig( { title:'Select an option', hideButtons:true } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'select-option' ), hideButtons:true } )
   const sharing = useSharingInfo()
   return (
     <>

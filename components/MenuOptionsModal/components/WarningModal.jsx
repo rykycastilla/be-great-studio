@@ -1,5 +1,6 @@
 import { capitalizeFirst } from '@/utils/capitalize_first'
 import { StyleSheet, Text } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useModalAction, useModalConfig } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 
@@ -21,9 +22,10 @@ const WarningModal = ( props ) => {
 
   const { args } = props
   const [ action, drawingList, onAccept ] = args
-  const isOnlyOne = drawingList.length === 1
+  const elementGrammaticalNumber = ( drawingList.length === 1 ) ? 'warning-single-element' : 'warning-many-elements'
   const { colors } = useTheme()
-  useModalConfig( { title:`${ capitalizeFirst( action ) } warning` } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'warning-option-title', capitalizeFirst( action ) ) } )
 
   useModalAction( () => {
     onAccept( drawingList )
@@ -31,7 +33,7 @@ const WarningModal = ( props ) => {
 
   return (
     <Text style={ [ styles.text, { color:colors.text } ] }>
-      Area you sure y want to { action } { drawingList.length } { isOnlyOne ? 'element' : 'elements' }
+      { t( 'option-warning', action, drawingList.length, t( elementGrammaticalNumber ) ) }
     </Text>
   )
 

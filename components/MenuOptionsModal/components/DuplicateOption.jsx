@@ -2,6 +2,7 @@ import OptionItem from './OptionItem'
 import WarningModal from './WarningModal'
 import { useCallback } from 'react'
 import { useDrawingList } from '@/contexts/drawing_list'
+import { useLanguage } from '@/contexts/language'
 import { useModal } from '@/contexts/modal'
 
 /**
@@ -16,6 +17,7 @@ const DuplicateOption = () => {
 
   const dispatchWarningModal = useModal( 'warning', WarningModal, {} )
   const { duplicateDrawing } = useDrawingList()
+  const { t } = useLanguage()
 
   const onAccept = useCallback(
     /** @type { ( drawingList:Drawing[] ) => Promise<void> } */
@@ -28,12 +30,12 @@ const DuplicateOption = () => {
   const onAction = useCallback(
     /** @type { ( drawingList:Drawing[] ) => void } */
     ( drawingList ) => {
-      dispatchWarningModal( 'duplicate', drawingList, onAccept )
-    }, [ dispatchWarningModal, onAccept ] )
+      dispatchWarningModal( t( 'warning-action-duplicate' ), drawingList, onAccept )
+    }, [ dispatchWarningModal, onAccept, t ] )
 
   return (
     <OptionItem
-      name="Duplicate"
+      name={ t( 'duplicate' ) }
       icon="copy-outline"
       onAction={ onAction } />
   )

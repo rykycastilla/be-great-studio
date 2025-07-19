@@ -1,5 +1,6 @@
 import OptionItem from './OptionItem'
 import RenamingModal from './RenamingModal'
+import { useLanguage } from '@/contexts/language'
 import { useModal } from '@/contexts/modal'
 
 /**
@@ -18,9 +19,10 @@ import { useModal } from '@/contexts/modal'
 const RenameOption = ( props ) => {
   const { hidden } = props
   const dispatchRenamingModal = useModal( 'renaming', RenamingModal, {} )
+  const { t } = useLanguage()
   return (
     <OptionItem
-      name="Rename"
+      name={ t( 'rename' ) }
       icon="pencil-outline"
       hidden={ hidden }
       onAction={ dispatchRenamingModal } />

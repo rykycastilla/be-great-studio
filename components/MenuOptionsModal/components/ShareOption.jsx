@@ -1,6 +1,7 @@
 import OptionItem from './OptionItem'
 import { useCallback } from 'react'
 import { useDrawingList } from '@/contexts/drawing_list'
+import { useLanguage } from '@/contexts/language'
 import { useLoader } from '@/contexts/loader'
 
 /**
@@ -22,6 +23,7 @@ const ShareOption = ( props ) => {
   const { hidden } = props
   const { shareDrawing } = useDrawingList()
   const addTask = useLoader()
+  const { t } = useLanguage()
 
   const onAction = useCallback(
     /** @type { ( drawingList:Drawing[] ) => void } */
@@ -39,7 +41,7 @@ const ShareOption = ( props ) => {
 
   return (
     <OptionItem
-      name="Share"
+      name={ t( 'share' ) }
       icon="share-outline"
       onAction={ onAction }
       hidden={ hidden } />

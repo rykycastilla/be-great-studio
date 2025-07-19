@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { useCallback } from 'react'
+import { useLanguage } from '@/contexts/language'
 import { useSelectionMode } from '@/contexts/drawing_list'
 import { useTheme } from '@/contexts/theme'
 
@@ -14,6 +15,7 @@ const SelectionButton = () => {
 
   const { colors } = useTheme()
   const { isSelectionMode, setIsSelectionMode } = useSelectionMode()
+  const { t } = useLanguage()
 
   // Toggle selection mode
   const handlePress = useCallback( () => {
@@ -24,7 +26,7 @@ const SelectionButton = () => {
   return (
     <TouchableOpacity onPress={ handlePress } style={ styles.selectionButton }>
       <Text style={ [ styles.selectionButtonText, { color:colors.primary } ] }>
-        { isSelectionMode ? 'Cancel' : 'Select' }
+        { isSelectionMode ? t( 'cancel' ) : t( 'select' ) }
       </Text>
     </TouchableOpacity>
   )

@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useSelectionMode } from '@/contexts/drawing_list'
 import { useTheme } from '@/contexts/theme'
 
@@ -13,6 +14,8 @@ const SelectionCounter = () => {
 
   const { colors } = useTheme()
   const { selectionList } = useSelectionMode()
+  const { t } = useLanguage()
+  const selected = selectionList.size === 1 ? 'selected-singular' : 'selected-plural'
 
   if( selectionList.size === 0 ) {
     return null
@@ -20,8 +23,8 @@ const SelectionCounter = () => {
 
   return (
     <View style={ styles.selectionCountContainer }>
-      <Text style={ [ styles.selectionCount, { color:colors.text }]}>
-        { selectionList.size } selected
+      <Text style={ [ styles.selectionCount, { color:colors.text } ] }>
+        { selectionList.size } { t( selected ) }
       </Text>
     </View>
   )
