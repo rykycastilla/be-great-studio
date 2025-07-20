@@ -1,6 +1,7 @@
 import ColorOption from './ColorOption'
 import EditColorsButton from './EditColorsButton'
 import { StyleSheet, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useEffect, useState } from 'react'
 import { useModalConfig } from '@/contexts/modal'
 
@@ -26,7 +27,8 @@ const ColorModal = ( props ) => {
   const { colorList, currentColor, setCurrentColor, dispatchColorPicker, deleteColor } = props
   const [ isDeleteMode, setIsDeleteMode ] = useState( false )
   const [ selectionList, setSelectionList ] = useState( /** @type { Set<string> } */ ( new Set() ) )
-  useModalConfig( { title:'Select a color', hideButtons:true } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'select-color' ), hideButtons:true } )
 
   // Resetting selection
   useEffect( () => {

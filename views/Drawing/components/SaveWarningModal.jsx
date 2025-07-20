@@ -1,4 +1,5 @@
 import { StyleSheet, Text } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useModalAction, useModalConfig } from '@/contexts/modal'
 import { useRouter } from 'expo-router'
 import { useTheme } from '@/contexts/theme'
@@ -21,7 +22,8 @@ const SaveWarningModal = ( props ) => {  // eslint-disable-line
 
   const { colors } = useTheme()
   const router = useRouter()
-  useModalConfig( { title:'Exit without saving?', acceptButtonTitle:'Exit' } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'exit-without-saving' ), acceptButtonTitle:t( 'exit' ) } )
 
   useModalAction( () => {
     router.back()
@@ -29,7 +31,7 @@ const SaveWarningModal = ( props ) => {  // eslint-disable-line
 
   return (
     <Text style={ [ styles.text, { color:colors.text } ] }>
-      You have unsaved changes. If you exit now, your progress will be lost.
+      { t( 'exit-without-saving-warning' ) }
     </Text>
   )
 

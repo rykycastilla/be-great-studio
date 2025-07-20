@@ -1,6 +1,7 @@
 import * as Clipboard from 'expo-clipboard'
 import SelectionCircle from '@/components/SelectionCircle'
 import { StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useLongCallback } from '@/hooks/long_callback'
 import { useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
@@ -32,10 +33,11 @@ const ColorOption = ( props ) => {
 
   const { colors } = useTheme()
   const hide = useModalHider()
+  const { t } = useLanguage()
 
   const handleLongPress = useLongCallback( async() => {
     await Clipboard.setStringAsync( color )
-    ToastAndroid.show( `Copiado: ${ color }`, ToastAndroid.SHORT )
+    ToastAndroid.show( `${ t( 'copied' ) }: ${ color }`, ToastAndroid.SHORT )
   } )
 
   const selectColor = () => {

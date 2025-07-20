@@ -1,6 +1,7 @@
 import { useDrawingList } from '@/contexts/drawing_list'
 import { useLocalSearchParams } from 'expo-router'
 import { useCallback, useMemo, useState } from 'react'
+import { useLanguage } from '@/contexts/language'
 import { useSettings } from '@/contexts/settings'
 
 /**
@@ -80,6 +81,7 @@ export function useDrawing() {
   const { id } = /** @type { { id:string } } */ ( useLocalSearchParams() )
   const settings = useSettings()
   const { drawingList } = useDrawingList()
+  const { t } = useLanguage()
 
   // Getting default resolution
   const defaultResolution = useMemo( () => {
@@ -101,13 +103,13 @@ export function useDrawing() {
   const defaultDrawing = useMemo( () => {
     return  {
       id,
-      name: 'New Drawing',
+      name: t( 'new-drawing' ),
       thumbnail: '',
       resolution: defaultResolution,
       aspectRatio: defaultAspectRatio,
       lastModified: new Date(),
     }
-  }, [ id, defaultResolution, defaultAspectRatio ] )
+  }, [ id, defaultResolution, defaultAspectRatio, t ] )
 
   // Using new drawing if it doesn't exists
   const drawing = savedDrawing ?? defaultDrawing

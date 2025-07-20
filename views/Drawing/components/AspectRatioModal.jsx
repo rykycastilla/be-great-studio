@@ -1,6 +1,7 @@
 import WarningModal from './WarningModal'
 import { optionList } from '@/views/Settings/data/aspect_ratio.json'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useModal, useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 import { wait } from '@/utils/wait'
@@ -25,13 +26,14 @@ const AspectRatioOption = ( props ) => {
   const { colors } = useTheme()
   const hide = useModalHider()
   const dispatchWarningModal = useModal( 'aspect-ratio-warning', WarningModal, {} )
+  const { t } = useLanguage()
 
   const handleAspectRatioSelection = async() => {
     hide()
     await wait( 1000 )
     dispatchWarningModal(
-      'Aspect ratio warning',
-      'Are you sure you want to change the aspect ratio of the drawing? This action will reset the changes history and modify the canvas',
+      t( 'aspect-ratio-warning' ),
+      t( 'aspect-ratio-warning-description' ),
       () => setAspectRatio( value ),
     )
   }
@@ -59,7 +61,8 @@ const AspectRatioOption = ( props ) => {
  */
 const AspectRatioModal = ( props ) => {
   const { onAspectRatioChange:setAspectRatio } = props
-  useModalConfig( { title:'Select the resolution', hideButtons:true } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'select-aspect-ratio' ), hideButtons:true } )
   return (
     <View style={styles.modalOptions}>
       { optionList.map( ( { value } ) => (

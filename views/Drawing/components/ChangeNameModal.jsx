@@ -1,4 +1,5 @@
 import Input from '@/components/Input'
+import { useLanguage } from '@/contexts/language'
 import { useModalAction, useModalConfig } from '@/contexts/modal'
 
 /**
@@ -19,8 +20,9 @@ import { useModalAction, useModalConfig } from '@/contexts/modal'
  */
 const ChangeNameModal = ( props ) => {
   const { defaultName, name, setName, onAccept } = props
+  const { t } = useLanguage()
   useModalConfig(
-    { title:'Change name', acceptButtonTitle:'Change', isButtonInactive:( name === '' ) },
+    { title:t( 'change-name' ), acceptButtonTitle:t( 'change' ), isButtonInactive:( name === '' ) },
   )
   useModalAction( onAccept )
   return <Input defaultValue={ defaultName } setValue={ setName } />

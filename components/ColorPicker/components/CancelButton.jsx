@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -17,11 +18,12 @@ import { useTheme } from '@/contexts/theme'
 const CancelButton = ( props ) => {
   const { onClose } = props
   const { colors } = useTheme()
+  const { t } = useLanguage()
   return (
     <TouchableOpacity
       style={ [ styles.cancelButton, { backgroundColor:colors.background } ] }
       onPress={ onClose }>
-      <Text style={ [ styles.buttonText, { color:colors.primary } ] }>Cancel</Text>
+      <Text style={ [ styles.buttonText, { color:colors.primary } ] }>{ t( 'cancel' ) }</Text>
     </TouchableOpacity>
   )
 }

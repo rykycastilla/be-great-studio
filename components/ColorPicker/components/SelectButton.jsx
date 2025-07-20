@@ -1,4 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -18,6 +19,7 @@ import { useTheme } from '@/contexts/theme'
 const SelectButton = ( props ) => {
   const { disabled, onConfirm:handleConfirm } = props
   const { colors } = useTheme()
+  const { t } = useLanguage()
   return (
     <TouchableOpacity
       style={ [
@@ -25,7 +27,7 @@ const SelectButton = ( props ) => {
       ] }
       onPress={ handleConfirm }
       disabled={ disabled }>
-      <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>Select</Text>
+      <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ t( 'select' ) }</Text>
     </TouchableOpacity>
   )
 }

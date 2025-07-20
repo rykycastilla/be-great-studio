@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Tool } from 'react-native-drawing'
+import { useLanguage } from '@/contexts/language'
 import { useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 import { useToolIcon } from '../hooks/tool_icon'
@@ -59,14 +60,15 @@ const ToolOption = ( props ) => {
 const ToolsModal = ( props ) => {
   const { args } = props
   const [ setTool ] = args
-  useModalConfig( { title:'Select a tool', hideButtons:true } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'select-tool' ), hideButtons:true } )
   return (
     <View style={ styles.modalOptions }>
-      <ToolOption name="Pencil" tool={ Tool.SQUARE_DOT_PEN } onToolChange={ setTool } />
-      <ToolOption name="Eraser" tool={ Tool.ERASER } onToolChange={ setTool } />
-      <ToolOption name="Filler" tool={ Tool.FILLER } onToolChange={ setTool } />
+      <ToolOption name={ t( 'pencil' ) } tool={ Tool.SQUARE_DOT_PEN } onToolChange={ setTool } />
+      <ToolOption name={ t( 'eraser' ) } tool={ Tool.ERASER } onToolChange={ setTool } />
+      <ToolOption name={ t( 'filler' ) } tool={ Tool.FILLER } onToolChange={ setTool } />
       { /** Pencil is used to emulate pencil style because of its effect in pixel art */ }
-      <ToolOption name="Brush" tool={ Tool.PENCIL } onToolChange={ setTool } />
+      <ToolOption name={ t( 'brush' ) } tool={ Tool.PENCIL } onToolChange={ setTool } />
     </View>
   )
 }

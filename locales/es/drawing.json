@@ -1,0 +1,20 @@
+{
+  "new-drawing": "New Drawing",
+  "select-tool": "Select a tool",
+  "pencil": "Pencil",
+  "eraser": "Eraser",
+  "filler": "Filler",
+  "brush": "Brush",
+  "select-color": "Select a color",
+  "copied": "Copied",
+  "color-picker": "Color Picker",
+  "select-resolution": "Select the resolution",
+  "resolution-warning": "Resolution warning",
+  "resolution-warning-description": "Are you sure you want to change the resolution of the drawing? This action will reset the changes history and modify the canvas",
+  "select-aspect-ratio": "Select the aspect ratio",
+  "aspect-ratio-warning": "Aspect Ratio warning",
+  "aspect-ratio-warning-description": "Are you sure you want to change the aspect ratio of the drawing? This action will reset the changes history and modify the canvas",
+  "exit-without-saving": "Exit without saving?",
+  "exit-without-saving-warning": "You have unsaved changes. If you exit now, your progress will be lost.",
+  "exit": "Exit"
+}

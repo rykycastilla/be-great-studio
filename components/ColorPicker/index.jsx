@@ -6,6 +6,7 @@ import ColorWheel from './components/ColorWheel'
 import ModalBackground from './components/ModalBackground'
 import SelectButton from './components/SelectButton'
 import { normalizeHex } from './functions/normalize_hex'
+import { useLanguage } from '@/contexts/language'
 import { useLayoutEffect, useState } from 'react'
 import { useModalAnimations } from './hooks/modal_animations'
 import { View, StyleSheet, Dimensions } from 'react-native'
@@ -39,6 +40,7 @@ const ColorPicker = ( props ) => {
   const screenWidth = Dimensions.get( 'window' ).width
   const cardWidth = Math.min( screenWidth - 40, 340 )
   const colorWheelSize = cardWidth - 80
+  const { t } = useLanguage()
 
   // Using initialColor
   useLayoutEffect( () => {
@@ -68,7 +70,7 @@ const ColorPicker = ( props ) => {
 
   return (
     <ModalBackground isVisible={ shouldRender } opacity={ opacity } onClose={ onClose }>
-      <Card width={ cardWidth } title="Color Picker" scale={ scale }>
+      <Card width={ cardWidth } title={ t( 'color-picker' ) } scale={ scale }>
         <View style={ styles.wheelContainer }>
           <ColorWheel
             size={ colorWheelSize }

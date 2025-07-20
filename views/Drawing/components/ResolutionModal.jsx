@@ -1,6 +1,7 @@
 import WarningModal from './WarningModal'
 import { optionList } from '@/views/Settings/data/resolution.json'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useModal, useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 import { wait } from '@/utils/wait'
@@ -25,13 +26,14 @@ const ResolutionOption = ( props ) => {
   const { colors } = useTheme()
   const hide = useModalHider()
   const dispatchWarningModal = useModal( 'resolution-warning', WarningModal, {} )
+  const { t } = useLanguage()
 
   const handleResolutionSelection = async() => {
     hide()
     await wait( 1000 )
     dispatchWarningModal(
-      'Resolution warning',
-      'Are you sure you want to change the resolution of the drawing? This action will reset the changes history and modify the canvas',
+      t( 'resolution-warning' ),
+      t( 'resolution-warning-description' ),
       () => setResolution( value ),
     )
   }
@@ -59,7 +61,8 @@ const ResolutionOption = ( props ) => {
  */
 const ResolutionModal = ( props ) => {
   const { onResolutionChange:setResolution } = props
-  useModalConfig( { title:'Select the resolution', hideButtons:true } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'select-resolution' ), hideButtons:true } )
   return (
     <View style={styles.modalOptions}>
       { optionList.map( ( { value } ) => (
