@@ -1,5 +1,6 @@
 import Input from '@/components/Input'
 import { useDrawingList } from '@/contexts/drawing_list'
+import { useLanguage } from '@/contexts/language'
 import { useModalAction, useModalConfig } from '@/contexts/modal'
 import { useState } from 'react'
 
@@ -25,7 +26,8 @@ const RenamingModal = ( props ) => {
   const [ name, setName ] = useState( '' )
   const { updateDrawing } = useDrawingList()
   const isButtonInactive = name === ''
-  useModalConfig( { title:'Change name', acceptButtonTitle:'Change', isButtonInactive } )
+  const { t } = useLanguage()
+  useModalConfig( { title:t( 'change-name' ), acceptButtonTitle:t( 'change' ), isButtonInactive } )
 
   useModalAction( () => {
     updateDrawing( drawing, { name } )

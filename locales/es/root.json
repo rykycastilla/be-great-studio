@@ -1,6 +1,7 @@
 {
   "select": "Select",
   "cancel": "Cancel",
+  "accept": "Accept",
   "selected-singular": "selected",
   "selected-plural": "selected",
   "select-option": "Select an option",
@@ -18,5 +19,7 @@
   "alphabetical-ascending": "Alphabetical (Ascending)",
   "alphabetical-descending": "Alphabetical (Descending)",
   "by-date-ascending": "By Date (Ascending)",
-  "by-date-descending": "By Date (Descending)"
+  "by-date-descending": "By Date (Descending)",
+  "change-name": "Change name",
+  "change": "Change"
 }

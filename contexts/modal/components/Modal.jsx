@@ -3,6 +3,7 @@ import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useCallback } from 'react'
+import { useLanguage } from '@/contexts/language'
 import { useModalHider } from '../hooks/modal_hider'
 import { useTheme } from '@/contexts/theme'
 
@@ -32,6 +33,7 @@ const Modal = ( props ) => {
   } = props
   const hide = useModalHider()
   const { colors } = useTheme()
+  const { t } = useLanguage()
 
   const handleAccept = useCallback( () => {
     hide()
@@ -50,7 +52,7 @@ const Modal = ( props ) => {
             <TouchableOpacity
               style={ [ styles.button, { backgroundColor:colors.background } ] }
               onPress={ hide }>
-              <Text style={ [ styles.buttonText, { color:colors.primary } ] }>Cancel</Text>
+              <Text style={ [ styles.buttonText, { color:colors.primary } ] }>{ t( 'cancel' ) }</Text>
             </TouchableOpacity>
             <TouchableOpacity
               disabled={ isButtonInactive }
@@ -61,7 +63,7 @@ const Modal = ( props ) => {
                 ]
               }
               onPress={ debounce( handleAccept, BUTTON_DEBOUNCE_DELAY ) }>
-              <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? 'Accept' }</Text>
+              <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? t( 'accept' ) }</Text>
             </TouchableOpacity>
           </View>
         )
