@@ -1,23 +1,23 @@
 {
   "target": "resolution",
-  "title": "Resolution",
+  "title": "resolution",
   "getter": "resolution",
   "setter": "setResolution",
   "optionList": [
     {
       "value": 16,
       "preview": "16px",
-      "description": "Ultra High pixels"
+      "description": "ultra-high-pixels"
     },
     {
       "value": 32,
       "preview": "32px",
-      "description": "Standard Pixel Art"
+      "description": "standard-pixel-art"
     },
     {
       "value": 64,
       "preview": "64px",
-      "description": "Moderated Definition"
+      "description": "moderated-definition"
     }
   ]
 }

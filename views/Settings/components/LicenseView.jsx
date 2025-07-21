@@ -2,6 +2,7 @@ import AreaView from '@/components/AreaView'
 import Header from './Header'
 import icon from '@/assets/images/icon.png'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -13,9 +14,10 @@ import { useTheme } from '@/contexts/theme'
  */
 const LicenseView = () => {
   const { colors } = useTheme()
+  const { t } = useLanguage()
   return (
     <AreaView>
-      <Header>License</Header>
+      <Header>{ t( 'license' ) }</Header>
       <View style={ styles.content }>
         <Image source={ icon } style={ styles.brandIcon } />
         <Text style={ styles.licenseContainer }>

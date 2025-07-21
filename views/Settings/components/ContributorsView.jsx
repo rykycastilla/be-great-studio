@@ -1,6 +1,7 @@
 import AreaView from '@/components/AreaView'
 import Header from './Header'
 import { StyleSheet, Text, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -26,14 +27,15 @@ const Contribuitor = ( props ) => {
 /**
  * @returns { ReactElement }
  */
-const ContribuitorsView = () => {
+const ContributorsView = () => {
+  const { t } = useLanguage()
   return (
     <AreaView>
-      <Header>Contribuitors</Header>
+      <Header>{ t( 'contributors' ) }</Header>
       <View style={ styles.content }>
-        <Contribuitor occupation="Developer" name="Orestes Ricardo Castilla Escalona" />
-        <Contribuitor occupation="Foundational Logo Designer" name="Jonathan Brito Savón" />
-        <Contribuitor occupation="Name Creator" name="David Silveira Bidot" />
+        <Contribuitor occupation={ t( 'developer' ) } name="Orestes Ricardo Castilla Escalona" />
+        <Contribuitor occupation={ t( 'logo-designer' ) } name="Jonathan Brito Savón" />
+        <Contribuitor occupation={ t( 'name-creator' ) } name="David Silveira Bidot" />
       </View>
     </AreaView>
   )
@@ -57,4 +59,4 @@ const styles = StyleSheet.create( {
 
 } )
 
-export default ContribuitorsView
+export default ContributorsView

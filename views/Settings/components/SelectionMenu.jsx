@@ -4,6 +4,7 @@ import SelectionItem from './SelectionItem'
 import { SettingsIndex } from '../models/SettingsIndex'
 import { ScrollView, StyleSheet } from 'react-native'
 import { useGlobalSearchParams } from 'expo-router'
+import { useLanguage } from '@/contexts/language'
 import { useSettings } from '@/contexts/settings'
 
 /**
@@ -28,13 +29,14 @@ const Content = ( props ) => {
   const { getter, setter } = setting
   const selected = /** @type { any } */ ( settingsData[ getter ] )
   const setSelected = /** @type { ( selected:any ) => void } */ ( settingsData[ setter ] )
+  const { t } = useLanguage()
 
   return setting.optionList.map( ( { value, preview, description } ) => (
     <SelectionItem
       key={ value }
       value={ value }
       preview={ preview }
-      description={ description }
+      description={ t( description ) }
       selected={ selected }
       onSelectedChange={ setSelected } />
   ) )
@@ -48,6 +50,7 @@ const SelectionMenu = () => {
 
   const { selection_menu } = /** @type { { selection_menu:string } } */ ( useGlobalSearchParams() )
   const setting = SettingsIndex[ selection_menu ]
+  const { t } = useLanguage()
 
   if( setting === undefined ) {
     return null
@@ -55,7 +58,7 @@ const SelectionMenu = () => {
 
   return (
     <AreaView style={ styles.container }>
-      <Header>{ setting.title }</Header>
+      <Header>{ t( setting.title ) }</Header>
       <ScrollView
         style={ styles.content }
         contentContainerStyle={ styles.contentContainer }

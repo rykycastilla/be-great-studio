@@ -6,6 +6,7 @@ import SwitchItem from './components/SwitchItem'
 import { Format } from '@/modules/image_converter/models'
 import { REAL_EXPORT_RESOLUTION_REF } from '@/constants'
 import { ScrollView, StyleSheet } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useSettings } from '@/contexts/settings'
 
 /**
@@ -27,33 +28,34 @@ function getResolutionValue( resolution, disabled ) {
 const Settings = () => {
   const { resolution, aspectRatio, showTouchCursor, setShowTouchCursor, exportResolution, exportFormat } = useSettings()
   const resolutionDisabled = exportFormat === Format.BGPX
+  const { t } = useLanguage()
   return (
     <AreaView style={ styles.container }>
-      <Header>Settings</Header>
+      <Header>{ t( 'settings' ) }</Header>
       <ScrollView
         style={ styles.content }
         contentContainerStyle={ styles.contentContainer }
         showsVerticalScrollIndicator={ false }
         bounces={ true }>
-        <SectionHeader>Viewing</SectionHeader>
-        <NavigationItem target="resolution" label="Resolution" value={ `${ resolution }px` } />
-        <NavigationItem target="aspect-ratio" label="Aspect Ratio" value={ aspectRatio } />
-        <SectionHeader>Drawing Area</SectionHeader>
+        <SectionHeader>{ t( 'viewing' ) }</SectionHeader>
+        <NavigationItem target="resolution" label={ t( 'resolution' ) } value={ `${ resolution }px` } />
+        <NavigationItem target="aspect-ratio" label={ t( 'aspect-ratio' ) } value={ aspectRatio } />
+        <SectionHeader>{ t( 'drawing-area' ) }</SectionHeader>
         <SwitchItem
-          label="Touch Cursor"
+          label={ t( 'touch-cursor' ) }
           isActive={ showTouchCursor }
           onIsActiveChange={ setShowTouchCursor } />
-        <SectionHeader>Exporting</SectionHeader>
+        <SectionHeader>{ t( 'exporting' ) }</SectionHeader>
         <NavigationItem
           target="export-resolution"
-          label="Resolution"
+          label={ t( 'resolution' ) }
           value={ getResolutionValue( exportResolution, resolutionDisabled ) }
           disabled={ resolutionDisabled } />
-        <NavigationItem target="export-format" label="Format" value={ Format[ exportFormat ] } />
+        <NavigationItem target="export-format" label={ t( 'format' ) } value={ Format[ exportFormat ] } />
         <SectionHeader>Legal</SectionHeader>
-        <NavigationItem target="license" label="License" />
-        <NavigationItem target="op-licenses" label="Open Source Licenses" />
-        <NavigationItem target="contribuitors" label="Contribuitors" />
+        <NavigationItem target="license" label={ t( 'license' ) } />
+        <NavigationItem target="op-licenses" label={ t( 'open-source-licenses' ) } />
+        <NavigationItem target="contributors" label={ t( 'contributors' ) } />
       </ScrollView>
     </AreaView>
   )

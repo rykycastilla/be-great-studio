@@ -2,6 +2,7 @@ import AreaView from '@/components/AreaView'
 import Header from './Header'
 import { LicenseList } from '../models/LicenseList'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -49,9 +50,10 @@ const License = ( props ) => {
  * @returns { ReactElement }
  */
 const OpenSourceLicensesView = () => {
+  const { t } = useLanguage()
   return (
     <AreaView>
-      <Header>Open Source Licenses</Header>
+      <Header>{ t( 'open-source-licenses' ) }</Header>
       <ScrollView>
         { LicenseList.map( ( license, index ) => {
           const { lib, name, description } = license

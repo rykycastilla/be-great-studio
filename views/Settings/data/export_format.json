@@ -1,23 +1,23 @@
 {
   "target": "export-format",
-  "title": "Format",
+  "title": "format",
   "getter": "exportFormat",
   "setter": "setExportFormat",
   "optionList": [
     {
       "value": 0,
       "preview": "BGPX",
-      "description": "BeGreat Pixel file to save metadata"
+      "description": "bgpx-format"
     },
     {
       "value": 1,
       "preview": "PNG",
-      "description": "Standard Portable Network Graphics"
+      "description": "png-format"
     },
     {
       "value": 2,
       "preview": "JPEG",
-      "description": "Standard \"Joint Photographic Experts Group\" implementation"
+      "description": "jpeg-format"
     }
   ]
 }
