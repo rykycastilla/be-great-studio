@@ -12,12 +12,12 @@
     {
       "value": "3:4",
       "preview": "#3:4",
-      "description": "candybar"
+      "description": "#Candybar"
     },
     {
       "value": "9:16",
       "preview": "#9:16",
-      "description": "poster"
+      "description": "#Poster"
     }
   ]
 }
