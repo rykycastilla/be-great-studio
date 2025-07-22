@@ -6,22 +6,22 @@
   "optionList": [
   {
       "value": 1,
-      "preview": "Real",
+      "preview": "#Real",
       "description": "ultra-low-res"
     },
     {
       "value": 360,
-      "preview": "360px",
+      "preview": "#360px",
       "description": "low-definition"
     },
     {
       "value": 540,
-      "preview": "540px",
+      "preview": "#540px",
       "description": "standard-definition"
     },
     {
       "value": 720,
-      "preview": "720px",
+      "preview": "#720px",
       "description": "high-definition"
     }
   ]

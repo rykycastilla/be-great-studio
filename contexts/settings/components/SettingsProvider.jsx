@@ -1,6 +1,7 @@
 import { Format } from '@/modules/image_converter/models'
 import { SettingsContext } from '../context'
 import { useEffect } from 'react'
+import { useLanguage } from '@/contexts/language'
 import { useStorageState } from '@/hooks/storage_state'
 
 /**
@@ -25,6 +26,7 @@ const ConfigProvider = ( props ) => {
   const [ showTouchCursor, setShowTouchCursor, loadingShowTouchCursor ] = useStorageState( true, 'config-show-touch-cursor' )
   const [ exportResolution, setExportResolution, loadingExportResolution ] = useStorageState( 540, 'config-export-resolution' )
   const [ exportFormat, setExportFormat, loadingExportFormat ] = useStorageState( Format.BGPX, 'config-export-format' )
+  const { language, languageConfig, setLanguage } = useLanguage()
 
   useEffect( () => {
     const fn = async() => {
@@ -46,6 +48,7 @@ const ConfigProvider = ( props ) => {
         showTouchCursor, setShowTouchCursor,
         exportResolution, setExportResolution,
         exportFormat, setExportFormat,
+        language:languageConfig, setLanguage, currentLanguage:language,
       } }>
       { children }
     </SettingsContext.Provider>

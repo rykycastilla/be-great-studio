@@ -6,17 +6,17 @@
   "optionList": [
     {
       "value": "1:1",
-      "preview": "1:1",
+      "preview": "#1:1",
       "description": "perfect-square"
     },
     {
       "value": "3:4",
-      "preview": "3:4",
+      "preview": "#3:4",
       "description": "candybar"
     },
     {
       "value": "9:16",
-      "preview": "9:16",
+      "preview": "#9:16",
       "description": "poster"
     }
   ]

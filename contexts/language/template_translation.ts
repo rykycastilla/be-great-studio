@@ -24,7 +24,7 @@ export interface Translation {
  */
 export function useTemplateTranslation( lang:Lang ): Translation {
   return useCallback( ( target:string, ...args:unknown[] ) => {
-    if( target === 'CODE' ) { return '' }
+    if( target.startsWith( '#' ) ) { return target.substring( 1 ) }
     // Extracting the current translation template
     const translatedTemplate: string | undefined = lang[ target ]
     if( translatedTemplate === undefined ) { return '' }

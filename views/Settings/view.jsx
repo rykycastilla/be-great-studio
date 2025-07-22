@@ -1,5 +1,6 @@
 import AreaView from '@/components/AreaView'
 import Header from './components/Header'
+import LanguageSection from './components/LanguageSection'
 import NavigationItem from './components/NavigationItem'
 import SectionHeader from './components/SectionHeader'
 import SwitchItem from './components/SwitchItem'
@@ -52,6 +53,7 @@ const Settings = () => {
           value={ getResolutionValue( exportResolution, resolutionDisabled ) }
           disabled={ resolutionDisabled } />
         <NavigationItem target="export-format" label={ t( 'format' ) } value={ Format[ exportFormat ] } />
+        <LanguageSection />
         <SectionHeader>Legal</SectionHeader>
         <NavigationItem target="license" label={ t( 'license' ) } />
         <NavigationItem target="op-licenses" label={ t( 'open-source-licenses' ) } />

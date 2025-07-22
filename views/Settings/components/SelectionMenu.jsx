@@ -35,7 +35,7 @@ const Content = ( props ) => {
     <SelectionItem
       key={ value }
       value={ value }
-      preview={ preview }
+      preview={ t( preview ) }
       description={ t( description ) }
       selected={ selected }
       onSelectedChange={ setSelected } />

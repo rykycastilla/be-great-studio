@@ -6,17 +6,17 @@
   "optionList": [
     {
       "value": 16,
-      "preview": "16px",
+      "preview": "#16px",
       "description": "ultra-high-pixels"
     },
     {
       "value": 32,
-      "preview": "32px",
+      "preview": "#32px",
       "description": "standard-pixel-art"
     },
     {
       "value": 64,
-      "preview": "64px",
+      "preview": "#64px",
       "description": "moderated-definition"
     }
   ]

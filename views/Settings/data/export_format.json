@@ -6,17 +6,17 @@
   "optionList": [
     {
       "value": 0,
-      "preview": "BGPX",
+      "preview": "#BGPX",
       "description": "bgpx-format"
     },
     {
       "value": 1,
-      "preview": "PNG",
+      "preview": "#PNG",
       "description": "png-format"
     },
     {
       "value": 2,
-      "preview": "JPEG",
+      "preview": "#JPEG",
       "description": "jpeg-format"
     }
   ]

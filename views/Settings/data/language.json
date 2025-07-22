@@ -1,0 +1,18 @@
+{
+  "target": "language",
+  "title": "#Language",
+  "getter": "language",
+  "setter": "setLanguage",
+  "optionList": [
+    {
+      "value": "en",
+      "preview": "#EN",
+      "description": "#English"
+    },
+    {
+      "value": "es",
+      "preview": "#ES",
+      "description": "#Spanish"
+    }
+  ]
+}

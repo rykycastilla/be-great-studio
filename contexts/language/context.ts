@@ -2,7 +2,7 @@ import { createContext } from 'react'
 
 export interface LanguageContext {
 
-    language: string
+  language: string
   setLanguage( language:string ): void
 
   /** Latest real value provided by `setLanguage` */
