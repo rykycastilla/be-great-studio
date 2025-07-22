@@ -1,6 +1,6 @@
 {
   "target": "language",
-  "title": "#Language",
+  "title": "language",
   "getter": "language",
   "setter": "setLanguage",
   "optionList": [

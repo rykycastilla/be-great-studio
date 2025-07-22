@@ -33,7 +33,7 @@ const LanguageSection = () => {
 
   return (
     <>
-      <SectionHeader>Language</SectionHeader>
+      <SectionHeader>{ t( 'language' ) }</SectionHeader>
       <SwitchItem label={ t( 'use-system-language' ) }
         isActive={ usingSysLang }
         onIsActiveChange={ updateSysLangUsage } />
