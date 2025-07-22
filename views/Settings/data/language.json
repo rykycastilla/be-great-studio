@@ -7,12 +7,12 @@
     {
       "value": "en",
       "preview": "#EN",
-      "description": "#English"
+      "description": "english"
     },
     {
       "value": "es",
       "preview": "#ES",
-      "description": "#Spanish"
+      "description": "spanish"
     }
   ]
 }
