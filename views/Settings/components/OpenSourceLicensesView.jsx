@@ -1,5 +1,6 @@
 import AreaView from '@/components/AreaView'
 import Header from './Header'
+import { Fragment } from 'react'
 import { LicenseList } from '../models/LicenseList'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { useLanguage } from '@/contexts/language'
@@ -58,14 +59,13 @@ const OpenSourceLicensesView = () => {
         { LicenseList.map( ( license, index ) => {
           const { lib, name, description } = license
           return (
-            <>
+            <Fragment key={ lib }>
               <License
-                key={ lib }
                 lib={ lib }
                 name={ name }
                 description={ description } />
-              { ( index < ( LicenseList.length - 1 ) ) && <Separator key={ String( index ) } /> }
-            </>
+              { ( index < ( LicenseList.length - 1 ) ) && <Separator /> }
+            </Fragment>
           )
         } ) }
       </ScrollView>
