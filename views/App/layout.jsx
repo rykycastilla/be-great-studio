@@ -1,4 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen'
+import RouteStack from '@/components/RouteStack'
 import { WindowProvider } from '@/contexts/window'
 import { DrawingListProvider } from '@/contexts/drawing_list'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -9,7 +10,6 @@ import { ModalProvider } from '@/contexts/modal'
 import { OffscreenBrowserProvider } from '@/utils/OffscreenBrowser'
 import { SettingsProvider } from '@/contexts/settings'
 import { SharingInfoProvider } from '@/contexts/sharing_info'
-import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { ThemeProvider } from '@/contexts/theme'
 import { useCallback, useEffect, useState } from 'react'
@@ -51,19 +51,7 @@ const AppLayout = () => {
                 <DrawingListProvider onLoad={ handleDrawingListLoad }>
                   <LoaderProvider>
                     <ModalProvider>
-                      <Stack
-                        screenOptions={ {
-                          headerShown: false,
-                          animationDuration: 250,
-                          gestureEnabled: true,
-                          gestureDirection: 'horizontal',
-                          presentation: 'card',
-                          animation: 'slide_from_right',
-                          contentStyle: {
-                            backgroundColor,
-                          },
-                          animationTypeForReplace: 'push',
-                        } } />
+                      <RouteStack />
                       <OffscreenBrowserProvider />
                     </ModalProvider>
                   </LoaderProvider>
