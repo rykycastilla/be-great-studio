@@ -1,5 +1,5 @@
 import AddPictureButton from './components/AddPictureButton'
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import ItemPreview from './components/ItemPreview'
 import SelectionButton from './components/SelectionButton'
 import SelectionCounter from './components/SelectionCounter'
@@ -31,7 +31,7 @@ const App = () => {
 
   return (
     <>
-      <AreaView style={ styles.container }>
+      <SafeView style={ styles.container }>
         <View style={ styles.header }>
           <SelectionButton />
           <View style={ styles.headerButtons }>
@@ -55,7 +55,7 @@ const App = () => {
         </View>
         <DrawingList handleLongPress={ handleLongPress } handlePressOut={ handlePressOut } />
         { !isSelectionMode && <AddPictureButton /> }
-      </AreaView>
+      </SafeView>
       { ( preview !== null ) && <ItemPreview drawing={ preview } scale={ previewScale } opacity={ previewOpacity } /> }
     </>
   )

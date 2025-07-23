@@ -1,4 +1,4 @@
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import Header from './Header'
 import { StyleSheet, Text, View } from 'react-native'
 import { useLanguage } from '@/contexts/language'
@@ -30,14 +30,14 @@ const Contribuitor = ( props ) => {
 const ContributorsView = () => {
   const { t } = useLanguage()
   return (
-    <AreaView>
+    <SafeView>
       <Header>{ t( 'contributors' ) }</Header>
       <View style={ styles.content }>
         <Contribuitor occupation={ t( 'developer' ) } name="Orestes Ricardo Castilla Escalona" />
         <Contribuitor occupation={ t( 'logo-designer' ) } name="Jonathan Brito Savón" />
         <Contribuitor occupation={ t( 'name-creator' ) } name="David Silveira Bidot" />
       </View>
-    </AreaView>
+    </SafeView>
   )
 }
 

@@ -1,4 +1,4 @@
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import AspectRatioControlButton from './components/AspectRatioControlButton'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
@@ -63,7 +63,7 @@ const Drawing = () => {
 
   return (
     <ToolsProvider id={ drawing.id }>
-      <AreaView style={ styles.container }>
+      <SafeView style={ styles.container }>
         <View style={ { flex:1 } }>
           <View style={ styles.header }>
             <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
@@ -89,7 +89,7 @@ const Drawing = () => {
           { /* If min height was exceed the content will collide with tools area, to avoid it, the tools area must collapse */ }
           <ToolsArea collapsable={ minHeightExceed } dispatchColorPicker={ dispatchColorPicker } />
         </View>
-      </AreaView>
+      </SafeView>
       <DrawingColorPicker { ...colorPicker } />
     </ToolsProvider>
   )

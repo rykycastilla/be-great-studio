@@ -14,7 +14,7 @@ import { SafeAreaProvider as RNSafeAreaProvider } from 'react-native-safe-area-c
  * @param { SafeAreaViewProps } props
  * @returns { ReactElement }
  */
-const SafeAreaProvider = ( props ) => {
+const WindowProvider = ( props ) => {
   const { children, backgroundColor } = props
   return (
     <RNSafeAreaProvider style={ { backgroundColor } }>
@@ -23,4 +23,4 @@ const SafeAreaProvider = ( props ) => {
   )
 }
 
-export default SafeAreaProvider
+export default WindowProvider

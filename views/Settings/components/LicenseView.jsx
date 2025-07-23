@@ -1,4 +1,4 @@
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import Header from './Header'
 import icon from '@/assets/images/icon.png'
 import { Image, StyleSheet, Text, View } from 'react-native'
@@ -16,7 +16,7 @@ const LicenseView = () => {
   const { colors } = useTheme()
   const { t } = useLanguage()
   return (
-    <AreaView>
+    <SafeView>
       <Header>{ t( 'license' ) }</Header>
       <View style={ styles.content }>
         <Image source={ icon } style={ styles.brandIcon } />
@@ -34,7 +34,7 @@ const LicenseView = () => {
           Powered by RN Drawing™
         </Text>
       </View>
-    </AreaView>
+    </SafeView>
   )
 }
 

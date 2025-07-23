@@ -1,4 +1,4 @@
-import SafeContainer from './components/SafeContainer'
+import SafeContainer from './SafeContainer'
 import { StyleSheet, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
@@ -17,7 +17,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
  * @param { AreaViewProps } props
  * @retruns { ReactElement }
  */
-const AreaView = ( props ) => {
+const SafeView = ( props ) => {
   const { children, style } = props
   const containerStyles = ( style instanceof Array ) ? style : [ style ]
   const { top, left, right, bottom } = useSafeAreaInsets()
@@ -41,4 +41,4 @@ const styles = StyleSheet.create( {
   },
 } )
 
-export default AreaView
+export default SafeView

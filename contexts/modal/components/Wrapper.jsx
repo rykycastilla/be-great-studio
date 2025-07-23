@@ -1,5 +1,5 @@
 import Animated from 'react-native-reanimated'
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import { BlurView } from 'expo-blur'
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native'
 import { useAnimatedStyle } from 'react-native-reanimated'
@@ -43,9 +43,9 @@ const Wrapper = ( props ) => {
           tint={ theme === 'dark' ? 'dark' : 'light' }
           style={ StyleSheet.absoluteFill } />
       </TouchableWithoutFeedback>
-      <AreaView>
+      <SafeView>
         { children }
-      </AreaView>
+      </SafeView>
     </Animated.View>
   )
 }

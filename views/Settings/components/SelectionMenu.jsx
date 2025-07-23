@@ -1,4 +1,4 @@
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import Header from './Header'
 import SelectionItem from './SelectionItem'
 import { SettingsIndex } from '../models/SettingsIndex'
@@ -57,7 +57,7 @@ const SelectionMenu = () => {
   }
 
   return (
-    <AreaView style={ styles.container }>
+    <SafeView style={ styles.container }>
       <Header>{ t( setting.title ) }</Header>
       <ScrollView
         style={ styles.content }
@@ -66,7 +66,7 @@ const SelectionMenu = () => {
         bounces={ true }>
         <Content setting={ setting } />
       </ScrollView>
-    </AreaView>
+    </SafeView>
   )
 }
 

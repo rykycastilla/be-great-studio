@@ -1,5 +1,5 @@
 import * as SplashScreen from 'expo-splash-screen'
-import SafeAreaProvider from '@/components/SafeAreaProvider'
+import { WindowProvider } from '@/contexts/window'
 import { DrawingListProvider } from '@/contexts/drawing_list'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Locales } from '@/locales'
@@ -44,7 +44,7 @@ const AppLayout = () => {
     <GestureHandlerRootView style={ { flex: 1 } }>
       <StatusBar style={ ( colorScheme === 'dark' ) ? 'light' : 'dark' } />
       <ThemeProvider>
-        <SafeAreaProvider backgroundColor={ backgroundColor }>
+        <WindowProvider backgroundColor={ backgroundColor }>
           <LanguageProvider langs={ Locales } defaultLang="en">
             <SharingInfoProvider onLoadInfo={ () => setSharingInfoLoaded( true ) }>
               <SettingsProvider onLoad={ () => setSettingsLoaded( true ) }>
@@ -71,7 +71,7 @@ const AppLayout = () => {
               </SettingsProvider>
             </SharingInfoProvider>
           </LanguageProvider>
-        </SafeAreaProvider>
+        </WindowProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   )

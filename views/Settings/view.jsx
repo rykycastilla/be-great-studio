@@ -1,4 +1,4 @@
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import Header from './components/Header'
 import LanguageSection from './components/LanguageSection'
 import NavigationItem from './components/NavigationItem'
@@ -31,7 +31,7 @@ const Settings = () => {
   const resolutionDisabled = exportFormat === Format.BGPX
   const { t } = useLanguage()
   return (
-    <AreaView style={ styles.container }>
+    <SafeView style={ styles.container }>
       <Header>{ t( 'settings' ) }</Header>
       <ScrollView
         style={ styles.content }
@@ -59,7 +59,7 @@ const Settings = () => {
         <NavigationItem target="op-licenses" label={ t( 'open-source-licenses' ) } />
         <NavigationItem target="contributors" label={ t( 'contributors' ) } />
       </ScrollView>
-    </AreaView>
+    </SafeView>
   )
 }
 

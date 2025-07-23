@@ -1,4 +1,4 @@
-import AreaView from '@/components/AreaView'
+import { SafeView } from '@/contexts/window'
 import Header from './Header'
 import { Fragment } from 'react'
 import { LicenseList } from '../models/LicenseList'
@@ -53,7 +53,7 @@ const License = ( props ) => {
 const OpenSourceLicensesView = () => {
   const { t } = useLanguage()
   return (
-    <AreaView>
+    <SafeView>
       <Header>{ t( 'open-source-licenses' ) }</Header>
       <ScrollView>
         { LicenseList.map( ( license, index ) => {
@@ -69,7 +69,7 @@ const OpenSourceLicensesView = () => {
           )
         } ) }
       </ScrollView>
-    </AreaView>
+    </SafeView>
   )
 }
 
