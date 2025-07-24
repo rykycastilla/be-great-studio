@@ -1,5 +1,6 @@
 import Reanimated, { useAnimatedStyle } from 'react-native-reanimated'
 import { BlurView } from 'expo-blur'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { Modal, StyleSheet, TouchableWithoutFeedback, View } from 'react-native'
 import { useTheme } from '@/contexts/theme'
 
@@ -39,16 +40,18 @@ const ModalBackground = ( props ) => {
       animationType="none"
       onRequestClose={ onClose }
       statusBarTranslucent>
-      <Reanimated.View style={ [ styles.overlay, overlayStyle ] }>
-        <BlurView
-          intensity={ actualBlurIntensity }
-          tint={ theme === 'dark' ? 'dark' : 'light' }
-          style={ StyleSheet.absoluteFill } />
-        <TouchableWithoutFeedback onPress={ onClose }>
-          <View style={ StyleSheet.absoluteFill } />
-        </TouchableWithoutFeedback>
-        { children }
-      </Reanimated.View>
+      <GestureHandlerRootView>
+        <Reanimated.View style={ [ styles.overlay, overlayStyle ] }>
+          <BlurView
+            intensity={ actualBlurIntensity }
+            tint={ theme === 'dark' ? 'dark' : 'light' }
+            style={ StyleSheet.absoluteFill } />
+          <TouchableWithoutFeedback onPress={ onClose }>
+            <View style={ StyleSheet.absoluteFill } />
+          </TouchableWithoutFeedback>
+          { children }
+        </Reanimated.View>
+      </GestureHandlerRootView>
     </Modal>
   )
 

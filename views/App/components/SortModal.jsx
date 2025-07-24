@@ -1,6 +1,7 @@
 import SortIcon from './SortIcon'
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { SortCategory, useSort } from '@/contexts/drawing_list'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { useLanguage } from '@/contexts/language'
 import { useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'

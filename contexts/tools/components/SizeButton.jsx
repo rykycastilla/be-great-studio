@@ -1,4 +1,5 @@
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import TouchableOpacity from '@/components/TouchableOpacity'
+import { StyleSheet } from 'react-native'
 import { useColor } from '../hooks/color'
 import { useSize } from '../hooks/size'
 import { useTheme } from '@/contexts/theme'

@@ -1,10 +1,10 @@
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useTheme } from '@/contexts/theme'
 
 /**
  * @import { ReactElement } from 'react'
- * @import { SharedValue } from 'react-native-reanimated'
  */
 
 /**
@@ -54,12 +54,7 @@ const styles = StyleSheet.create( {
     borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 120,
     borderWidth: 1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 3,
   },
 
 } )

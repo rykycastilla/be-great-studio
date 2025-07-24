@@ -1,5 +1,6 @@
 import ResolutionModal from './ResolutionModal'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import TouchableOpacity from '@/components/TouchableOpacity'
+import { StyleSheet, Text } from 'react-native'
 import { useModal } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 

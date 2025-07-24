@@ -1,6 +1,7 @@
 import SortIcon from './SortIcon'
 import SortModal from './SortModal'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import TouchableOpacity from '@/components/TouchableOpacity'
+import { StyleSheet } from 'react-native'
 import { useModal } from '@/contexts/modal'
 import { useSort } from '@/contexts/drawing_list'
 import { useTheme } from '@/contexts/theme'

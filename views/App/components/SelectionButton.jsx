@@ -1,4 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import TouchableOpacity from '@/components/TouchableOpacity'
+import { StyleSheet, Text } from 'react-native'
 import { useCallback } from 'react'
 import { useLanguage } from '@/contexts/language'
 import { useSelectionMode } from '@/contexts/drawing_list'

@@ -1,5 +1,6 @@
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { useCallback } from 'react'
 import { useDrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { useModalHider } from '@/contexts/modal'

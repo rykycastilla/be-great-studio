@@ -1,5 +1,6 @@
 import Switch from '@/components/Switch'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import TouchableOpacity from '@/components/TouchableOpacity'
+import { StyleSheet, Text, View } from 'react-native'
 import { useTheme } from '@/contexts/theme'
 
 /**

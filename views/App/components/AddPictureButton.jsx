@@ -1,10 +1,11 @@
 import * as FileSystem from 'expo-file-system'
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { IdService } from '@/modules/id/controllers'
 import { getDocumentAsync } from 'expo-document-picker'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { useCallback, useState } from 'react'
 import { useDrawingList } from '@/contexts/drawing_list'
 import { useLoader } from '@/contexts/loader'
@@ -92,7 +93,7 @@ const AddPictureButton = () => {
   return (
     <TouchableOpacity
       style={ [ styles.addPictureButton, { backgroundColor:colors.primary } ] }
-      onPress={ debounce( handle, BUTTON_DEBOUNCE_DELAY ) }
+      onPress={ debounce( handle, BUTTON_DEBOUNCE_DELAY )}
       onLongPress={ toggleState }>
       <Ionicons name={ icon } size={ 28 } color="#FFFFFF" />
     </TouchableOpacity>

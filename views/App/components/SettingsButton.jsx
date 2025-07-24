@@ -1,7 +1,8 @@
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
 import { debounce } from '@/utils/debounce'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { useRouter } from 'expo-router'
 import { useTheme } from '@/contexts/theme'
 

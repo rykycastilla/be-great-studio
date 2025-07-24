@@ -1,6 +1,7 @@
+import TouchableOpacity from '@/components/TouchableOpacity'
 import WarningModal from './WarningModal'
 import { optionList } from '@/views/Settings/data/aspect_ratio.json'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { useLanguage } from '@/contexts/language'
 import { useModal, useModalConfig, useModalHider } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'

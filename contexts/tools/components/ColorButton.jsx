@@ -1,5 +1,6 @@
 import ColorModal from './ColorModal'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import TouchableOpacity from '@/components/TouchableOpacity'
+import { StyleSheet } from 'react-native'
 import { Tool } from 'react-native-drawing'
 import { useColor } from '../hooks/color'
 import { useColorList } from '../hooks/color_list'

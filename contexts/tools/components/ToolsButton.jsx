@@ -1,6 +1,7 @@
 import ToolsModal from './ToolsModal'
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { useModal } from '@/contexts/modal'
 import { useTheme } from '@/contexts/theme'
 import { useToolIcon } from '../hooks/tool_icon'

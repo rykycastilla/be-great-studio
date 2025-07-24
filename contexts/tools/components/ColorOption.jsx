@@ -1,6 +1,7 @@
 import * as Clipboard from 'expo-clipboard'
 import SelectionCircle from '@/components/SelectionCircle'
-import { StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import TouchableOpacity from '@/components/TouchableOpacity'
+import { StyleSheet, ToastAndroid, View } from 'react-native'
 import { useLanguage } from '@/contexts/language'
 import { useLongCallback } from '@/hooks/long_callback'
 import { useModalHider } from '@/contexts/modal'

@@ -1,5 +1,6 @@
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { Ionicons } from '@expo/vector-icons'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { Tool } from 'react-native-drawing'
 import { useTheme } from '@/contexts/theme'
 import { useTools } from '../hooks/tools'
