@@ -1,5 +1,5 @@
+import Ionicons from '@/components/Ionicons'
 import TouchableOpacity from '@/components/TouchableOpacity'
-import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
 import { useTheme } from '@/contexts/theme'
 import { useViewMode } from '@/contexts/drawing_list'

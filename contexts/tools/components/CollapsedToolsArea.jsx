@@ -1,6 +1,6 @@
-import TouchableOpacity from '@/components/TouchableOpacity'
+import Ionicons from '@/components/Ionicons'
 import Reanimated, { useAnimatedStyle } from 'react-native-reanimated'
-import { Ionicons } from '@expo/vector-icons'
+import TouchableOpacity from '@/components/TouchableOpacity'
 import { StyleSheet, View } from 'react-native'
 import { useTheme } from '@/contexts/theme'
 

@@ -1,5 +1,5 @@
+import Ionicons from '@/components/Ionicons'
 import TouchableOpacity from '@/components/TouchableOpacity'
-import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet } from 'react-native'
 import { useLongCallback } from '@/hooks/long_callback'
 import { useTheme } from '@/contexts/theme'
