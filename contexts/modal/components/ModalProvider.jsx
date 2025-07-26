@@ -5,12 +5,12 @@ import { useCallback, useState } from 'react'
 
 /**
  * @import { ActionRef, ModalConfig } from '../context'
- * @import { ReactElement } from 'react'
+ * @import { ReactElement, ReactNode } from 'react'
  */
 
 /**
  * @typedef { object } ModalProviderProps
- * @property { ReactElement | ReactElement[] } children
+ * @property { ReactNode } children
  */
 
 /**

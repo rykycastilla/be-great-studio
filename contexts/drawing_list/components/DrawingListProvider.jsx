@@ -2,6 +2,7 @@ import { useDrawingController } from '../hooks/drawing_controller'
 import { DrawingListContext } from '../context'
 import { SortCategory } from '../models'
 import { useCallback, useEffect, useState } from 'react'
+import { useStaticCallback } from '@/hooks/static_callback'
 import { useStorageState } from '@/hooks/storage_state'
 
 /**
@@ -21,7 +22,8 @@ import { useStorageState } from '@/hooks/storage_state'
  */
 const DrawingListProvider = ( props ) => {
 
-  const { children, onLoad } = props
+  const { children, onLoad:handleLoad = () => {} } = props
+  const onLoad = useStaticCallback( handleLoad )
   const [ viewMode, setViewMode, requestingViewMode ] = useStorageState( /** @type { 'grid' | 'list' } */ ( 'grid' ), 'view-mode' )
   const [ isSelectionMode, setIsSelectionMode ] = useState( false )
   const [ selectionList, setSelectionList ] = useState( /** @type { Set<string> } */ ( new Set() ) )
