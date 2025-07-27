@@ -1,11 +1,9 @@
 import Ionicons from '@/components/Ionicons'
 import TouchableOpacity from '@/components/TouchableOpacity'
-import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
-import { debounce } from '@/utils/debounce'
 import { StyleSheet } from 'react-native'
 import { useBack } from '@/hooks/back'
 import { useCallback } from 'react'
-import { useRouter } from 'expo-router'
+import { useRouter } from '@/contexts/debounced_router'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -38,7 +36,7 @@ const BackButton = ( props ) => {
   return (
     <TouchableOpacity
       style={ [ styles.backButton, { backgroundColor:colors.card } ] }
-      onPress={ debounce( handleBack, BUTTON_DEBOUNCE_DELAY ) }>
+      onPress={ handleBack }>
       <Ionicons name="chevron-back" size={ 22 } color={ colors.primary } />
     </TouchableOpacity>
   )

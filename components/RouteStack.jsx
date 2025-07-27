@@ -1,4 +1,4 @@
-import { Stack } from 'expo-router'
+import { Stack } from '@/contexts/debounced_router'
 import { useDimensions } from '@/contexts/window'
 import { useTheme } from '@/contexts/theme'
 
@@ -16,7 +16,6 @@ const RouteStack = () => {
     <Stack
       screenOptions={ {
         headerShown: false,
-        animationDuration: 250,
         gestureEnabled: true,
         gestureDirection: 'horizontal',
         presentation: 'card',

@@ -1,7 +1,7 @@
 import Ionicons from '@/components/Ionicons'
 import TouchableOpacity from '@/components/TouchableOpacity'
 import { StyleSheet, Text, View } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useRouter } from '@/contexts/debounced_router'
 import { useTheme } from '@/contexts/theme'
 
 /**

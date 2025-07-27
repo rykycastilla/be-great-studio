@@ -6,6 +6,7 @@ import { ScrollView, StyleSheet } from 'react-native'
 import { useGlobalSearchParams } from 'expo-router'
 import { useLanguage } from '@/contexts/language'
 import { useSettings } from '@/contexts/settings'
+import { useFocus } from '@/contexts/debounced_router'
 
 /**
  * @import { ReactElement } from 'react'
@@ -51,6 +52,8 @@ const SelectionMenu = () => {
   const { selection_menu } = /** @type { { selection_menu:string } } */ ( useGlobalSearchParams() )
   const setting = SettingsIndex[ selection_menu ]
   const { t } = useLanguage()
+
+  useFocus()
 
   if( setting === undefined ) {
     return null

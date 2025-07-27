@@ -1,6 +1,7 @@
 import { SafeView } from '@/contexts/window'
 import Header from './Header'
 import { StyleSheet, Text, View } from 'react-native'
+import { useFocus } from '@/contexts/debounced_router'
 import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
@@ -29,6 +30,9 @@ const Contribuitor = ( props ) => {
  */
 const ContributorsView = () => {
   const { t } = useLanguage()
+
+  useFocus()
+
   return (
     <SafeView>
       <Header>{ t( 'contributors' ) }</Header>

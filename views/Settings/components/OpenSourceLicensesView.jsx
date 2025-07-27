@@ -3,6 +3,7 @@ import Header from './Header'
 import { Fragment } from 'react'
 import { LicenseList } from '../models/LicenseList'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { useFocus } from '@/contexts/debounced_router'
 import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
@@ -52,6 +53,9 @@ const License = ( props ) => {
  */
 const OpenSourceLicensesView = () => {
   const { t } = useLanguage()
+
+  useFocus()
+
   return (
     <SafeView>
       <Header>{ t( 'open-source-licenses' ) }</Header>

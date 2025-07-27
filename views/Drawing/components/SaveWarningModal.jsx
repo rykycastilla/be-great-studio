@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from 'react-native'
 import { useLanguage } from '@/contexts/language'
 import { useModalAction, useModalConfig } from '@/contexts/modal'
-import { useRouter } from 'expo-router'
+import { useRouter } from '@/contexts/debounced_router'
 import { useTheme } from '@/contexts/theme'
 
 /**

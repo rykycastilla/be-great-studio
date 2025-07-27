@@ -7,6 +7,7 @@ import SwitchItem from './components/SwitchItem'
 import { Format } from '@/modules/image_converter/models'
 import { REAL_EXPORT_RESOLUTION_REF } from '@/constants'
 import { ScrollView, StyleSheet } from 'react-native'
+import { useFocus } from '@/contexts/debounced_router'
 import { useLanguage } from '@/contexts/language'
 import { useSettings } from '@/contexts/settings'
 
@@ -30,6 +31,9 @@ const Settings = () => {
   const { resolution, aspectRatio, showTouchCursor, setShowTouchCursor, exportResolution, exportFormat } = useSettings()
   const resolutionDisabled = exportFormat === Format.BGPX
   const { t } = useLanguage()
+
+  useFocus()
+
   return (
     <SafeView style={ styles.container }>
       <Header>{ t( 'settings' ) }</Header>

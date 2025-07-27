@@ -1,4 +1,4 @@
-import { WindowProvider } from '@/contexts/window'
+import { DebouncedRouterProvider } from '@/contexts/debounced_router'
 import { DrawingListProvider } from '@/contexts/drawing_list'
 import { Locales } from '@/locales'
 import { LanguageProvider } from '@/contexts/language'
@@ -7,6 +7,7 @@ import { ModalProvider } from '@/contexts/modal'
 import { SettingsProvider } from '@/contexts/settings'
 import { SharingInfoProvider } from '@/contexts/sharing_info'
 import { useTheme } from '@/contexts/theme'
+import { WindowProvider } from '@/contexts/window'
 
 /**
  * @import { ReactElement, ReactNode } from 'react'
@@ -30,13 +31,15 @@ const AppProvider = ( props ) => {
       <LanguageProvider langs={ Locales } defaultLang="en">
         <SharingInfoProvider onLoadInfo={ () => getReady( 'sharing-info' ) }>
           <SettingsProvider onLoad={ () => getReady( 'settings' ) }>
-            <DrawingListProvider onLoad={ () => getReady( 'drawing-list' ) }>
-              <LoaderProvider>
-                <ModalProvider>
-                  { children }
-                </ModalProvider>
-              </LoaderProvider>
-            </DrawingListProvider>
+            <DebouncedRouterProvider>
+              <DrawingListProvider onLoad={ () => getReady( 'drawing-list' ) }>
+                <LoaderProvider>
+                  <ModalProvider>
+                    { children }
+                  </ModalProvider>
+                </LoaderProvider>
+              </DrawingListProvider>
+            </DebouncedRouterProvider>
           </SettingsProvider>
         </SharingInfoProvider>
       </LanguageProvider>

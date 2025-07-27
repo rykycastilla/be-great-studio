@@ -2,6 +2,7 @@ import { SafeView } from '@/contexts/window'
 import Header from './Header'
 import icon from '@/assets/images/icon.png'
 import { Image, StyleSheet, Text, View } from 'react-native'
+import { useFocus } from '@/contexts/debounced_router'
 import { useLanguage } from '@/contexts/language'
 import { useTheme } from '@/contexts/theme'
 
@@ -15,6 +16,9 @@ import { useTheme } from '@/contexts/theme'
 const LicenseView = () => {
   const { colors } = useTheme()
   const { t } = useLanguage()
+
+  useFocus()
+
   return (
     <SafeView>
       <Header>{ t( 'license' ) }</Header>

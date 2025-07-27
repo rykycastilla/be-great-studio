@@ -1,0 +1,1 @@
+export const STACK_ANIMATION_DURATION = 100

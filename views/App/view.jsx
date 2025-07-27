@@ -10,6 +10,7 @@ import ViewModeButton from './components/ViewModeButton'
 import { DrawingList, useSelectionMode } from '@/contexts/drawing_list'
 import { View, StyleSheet } from 'react-native'
 import { useBack } from '@/hooks/back'
+import { useFocus } from '@/contexts/debounced_router'
 import { usePreview } from './hooks/preview'
 
 /**
@@ -23,6 +24,8 @@ const App = () => {
 
   const { isSelectionMode, setIsSelectionMode } = useSelectionMode()
   const { preview, previewScale, previewOpacity, handleLongPress, handlePressOut } = usePreview()
+
+  useFocus()
 
   useBack( () => {
     if( isSelectionMode ) { setIsSelectionMode( false ) }

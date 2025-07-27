@@ -2,8 +2,6 @@ import AnimatedTouchableOpacity from '@/components/AnimatedTouchableOpacity'
 import PixelatedImage from '@/components/PixelatedImage'
 import SelectionCircle from '@/components/SelectionCircle'
 import { AspectRatioAdapter } from '@/utils/AspectRatioAdapter'
-import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
-import { debounce } from '@/utils/debounce'
 import { Layout } from 'react-native-reanimated'
 import { StyleSheet, Text, View } from 'react-native'
 import { useTheme } from '@/contexts/theme'
@@ -112,7 +110,7 @@ const ListDrawingItem = ( props ) => {
   return (
     <AnimatedTouchableOpacity
       style={ [ styles.item, { width, backgroundColor:colors.card, borderColor: colors.border } ] }
-      onPress={ isSelectionMode ? toggleSelection : debounce( openDrawing, BUTTON_DEBOUNCE_DELAY ) }
+      onPress={ isSelectionMode ? toggleSelection : openDrawing }
       onLongPress={ !isSelectionMode ? () => handleLongPress( item ) : undefined }
       onPressOut={ handlePressOut }
       layout={ Layout.springify() }>

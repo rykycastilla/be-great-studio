@@ -1,6 +1,4 @@
 import ModalContainer from './ModalContainer'
-import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
-import { debounce } from '@/utils/debounce'
 import { StyleSheet, Text, View } from 'react-native'
 import TouchableOpacity from '@/components/TouchableOpacity'
 import { useCallback } from 'react'
@@ -63,7 +61,7 @@ const Modal = ( props ) => {
                   { backgroundColor:( isButtonInactive ? colors.inactive : colors.primary ) },
                 ]
               }
-              onPress={ debounce( handleAccept, BUTTON_DEBOUNCE_DELAY ) }>
+              onPress={ handleAccept }>
               <Text adjustsFontSizeToFit style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? t( 'accept' ) }</Text>
             </TouchableOpacity>
           </View>

@@ -1,9 +1,7 @@
 import Ionicons from '@/components/Ionicons'
 import TouchableOpacity from '@/components/TouchableOpacity'
-import { BUTTON_DEBOUNCE_DELAY } from '@/constants'
-import { debounce } from '@/utils/debounce'
 import { StyleSheet } from 'react-native'
-import { useRouter } from 'expo-router'
+import { useRouter } from '@/contexts/debounced_router'
 import { useTheme } from '@/contexts/theme'
 
 /**
@@ -19,7 +17,7 @@ const SettingsButton = () => {
   return (
     <TouchableOpacity
       style={ [ styles.iconButton, { backgroundColor:colors.card } ] }
-      onPress={ debounce( () => router.push( '/settings' ), BUTTON_DEBOUNCE_DELAY ) }>
+      onPress={ () => router.push( '/settings' ) }>
       <Ionicons name="settings-outline" size={ 22 } color={ colors.primary } />
     </TouchableOpacity>
   )

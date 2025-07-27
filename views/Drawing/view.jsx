@@ -13,6 +13,7 @@ import { useCallback, useRef } from 'react'
 import { useColorPicker } from './hooks/color_picker'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
+import { useFocus } from '@/contexts/debounced_router'
 import { useMinHeight } from './hooks/min_height'
 import { useModal } from '@/contexts/modal'
 import { useSaverHandler } from './hooks/saver_handler'
@@ -35,6 +36,8 @@ const Drawing = () => {
   const content = useContent()
   const drawing = useDrawing()
   const { height } = useDimensions()
+
+  useFocus()
 
   const {
     minHeightExceed, minHeightStyle, handleLayout,

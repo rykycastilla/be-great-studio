@@ -1,6 +1,6 @@
 import { Drawing } from './Drawing'
 import { Layout } from '../hooks/item_dimensions'
-import { Router } from 'expo-router'
+import { Router } from '@/contexts/debounced_router'
 import { ThemeContext } from '@/contexts/theme'
 
 export interface SharedConfig {
