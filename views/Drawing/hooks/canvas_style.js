@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native'
+import { useDimensions } from '@/contexts/window'
 import { useMemo } from 'react'
 import { useTheme } from '@/contexts/theme'
 
@@ -22,14 +22,15 @@ function calcHeightWithAspectRatio( width, aspectRatio ) {
 }
 
 /**
+ * @param { number } windowWidth
  * @param { string } aspectRatio
  * @param { Theme } theme
  * @param { ThemeContext[ 'colors' ] } colors
  * @returns { object }
  */
-function getCanvasStyle( aspectRatio, theme, colors ) {
+function getCanvasStyle( windowWidth, aspectRatio, theme, colors ) {
   // Calculating dimensions
-  const width = Dimensions.get( 'window' ).width - 32 // 16px of margin in  both sides
+  const width = windowWidth - 32 // 16px of margin in  both sides
   const height = calcHeightWithAspectRatio( width, aspectRatio )
   // Building styles
   return {
@@ -52,7 +53,8 @@ function getCanvasStyle( aspectRatio, theme, colors ) {
  */
 export function useCanvasStyle( aspectRatio ) {
   const { colors, theme } = useTheme()
+  const { width } = useDimensions()
   return useMemo( () => {
-    return getCanvasStyle( aspectRatio, theme, colors )
-  }, [ aspectRatio, theme, colors ] )
+    return getCanvasStyle( width, aspectRatio, theme, colors )
+  }, [ width, aspectRatio, theme, colors ] )
 }

@@ -6,10 +6,11 @@ import ColorWheel from './components/ColorWheel'
 import ModalBackground from './components/ModalBackground'
 import SelectButton from './components/SelectButton'
 import { normalizeHex } from './functions/normalize_hex'
+import { useDimensions } from '@/contexts/window'
 import { useLanguage } from '@/contexts/language'
 import { useLayoutEffect, useState } from 'react'
 import { useModalAnimations } from './hooks/modal_animations'
-import { View, StyleSheet, Dimensions } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 
 /**
  * @import { ReactElement } from 'react'
@@ -35,9 +36,9 @@ const ColorPicker = ( props ) => {
   const [ hexInput, setHexInput ] = useState( initialColor.replace( '#', '' ) )
   const [ isValidInput, setIsValidInput ] = useState( true )
   const { shouldRender, scale, opacity } = useModalAnimations( visible )
+  const { width:screenWidth } = useDimensions()
 
   // Calculating elements size
-  const screenWidth = Dimensions.get( 'window' ).width
   const cardWidth = Math.min( screenWidth - 40, 340 )
   const colorWheelSize = cardWidth - 80
   const { t } = useLanguage()

@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native'
+import { useDimensions } from '@/contexts/window'
 import { useMemo } from 'react'
 
 /**
@@ -13,7 +13,7 @@ import { useMemo } from 'react'
  * @returns { Layout }
  */
 export function useItemDimensions( viewMode ) {
-  const { width } = Dimensions.get( 'window' )
+  const { width } = useDimensions()
   return useMemo( () => {
     const horizontalPadding = 16
     const spacing = 12

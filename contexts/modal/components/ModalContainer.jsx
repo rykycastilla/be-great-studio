@@ -1,14 +1,12 @@
 import Card from './Card'
 import Wrapper from './Wrapper'
-import { Dimensions } from 'react-native'
+import { useDimensions } from '@/contexts/window'
 import { useEffect, useState } from 'react'
 import { useSharedValue, withTiming, withSpring, runOnJS } from 'react-native-reanimated'
 
 /**
  * @import { ReactNode } from 'react'
  */
-
-const { height } = Dimensions.get( 'window' )
 
 /**
  * @typedef { object } ModalContainerProps
@@ -22,6 +20,7 @@ const { height } = Dimensions.get( 'window' )
  */
 const ModalContainer = ( props ) => {
   const { visible, onClose, children } = props
+  const { height } = useDimensions()
   const translateY = useSharedValue( height )
   const opacity = useSharedValue( 0 )
   const [ isVisible, setIsVisible ] = useState( visible )
