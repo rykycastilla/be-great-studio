@@ -1,4 +1,3 @@
-import { SafeView } from '@/contexts/window'
 import AspectRatioControlButton from './components/AspectRatioControlButton'
 import BackButton from '@/components/BackButton'
 import Canvas from './components/Canvas'
@@ -7,7 +6,8 @@ import Name from './components/Name'
 import ResolutionControlButton from './components/ResolutionControlButton'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
-import { Dimensions, StyleSheet, View } from 'react-native'
+import { SafeView, useDimensions } from '@/contexts/window'
+import { StyleSheet, View } from 'react-native'
 import { ToolsArea, ToolsProvider } from '@/contexts/tools'
 import { useCallback, useRef } from 'react'
 import { useColorPicker } from './hooks/color_picker'
@@ -31,10 +31,11 @@ const Drawing = () => {
   const canvasRef = useRef( /** @type { CanvasObject | null } */ ( null ) )
   const content = useContent()
   const drawing = useDrawing()
+  const { height } = useDimensions()
 
   const {
     minHeightExceed, minHeightStyle, handleLayout,
-  } = useMinHeight( Dimensions.get( 'window' ).height - 220 )
+  } = useMinHeight( height - 220 )
 
   const requestData = useCallback( async() => {
     const canvas = canvasRef.current
