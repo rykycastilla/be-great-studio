@@ -21,7 +21,7 @@ const WarningModal = ( props ) => {
   const { colors } = useTheme()
   useModalConfig( { title } )
   useModalAction( () => handleAccept() )
-  return <Text style={ [ styles.warningText, { color:colors.text } ] }>{ text }</Text>
+  return <Text adjustsFontSizeToFit style={ [ styles.warningText, { color:colors.text } ] }>{ text }</Text>
 }
 
 const styles = StyleSheet.create( {

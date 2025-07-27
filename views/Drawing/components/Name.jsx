@@ -38,7 +38,7 @@ const Name = ( props ) => {
 
   return (
     <TouchableWithoutFeedback onPress={ dispatchChangeNameModal }>
-      <Text style={ [ styles.name, { color:colors.text } ] }>
+      <Text adjustsFontSizeToFit style={ [ styles.name, { color:colors.text } ] }>
         { drawing.name }
       </Text>
     </TouchableWithoutFeedback>

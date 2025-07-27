@@ -39,7 +39,7 @@ const ColorInput = ( props ) => {
 
   return (
     <View style={ styles.hexInputContainer }>
-      <Text style={ [ styles.hexLabel, { color:colors.text } ] }>#</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.hexLabel, { color:colors.text } ] }>#</Text>
       <TextInput
         style={ [
           styles.hexInput,

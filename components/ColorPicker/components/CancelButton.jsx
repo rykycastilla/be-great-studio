@@ -24,7 +24,7 @@ const CancelButton = ( props ) => {
     <TouchableOpacity
       style={ [ styles.cancelButton, { backgroundColor:colors.background } ] }
       onPress={ onClose }>
-      <Text style={ [ styles.buttonText, { color:colors.primary } ] }>{ t( 'cancel' ) }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.buttonText, { color:colors.primary } ] }>{ t( 'cancel' ) }</Text>
     </TouchableOpacity>
   )
 }

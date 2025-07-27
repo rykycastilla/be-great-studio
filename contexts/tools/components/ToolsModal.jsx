@@ -42,7 +42,7 @@ const ToolOption = ( props ) => {
         hide()
       } }>
       <Ionicons name={ icon } size={ 18 } color="#FFFFFF" />
-      <Text style={ [ styles.modalOptionText, { color:colors.text } ] }>
+      <Text adjustsFontSizeToFit style={ [ styles.modalOptionText, { color:colors.text } ] }>
         { name }
       </Text>
     </TouchableOpacity>

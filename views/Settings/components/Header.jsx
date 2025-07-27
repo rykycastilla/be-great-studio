@@ -21,7 +21,7 @@ const Header = ( props ) => {
   return (
     <View style={ styles.header }>
       <BackButton />
-      <Text style={ [ styles.title, { color:colors.text } ] }>{ children }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.title, { color:colors.text } ] }>{ children }</Text>
       <View style={ styles.placeholder } />
     </View>
   )

@@ -28,7 +28,7 @@ const SelectButton = ( props ) => {
       ] }
       onPress={ handleConfirm }
       disabled={ disabled }>
-      <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ t( 'select' ) }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ t( 'select' ) }</Text>
     </TouchableOpacity>
   )
 }

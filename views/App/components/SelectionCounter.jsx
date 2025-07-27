@@ -23,7 +23,7 @@ const SelectionCounter = () => {
 
   return (
     <View style={ styles.selectionCountContainer }>
-      <Text style={ [ styles.selectionCount, { color:colors.text } ] }>
+      <Text adjustsFontSizeToFit style={ [ styles.selectionCount, { color:colors.text } ] }>
         { selectionList.size } { t( selected ) }
       </Text>
     </View>

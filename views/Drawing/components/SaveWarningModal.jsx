@@ -30,7 +30,7 @@ const SaveWarningModal = ( props ) => {  // eslint-disable-line
   } )
 
   return (
-    <Text style={ [ styles.text, { color:colors.text } ] }>
+    <Text adjustsFontSizeToFit style={ [ styles.text, { color:colors.text } ] }>
       { t( 'exit-without-saving-warning' ) }
     </Text>
   )

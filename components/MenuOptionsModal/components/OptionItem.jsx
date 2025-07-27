@@ -53,7 +53,7 @@ const OptionItem = ( props ) => {
   return (
     <TouchableOpacity style={ styles.optionItem } onPress={ selectOption }>
       <Ionicons name={ icon } size={ 22 } color={ colors.text } />
-      <Text style={ [ styles.optionText, { color:colors.text } ] }>{ name }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.optionText, { color:colors.text } ] }>{ name }</Text>
     </TouchableOpacity>
   )
 

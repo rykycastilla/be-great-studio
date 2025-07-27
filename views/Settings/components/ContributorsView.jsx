@@ -21,7 +21,7 @@ import { useTheme } from '@/contexts/theme'
 const Contribuitor = ( props ) => {
   const { occupation, name } = props
   const { colors } = useTheme()
-  return <Text style={ [ styles.licenseText, { color:colors.inactive } ] }>{ occupation }: { name }</Text>
+  return <Text adjustsFontSizeToFit style={ [ styles.licenseText, { color:colors.inactive } ] }>{ occupation }: { name }</Text>
 }
 
 /**

@@ -32,7 +32,7 @@ const WarningModal = ( props ) => {
   } )
 
   return (
-    <Text style={ [ styles.text, { color:colors.text } ] }>
+    <Text adjustsFontSizeToFit style={ [ styles.text, { color:colors.text } ] }>
       { t( 'option-warning', action, drawingList.length, t( elementGrammaticalNumber ) ) }
     </Text>
   )

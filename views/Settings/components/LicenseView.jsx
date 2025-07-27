@@ -20,17 +20,17 @@ const LicenseView = () => {
       <Header>{ t( 'license' ) }</Header>
       <View style={ styles.content }>
         <Image source={ icon } style={ styles.brandIcon } />
-        <Text style={ styles.licenseContainer }>
-          <Text style={ [ styles.licenseText, { color:colors.text } ] }>
+        <Text adjustsFontSizeToFit style={ styles.licenseContainer }>
+          <Text adjustsFontSizeToFit style={ [ styles.licenseText, { color:colors.text } ] }>
             Copyright © { new Date().getFullYear() } BeGreat Studio™
           </Text>
           { '\n' }
-          <Text style={ [ styles.licenseDescription, { color:colors.inactive } ] }>
+          <Text adjustsFontSizeToFit style={ [ styles.licenseDescription, { color:colors.inactive } ] }>
             This App is subject to the terms of the Mozilla Public License, v. 2.0.
             This name, logo and branding elements are protected by trademarks law.
           </Text>
         </Text>
-        <Text style={ [ styles.poweredBy, { color:colors.inactive } ] }>
+        <Text adjustsFontSizeToFit style={ [ styles.poweredBy, { color:colors.inactive } ] }>
           Powered by RN Drawing™
         </Text>
       </View>

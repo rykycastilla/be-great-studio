@@ -43,7 +43,7 @@ const ResolutionOption = ( props ) => {
     <TouchableOpacity
       style={ [ styles.modalOption, { borderColor:colors.border } ] }
       onPress={ handleResolutionSelection }>
-      <Text style={ [ styles.modalOptionText, { color:colors.text } ] }>
+      <Text adjustsFontSizeToFit style={ [ styles.modalOptionText, { color:colors.text } ] }>
         { value }px
       </Text>
     </TouchableOpacity>

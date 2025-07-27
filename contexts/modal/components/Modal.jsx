@@ -45,7 +45,7 @@ const Modal = ( props ) => {
     <ModalContainer
       visible={ isVisible }
       onClose={ hide }>
-      <Text style={ [ styles.title, { color:colors.text }]  }>{ title }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.title, { color:colors.text }]  }>{ title }</Text>
       { children }
       {
         !hideButtons && (
@@ -53,7 +53,7 @@ const Modal = ( props ) => {
             <TouchableOpacity
               style={ [ styles.button, { backgroundColor:colors.background } ] }
               onPress={ hide }>
-              <Text style={ [ styles.buttonText, { color:colors.primary } ] }>{ t( 'cancel' ) }</Text>
+              <Text adjustsFontSizeToFit style={ [ styles.buttonText, { color:colors.primary } ] }>{ t( 'cancel' ) }</Text>
             </TouchableOpacity>
             <TouchableOpacity
               disabled={ isButtonInactive }
@@ -64,7 +64,7 @@ const Modal = ( props ) => {
                 ]
               }
               onPress={ debounce( handleAccept, BUTTON_DEBOUNCE_DELAY ) }>
-              <Text style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? t( 'accept' ) }</Text>
+              <Text adjustsFontSizeToFit style={ [ styles.buttonText, { color: '#FFFFFF' } ] }>{ acceptButtonTitle ?? t( 'accept' ) }</Text>
             </TouchableOpacity>
           </View>
         )

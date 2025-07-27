@@ -66,10 +66,10 @@ const Info = ( props ) => {
   const { colors } = useTheme()
   return (
     <View style={ styles.info }>
-      <Text style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
+      <Text adjustsFontSizeToFit style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
         { name }
       </Text>
-      <Text style={ [ styles.extraInfo, { color:colors.inactive } ] }>
+      <Text adjustsFontSizeToFit style={ [ styles.extraInfo, { color:colors.inactive } ] }>
         { lastModified.toLocaleDateString() }   { resolution }px { aspectRatio }
       </Text>
     </View>

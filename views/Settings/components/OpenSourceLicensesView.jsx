@@ -40,9 +40,9 @@ const License = ( props ) => {
   const { colors } = useTheme()
   return (
     <View style={ styles.licenseContainer }>
-      <Text style={ [ styles.libName, { color:colors.text } ] }>{ lib }</Text>
-      <Text style={ [ styles.licenseName, { color:colors.text } ] }>{ name }</Text>
-      <Text style={ [ styles.licenseText, { color:colors.inactive } ] }>{ description }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.libName, { color:colors.text } ] }>{ lib }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.licenseName, { color:colors.text } ] }>{ name }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.licenseText, { color:colors.inactive } ] }>{ description }</Text>
     </View>
   )
 }

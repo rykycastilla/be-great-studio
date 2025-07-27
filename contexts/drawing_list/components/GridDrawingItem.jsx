@@ -68,14 +68,14 @@ const Info = ( props ) => {
   const { name, lastModified, resolution, aspectRatio } = drawing
   return (
     <View style={ styles.info }>
-      <Text style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
+      <Text adjustsFontSizeToFit style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
         { name }
       </Text>
       <View style={ styles.extraInfoContainer }>
-        <Text style={ [ styles.extraInfo, { color:colors.inactive } ] }>
+        <Text adjustsFontSizeToFit style={ [ styles.extraInfo, { color:colors.inactive } ] }>
           { lastModified.toLocaleDateString() }
         </Text>
-        <Text style={ [ styles.extraInfo, { color:colors.inactive } ] }>
+        <Text adjustsFontSizeToFit style={ [ styles.extraInfo, { color:colors.inactive } ] }>
           { resolution }px { aspectRatio }
         </Text>
       </View>

@@ -26,7 +26,7 @@ const NavigationItem = ( props ) => {
       style={ [ styles.settingItem, { backgroundColor:colors.card, borderColor:colors.border } ] }
       onPress={ () => setIsActive( !isActive ) }
       activeOpacity={ 0.7 }>
-      <Text style={ [ styles.settingLabel, { color:colors.text } ] }>{ label }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.settingLabel, { color:colors.text } ] }>{ label }</Text>
       <View style={ styles.switchContainer }>
         <Switch isActive={ isActive } onIsActiveChange={ setIsActive } />
       </View>

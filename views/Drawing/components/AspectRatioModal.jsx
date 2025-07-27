@@ -43,7 +43,7 @@ const AspectRatioOption = ( props ) => {
     <TouchableOpacity
       style={ [ styles.modalOption, { borderColor:colors.border } ] }
       onPress={ handleAspectRatioSelection }>
-      <Text style={ [ styles.modalOptionText, { color:colors.text } ] }>
+      <Text adjustsFontSizeToFit style={ [ styles.modalOptionText, { color:colors.text } ] }>
         { value }
       </Text>
     </TouchableOpacity>

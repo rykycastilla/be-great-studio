@@ -37,7 +37,7 @@ const Item = ( props ) => {
         }
       }>
       <SortIcon sort={ sort } size={ 16 } color={ colors.text } />
-      <Text style={ [ styles.itemText, { color:colors.text } ] }>{ children }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.itemText, { color:colors.text } ] }>{ children }</Text>
     </TouchableOpacity>
   )
 }

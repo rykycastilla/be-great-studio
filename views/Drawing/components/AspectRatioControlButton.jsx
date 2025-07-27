@@ -29,7 +29,7 @@ const AspectRatioControlButton = ( props ) => {
     <TouchableOpacity
       style={ [ styles.controlButton, { backgroundColor:colors.card } ] }
       onPress={ dispatchAspectRatioModal }>
-      <Text style={ [ styles.controlText, { color: colors.text } ] }>{ drawing.aspectRatio }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.controlText, { color: colors.text } ] }>{ drawing.aspectRatio }</Text>
     </TouchableOpacity>
   )
 }

@@ -26,7 +26,7 @@ const SelectionButton = () => {
 
   return (
     <TouchableOpacity onPress={ handlePress } style={ styles.selectionButton }>
-      <Text style={ [ styles.selectionButtonText, { color:colors.primary } ] }>
+      <Text adjustsFontSizeToFit  minimumFontScale={ 1 } style={ [ styles.selectionButtonText, { color:colors.primary } ] }>
         { isSelectionMode ? t( 'cancel' ) : t( 'select' ) }
       </Text>
     </TouchableOpacity>

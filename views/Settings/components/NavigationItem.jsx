@@ -30,9 +30,9 @@ const NavigationItem = ( props ) => {
       onPress={ () => router.push( `/settings/${ target }` ) }
       disabled={ disabled }
       activeOpacity={ 0.7 }>
-      <Text style={ [ styles.settingLabel, { color:( disabled ? colors.inactive : colors.text ) } ] }>{ label }</Text>
+      <Text adjustsFontSizeToFit style={ [ styles.settingLabel, { color:( disabled ? colors.inactive : colors.text ) } ] }>{ label }</Text>
       <View style={ styles.valueContainer }>
-        <Text style={ [ styles.valueText, { color:colors.inactive } ] }>{ value }</Text>
+        <Text adjustsFontSizeToFit style={ [ styles.valueText, { color:colors.inactive } ] }>{ value }</Text>
         { !disabled && <Ionicons name="chevron-forward" size={ 20 } color={ colors.inactive } /> }
       </View>
     </TouchableOpacity>

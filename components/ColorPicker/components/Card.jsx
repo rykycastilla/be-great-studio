@@ -48,7 +48,7 @@ const Card = ( props ) => {
           },
         ]}
       >
-        <Text style={[styles.title, { color: colors.text }]}>{ title }</Text>
+        <Text adjustsFontSizeToFit style={[styles.title, { color: colors.text }]}>{ title }</Text>
         { children }
       </AnimatedView>
     </KeyboardAvoidingView>

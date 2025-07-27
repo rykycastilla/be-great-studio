@@ -31,8 +31,8 @@ const SelectionItem = ( props ) => {
       onPress={ () => setSelected( value ) }
       activeOpacity={ 0.7 }>
       <View>
-        <Text style={ [ styles.preview, { color:colors.text } ] }>{ preview }</Text>
-        <Text style={ [ styles.description, { color:colors.inactive } ] }>{ description }</Text>
+        <Text adjustsFontSizeToFit style={ [ styles.preview, { color:colors.text } ] }>{ preview }</Text>
+        <Text adjustsFontSizeToFit style={ [ styles.description, { color:colors.inactive } ] }>{ description }</Text>
       </View>
       { isSelected && <Ionicons name="checkmark" size={ 22 } color={ colors.primary } /> }
     </TouchableOpacity>

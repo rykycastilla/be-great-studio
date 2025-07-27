@@ -29,7 +29,7 @@ const ResolutionControlButton = ( props ) => {
     <TouchableOpacity
       style={ [ styles.controlButton, { backgroundColor:colors.card } ] }
       onPress={ dispatchResolutionModal }>
-      <Text style={[styles.controlText, { color:colors.text }]}>{ drawing.resolution }px</Text>
+      <Text adjustsFontSizeToFit style={[styles.controlText, { color:colors.text }]}>{ drawing.resolution }px</Text>
     </TouchableOpacity>
 
   )
