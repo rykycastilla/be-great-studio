@@ -38,7 +38,10 @@ const Name = ( props ) => {
 
   return (
     <TouchableWithoutFeedback onPress={ dispatchChangeNameModal }>
-      <Text adjustsFontSizeToFit style={ [ styles.name, { color:colors.text } ] }>
+      <Text
+        numberOfLines={ 1 }
+        ellipsizeMode="tail"
+        style={ [ styles.name, { color:colors.text } ] }>
         { drawing.name }
       </Text>
     </TouchableWithoutFeedback>
@@ -48,6 +51,7 @@ const Name = ( props ) => {
 
 const styles = StyleSheet.create( {
   name: {
+    maxWidth: '65%',
     fontSize: 17,
     fontWeight: '600',
     fontFamily: 'System',

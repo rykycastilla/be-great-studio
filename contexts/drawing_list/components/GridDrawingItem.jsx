@@ -66,7 +66,10 @@ const Info = ( props ) => {
   const { name, lastModified, resolution, aspectRatio } = drawing
   return (
     <View style={ styles.info }>
-      <Text adjustsFontSizeToFit style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
+      <Text
+        numberOfLines={ 1 }
+        ellipsizeMode="tail"
+        style={ [ styles.name, { color:colors.text } ] }>
         { name }
       </Text>
       <View style={ styles.extraInfoContainer }>

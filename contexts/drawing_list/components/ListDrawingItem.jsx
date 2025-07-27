@@ -64,7 +64,10 @@ const Info = ( props ) => {
   const { colors } = useTheme()
   return (
     <View style={ styles.info }>
-      <Text adjustsFontSizeToFit style={ [ styles.name, { color:colors.text } ] } numberOfLines={ 1 }>
+      <Text
+        numberOfLines={ 1 }
+        ellipsizeMode="tail"
+        style={ [ styles.name, { color:colors.text } ] }>
         { name }
       </Text>
       <Text adjustsFontSizeToFit style={ [ styles.extraInfo, { color:colors.inactive } ] }>
