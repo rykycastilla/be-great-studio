@@ -23,6 +23,9 @@ import { useSaverHandler } from './hooks/saver_handler'
  * @import { SaveEvent } from './components/SaveButton'
  */
 
+/** Tools area height in pixels for layout calculations */
+const TOOLS_AREA_HEIGHT = 220
+
 /**
  * @returns { ReactElement }
  */
@@ -35,7 +38,7 @@ const Drawing = () => {
 
   const {
     minHeightExceed, minHeightStyle, handleLayout,
-  } = useMinHeight( height - 220 )
+  } = useMinHeight( height - TOOLS_AREA_HEIGHT )
 
   const requestData = useCallback( async() => {
     const canvas = canvasRef.current
