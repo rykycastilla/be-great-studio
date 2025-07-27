@@ -83,6 +83,7 @@ const Canvas = forwardRef(
     const currentSize = useCurrentSize()
     const { createColor } = useColorList()
     const size = /** @type { number } */ ( sizeMatrix.get( currentSize, resolution ) )
+    const [ scale, setScale ] = useState( 1 )
 
     const avoidingNullContentRef = useRef(
       /** @type { Resolver<void> } */ ( /** @type { unknown } */ ( null ) ),
@@ -146,7 +147,7 @@ const Canvas = forwardRef(
 
     return (
       <TouchableView
-        touchIndicatorSize={ indicatorSize }
+        touchIndicatorSize={ indicatorSize * scale }
         disabled={ !showTouchCursor }
         style={ canvasStyle }
         onLayout={ handleLayout }>
@@ -158,6 +159,7 @@ const Canvas = forwardRef(
           color={ currentColor }
           tool={ currentTool }
           toolSize={ size }
+          onScroll={ ( event ) => setScale( event.scale ) }
           onHistoryMove={ ( event ) => {
             const { canUndo, canRedo } = event
             setCanUndo( canUndo )
