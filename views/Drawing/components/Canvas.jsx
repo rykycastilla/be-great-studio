@@ -37,6 +37,22 @@ sizeMatrix.set( Size.GIANT, 32, 9 )
 sizeMatrix.set( Size.GIANT, 64, 18 )
 
 /**
+ * @param { string } color
+ * @returns { boolean }
+ */
+function checkIsVisible( color ) {
+  // Detecting rgba chanels
+  const match = /** @type { [ string, string, string, string, string ] | null } */ (
+    color.match( /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,?\s*(\d*(?:\.\d+)?)?\s*\)$/ )
+  )
+  // Validating is a valid color
+  if( !match ) { return false }
+  // Validating visible alpha
+  const alpha = parseInt( match[ 4 ] )
+  return alpha > 0.4
+}
+
+/**
  * @typedef { object } CanvasProps
  * @property { string | null } [ content ]
  * @property { number } resolution
@@ -148,6 +164,8 @@ const Canvas = forwardRef(
             setCanRedo( canRedo )
           } }
           onEyeDropper={ ( event ) => {
+            const isVisible = checkIsVisible( event.color )
+            if( !isVisible ) { return }
             const hex = rgbaToHex( event.color )
             createColor( hex )
           } } />
