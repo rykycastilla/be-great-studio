@@ -2,7 +2,7 @@ import Touch from './Touch'
 
 /**
  * @import { ReactElement } from 'react'
- * @import { Touch as ITouch } from '../types/Touch'
+ * @import { Touch as ITouch } from '../models/Touch'
  */
 
 /**

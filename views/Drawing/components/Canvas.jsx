@@ -1,4 +1,3 @@
-import TouchableView from '@/components/TouchableView'
 import { calcAspectRatio } from '@/utils/calc_aspect_ratio'
 import { Draw } from 'react-native-drawing'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react'
@@ -7,7 +6,8 @@ import { rgbaToHex } from '@/utils/rgba_to_hex'
 import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { Table } from '@/utils/Table'
 import { useCanvasStyle } from '../hooks/canvas_style'
-import { useSettings } from '@/contexts/settings'
+import { useTouchIndicatorSize } from '@/contexts/touch'
+import { View } from 'react-native'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
@@ -57,6 +57,7 @@ function checkIsVisible( color ) {
  * @property { string | null } [ content ]
  * @property { number } resolution
  * @property { string } aspectRatio
+ * @property { ( event:LayoutChangeEvent ) => void } onLayout
  */
 
 /**
@@ -75,7 +76,7 @@ const Canvas = forwardRef(
   /** @type { ( props:CanvasProps, ref:ForwardedRef<CanvasObject|null> ) => ReactElement } */
   ( props, ref ) => {
 
-    const { content, resolution, aspectRatio } = props
+    const { content, resolution, aspectRatio, onLayout:handleLayout } = props
     const canvasStyle = useCanvasStyle( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
     const currentTool = useCurrentTool()
@@ -83,7 +84,6 @@ const Canvas = forwardRef(
     const currentSize = useCurrentSize()
     const { createColor } = useColorList()
     const size = /** @type { number } */ ( sizeMatrix.get( currentSize, resolution ) )
-    const [ scale, setScale ] = useState( 1 )
 
     const avoidingNullContentRef = useRef(
       /** @type { Resolver<void> } */ ( /** @type { unknown } */ ( null ) ),
@@ -119,13 +119,16 @@ const Canvas = forwardRef(
 
     // Using touch indicator size
     const [ width, setWidth ] = useState( 0 )
+    const [ scale, setScale ] = useState( 1 )
     const indicatorSize = size / resolution * width
+    useTouchIndicatorSize( indicatorSize * scale )
 
     /** @type { ( event:LayoutChangeEvent ) => void } */
-    const handleLayout = useCallback( ( event ) => {
+    const handleContainerLayout = useCallback( ( event ) => {
       const { layout } = event.nativeEvent
       setWidth( layout.width )
-    }, [] )
+      handleLayout( event )
+    }, [ handleLayout ] )
 
     // Creating history reference
 
@@ -143,14 +146,10 @@ const Canvas = forwardRef(
     const [ canRedo, setCanRedo ] = useState( false )
     useNewHistory( { canUndo, canRedo, undo, redo } )
 
-    const { showTouchCursor } = useSettings()
-
     return (
-      <TouchableView
-        touchIndicatorSize={ indicatorSize * scale }
-        disabled={ !showTouchCursor }
-        style={ canvasStyle }
-        onLayout={ handleLayout }>
+      <View
+        style={ [ canvasStyle ] }
+        onLayout={ handleContainerLayout }>
         <Draw
           ref={ drawRef }
           resolution={ resolution }
@@ -171,7 +170,7 @@ const Canvas = forwardRef(
             const hex = rgbaToHex( event.color )
             createColor( hex )
           } } />
-      </TouchableView>
+      </View>
     )
 
   } )

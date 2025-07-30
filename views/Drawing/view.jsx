@@ -9,6 +9,8 @@ import SaveWarningModal from './components/SaveWarningModal'
 import { SafeView, useDimensions } from '@/contexts/window'
 import { StyleSheet, View } from 'react-native'
 import { ToolsArea, ToolsProvider } from '@/contexts/tools'
+import { TouchProvider } from '@/contexts/touch'
+import { useBoardPoints } from './hooks/board_points'
 import { useCallback, useRef } from 'react'
 import { useColorPicker } from './hooks/color_picker'
 import { useContent } from './hooks/content'
@@ -17,6 +19,7 @@ import { useFocus } from '@/contexts/debounced_router'
 import { useMinHeight } from './hooks/min_height'
 import { useModal } from '@/contexts/modal'
 import { useSaverHandler } from './hooks/saver_handler'
+import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { CanvasObject } from './components/Canvas'
@@ -68,10 +71,14 @@ const Drawing = () => {
   const colorPicker = useColorPicker()
   const { dispatchColorPicker } = colorPicker
 
+  // Pointer config
+  const { showTouchCursor } = useSettings()
+  const { checkIsIn, handleBoardLayout, handleObstacleLayout } = useBoardPoints()
+
   return (
     <ToolsProvider id={ drawing.id }>
       <SafeView style={ styles.container }>
-        <View style={ { flex:1 } }>
+        <TouchProvider disabled={ !showTouchCursor } checkIsInArea={ checkIsIn }>
           <View style={ styles.header }>
             <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
             <Name drawing={ drawing } />
@@ -91,11 +98,16 @@ const Drawing = () => {
               ref={ canvasRef }
               content={ content }
               resolution={ drawing.resolution }
-              aspectRatio={ drawing.aspectRatio } />
+              aspectRatio={ drawing.aspectRatio }
+              onLayout={ handleBoardLayout } />
           </View>
           { /* If min height was exceed the content will collide with tools area, to avoid it, the tools area must collapse */ }
-          <ToolsArea collapsable={ minHeightExceed } dispatchColorPicker={ dispatchColorPicker } />
-        </View>
+          <ToolsArea
+            collapsable={ minHeightExceed }
+            dispatchColorPicker={ dispatchColorPicker }
+            // Excluding touch indicator when is over tools area
+            onLayout={ handleObstacleLayout } />
+        </TouchProvider>
       </SafeView>
       <DrawingColorPicker { ...colorPicker } />
     </ToolsProvider>
