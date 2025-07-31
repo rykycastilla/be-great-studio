@@ -29,20 +29,20 @@ const ToolOption = ( props ) => {
   const icon = useToolIcon( tool )
   return (
     <TouchableOpacity
-      style={[
+      style={ [
         styles.modalOption,
         {
           backgroundColor: colors.primary,
           borderColor: colors.border,
           borderRadius: 8,
         },
-      ]}
+      ] }
       onPress={ () => {
         setTool( tool )
         hide()
       } }>
       <Ionicons name={ icon } size={ 18 } color="#FFFFFF" />
-      <Text adjustsFontSizeToFit style={ [ styles.modalOptionText, { color:colors.text } ] }>
+      <Text adjustsFontSizeToFit style={ [ styles.modalOptionText ] }>
         { name }
       </Text>
     </TouchableOpacity>
@@ -98,6 +98,7 @@ const styles = StyleSheet.create( {
 
   modalOptionText: {
     marginLeft: 8,
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '500',
   },
