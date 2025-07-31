@@ -1,6 +1,8 @@
 # BeGreat Studio
 **BeGreat Studio** is a *pixel art drawing application* built with **React Native** and **Expo**. The app provides a comprehensive digital art creation environment featuring multi-touch gesture support, drawing tools, and real-time canvas interaction capabilities.
 
+> ⚠️ **WARNING:** This project is currently in Beta. You may encounter bugs or unexpected behavior, some features will be unstable or incomplete.
+
 ## Installation & Setup
 
 To get started with the project, follow these steps:
