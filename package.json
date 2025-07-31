@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "scripts": {
     "start": "expo start --offline",
-    "build": "eas build -p android --profile preview",
+    "build": "eas build -p android --profile release",
+    "build:preview": "eas build -p android --profile preview",
     "lint": "tsc && eslint ."
   },
   "dependencies": {
