@@ -38,7 +38,6 @@ const ContributorsView = () => {
       <Header>{ t( 'contributors' ) }</Header>
       <View style={ styles.content }>
         <Contribuitor occupation={ t( 'developer' ) } name="Orestes Ricardo Castilla Escalona" />
-        <Contribuitor occupation={ t( 'logo-designer' ) } name="Jonathan Brito Savón" />
         <Contribuitor occupation={ t( 'name-creator' ) } name="David Silveira Bidot" />
       </View>
     </SafeView>
