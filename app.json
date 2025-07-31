@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#9dcee5"
+      "backgroundColor": "#007AFF"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -17,11 +17,11 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/icon.png",
-        "backgroundColor": "#9dcee5"
+        "backgroundColor": "#007AFF"
       },
       "softwareKeyboardLayoutMode": "pan",
       "statusBar": {
-        "backgroundColor": "#9dcee5",
+        "backgroundColor": "#007AFF",
         "translucent": true
       },
       "package": "com.begreat.studio"
