@@ -99,7 +99,7 @@ Pure utility functions and helper classes.
 ### **Service Layer Pattern**
 Business logic is encapsulated in service classes with clear interfaces:
 
-```javascript
+``` javascript
 // Example: Drawing management service
 export class DrawingService {
   constructor( repository, configRepo, thumbnailDAO, mapper, sharingService, genId ) {
@@ -115,7 +115,7 @@ export class DrawingService {
 ### **Repository Pattern**
 Data access is abstracted through repository classes that aggregate multiple DAOs:
 
-```javascript
+``` javascript
 export class DrawingRepository {
   constructor( drawingDAO, thumbnailDAO, mapper ) {
     // Data access coordination
@@ -174,7 +174,7 @@ New drawing tools can be added by:
 
 ### **Context Composition**
 Complex features are built by composing multiple contexts:
-```jsx
+``` jsx
 <LanguageProvider>
   <ThemeProvider>
     <SettingsProvider>
