@@ -7,6 +7,7 @@ import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, us
 import { Table } from '@/utils/Table'
 import { useCanvasStyle } from '../hooks/canvas_style'
 import { useSettings } from '@/contexts/settings'
+import { useTheme } from '@/contexts/theme'
 import { View } from 'react-native'
 
 /**
@@ -75,6 +76,7 @@ const Canvas = forwardRef(
   ( props, ref ) => {
 
     const { content, resolution, aspectRatio } = props
+    const { colors } = useTheme()
     const canvasStyle = useCanvasStyle( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
     const currentTool = useCurrentTool()
@@ -145,6 +147,7 @@ const Canvas = forwardRef(
           ref={ drawRef }
           cursor={ showTouchCursor }
           cursorStyle={ { borderRadius:'15%' } }
+          backgroundColor={ colors.canvas }
           resolution={ resolution }
           aspectRatio={ calcAspectRatio( aspectRatio ) }
           antialiasing={ false }
