@@ -108,7 +108,10 @@ const Canvas = forwardRef(
     useEffect( () => {
       const draw = /** @type { Draw } */ ( drawRef.current )
       if( content === undefined ) { draw.clear() }
-      else if( ( typeof content ) === 'string' ) { draw.setImage( content ) }
+      else if( ( typeof content ) === 'string' ) {
+        draw.setImage( content )
+          .then( () => draw.resetHistory() )
+      }
     }, [ drawRef, content ] )
 
     // Using promise (waiter) for null contents
