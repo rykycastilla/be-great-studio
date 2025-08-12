@@ -109,6 +109,7 @@ const Canvas = forwardRef(
       const draw = /** @type { Draw } */ ( drawRef.current )
       if( content === undefined ) { draw.clear() }
       else if( ( typeof content ) === 'string' ) {
+        // Reseting history after set loaded image to handle this content as new paint
         draw.setImage( content )
           .then( () => draw.resetHistory() )
       }
