@@ -9,8 +9,6 @@ import SaveWarningModal from './components/SaveWarningModal'
 import { SafeView, useDimensions } from '@/contexts/window'
 import { StyleSheet, View } from 'react-native'
 import { ToolsArea, ToolsProvider } from '@/contexts/tools'
-import { TouchProvider } from '@/contexts/touch'
-import { useBoardPoints } from './hooks/board_points'
 import { useCallback, useRef } from 'react'
 import { useColorPicker } from './hooks/color_picker'
 import { useContent } from './hooks/content'
@@ -19,7 +17,6 @@ import { useFocus } from '@/contexts/debounced_router'
 import { useMinHeight } from './hooks/min_height'
 import { useModal } from '@/contexts/modal'
 import { useSaverHandler } from './hooks/saver_handler'
-import { useSettings } from '@/contexts/settings'
 
 /**
  * @import { CanvasObject } from './components/Canvas'
@@ -71,43 +68,34 @@ const Drawing = () => {
   const colorPicker = useColorPicker()
   const { dispatchColorPicker } = colorPicker
 
-  // Pointer config
-  const { showTouchCursor } = useSettings()
-  const { checkIsIn, handleBoardLayout, handleObstacleLayout } = useBoardPoints()
-
   return (
     <ToolsProvider id={ drawing.id }>
       <SafeView style={ styles.container }>
-        <TouchProvider disabled={ !showTouchCursor } checkIsInArea={ checkIsIn }>
-          <View style={ styles.header }>
-            <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
-            <Name drawing={ drawing } />
-            <SaveButton
-              drawing={ drawing }
-              disabled={ savingIsUnnecessary }
-              dataRequester={ requestData }
-              onSave={ handleSave } />
+        <View style={ styles.header }>
+          <BackButton blockNavigation={ !savingIsUnnecessary } fallback={ backButtonFallback } />
+          <Name drawing={ drawing } />
+          <SaveButton
+            drawing={ drawing }
+            disabled={ savingIsUnnecessary }
+            dataRequester={ requestData }
+            onSave={ handleSave } />
+        </View>
+        { /* Calculating if content has a safe height (to avoid collisions with tools area) */ }
+        <View style={ [ styles.content, minHeightStyle ] } onLayout={ handleLayout }>
+          <View style={ styles.canvasControls }>
+            <AspectRatioControlButton drawing={ drawing } />
+            <ResolutionControlButton drawing={ drawing } />
           </View>
-          { /* Calculating if content has a safe height (to avoid collisions with tools area) */ }
-          <View style={ [ styles.content, minHeightStyle ] } onLayout={ handleLayout }>
-            <View style={ styles.canvasControls }>
-              <AspectRatioControlButton drawing={ drawing } />
-              <ResolutionControlButton drawing={ drawing } />
-            </View>
-            <Canvas
-              ref={ canvasRef }
-              content={ content }
-              resolution={ drawing.resolution }
-              aspectRatio={ drawing.aspectRatio }
-              onLayout={ handleBoardLayout } />
-          </View>
-          { /* If min height was exceed the content will collide with tools area, to avoid it, the tools area must collapse */ }
-          <ToolsArea
-            collapsable={ minHeightExceed }
-            dispatchColorPicker={ dispatchColorPicker }
-            // Excluding touch indicator when is over tools area
-            onLayout={ handleObstacleLayout } />
-        </TouchProvider>
+          <Canvas
+            ref={ canvasRef }
+            content={ content }
+            resolution={ drawing.resolution }
+            aspectRatio={ drawing.aspectRatio } />
+        </View>
+        { /* If min height was exceed the content will collide with tools area, to avoid it, the tools area must collapse */ }
+        <ToolsArea
+          collapsable={ minHeightExceed }
+          dispatchColorPicker={ dispatchColorPicker } />
       </SafeView>
       <DrawingColorPicker { ...colorPicker } />
     </ToolsProvider>

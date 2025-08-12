@@ -6,12 +6,11 @@ import { rgbaToHex } from '@/utils/rgba_to_hex'
 import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
 import { Table } from '@/utils/Table'
 import { useCanvasStyle } from '../hooks/canvas_style'
-import { useTouchIndicatorSize } from '@/contexts/touch'
+import { useSettings } from '@/contexts/settings'
 import { View } from 'react-native'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
- * @import { LayoutChangeEvent } from 'react-native'
  */
 
 /** @type { Table<Size,number,number> } */ const sizeMatrix = new Table()
@@ -57,7 +56,6 @@ function checkIsVisible( color ) {
  * @property { string | null } [ content ]
  * @property { number } resolution
  * @property { string } aspectRatio
- * @property { ( event:LayoutChangeEvent ) => void } onLayout
  */
 
 /**
@@ -76,7 +74,7 @@ const Canvas = forwardRef(
   /** @type { ( props:CanvasProps, ref:ForwardedRef<CanvasObject|null> ) => ReactElement } */
   ( props, ref ) => {
 
-    const { content, resolution, aspectRatio, onLayout:handleLayout } = props
+    const { content, resolution, aspectRatio } = props
     const canvasStyle = useCanvasStyle( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
     const currentTool = useCurrentTool()
@@ -121,19 +119,6 @@ const Canvas = forwardRef(
       else { avoidingNullContentRef.current.resolve() }
     }, [ content, avoidingNullContentRef ] )
 
-    // Using touch indicator size
-    const [ width, setWidth ] = useState( 0 )
-    const [ scale, setScale ] = useState( 1 )
-    const indicatorSize = size / resolution * width
-    useTouchIndicatorSize( indicatorSize * scale )
-
-    /** @type { ( event:LayoutChangeEvent ) => void } */
-    const handleContainerLayout = useCallback( ( event ) => {
-      const { layout } = event.nativeEvent
-      setWidth( layout.width )
-      handleLayout( event )
-    }, [ handleLayout ] )
-
     // Creating history reference
 
     const undo = useCallback( () => {
@@ -150,19 +135,22 @@ const Canvas = forwardRef(
     const [ canRedo, setCanRedo ] = useState( false )
     useNewHistory( { canUndo, canRedo, undo, redo } )
 
+    // Setting drawing cursor
+    const { showTouchCursor } = useSettings()
+
     return (
       <View
-        style={ [ canvasStyle ] }
-        onLayout={ handleContainerLayout }>
+        style={ [ canvasStyle ] }>
         <Draw
           ref={ drawRef }
+          cursor={ showTouchCursor }
+          cursorStyle={ { borderRadius:'15%' } }
           resolution={ resolution }
           aspectRatio={ calcAspectRatio( aspectRatio ) }
           antialiasing={ false }
           color={ currentColor }
           tool={ currentTool }
           toolSize={ size }
-          onScroll={ ( event ) => setScale( event.scale ) }
           onHistoryMove={ ( event ) => {
             const { canUndo, canRedo } = event
             setCanUndo( canUndo )

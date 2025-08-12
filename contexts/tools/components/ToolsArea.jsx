@@ -7,7 +7,6 @@ import { useSharedValue } from 'react-native-reanimated'
 import { useLayoutEffect, useState } from 'react'
 
 /**
- * @import { LayoutChangeEvent } from 'react-native'
  * @import { ReactElement } from 'react'
  */
 
@@ -15,7 +14,6 @@ import { useLayoutEffect, useState } from 'react'
  * @typedef { object } ToolsAreaProps
  * @property { boolean } collapsable
  * @property { ( color:string ) => void } dispatchColorPicker
- * @property { ( event:LayoutChangeEvent ) => void } onLayout
  */
 
 /**
@@ -24,7 +22,7 @@ import { useLayoutEffect, useState } from 'react'
  */
 const ToolsArea = ( props ) => {
 
-  const { collapsable, dispatchColorPicker, onLayout:handleLayout } = props
+  const { collapsable, dispatchColorPicker } = props
   const [ toolbarExpanded, setToolbarExpanded ] = useState( true )
   const isToolbarExpanded = toolbarExpanded || !collapsable
   const [ isAnimationComplete, setIsAnimationComplete ] = useState( true )
@@ -69,7 +67,7 @@ const ToolsArea = ( props ) => {
   }, [ isToolbarExpanded ] )  // eslint-disable-line
 
   return (
-    <View style={ styles.toolsContainerWrapper } onLayout={ handleLayout }>
+    <View style={ styles.toolsContainerWrapper }>
       {
         ( isToolbarExpanded && isAnimationComplete && collapsable ) &&
         <HiderButton onHide={ () => setToolbarExpanded( false ) } />
