@@ -14,7 +14,6 @@ import { useColorPicker } from './hooks/color_picker'
 import { useContent } from './hooks/content'
 import { useDrawing } from './hooks/drawing'
 import { useFocus } from '@/contexts/debounced_router'
-import { useMinHeight } from './hooks/min_height'
 import { useModal } from '@/contexts/modal'
 import { useSaverHandler } from './hooks/saver_handler'
 
@@ -38,10 +37,6 @@ const Drawing = () => {
   const { height } = useDimensions()
 
   useFocus()
-
-  const {
-    minHeightExceed, minHeightStyle, handleLayout,
-  } = useMinHeight( height - TOOLS_AREA_HEIGHT )
 
   const requestData = useCallback( async() => {
     const canvas = canvasRef.current
@@ -81,7 +76,7 @@ const Drawing = () => {
             onSave={ handleSave } />
         </View>
         { /* Calculating if content has a safe height (to avoid collisions with tools area) */ }
-        <View style={ [ styles.content, minHeightStyle ] } onLayout={ handleLayout }>
+        <View style={ [ styles.content, { minHeight: height - TOOLS_AREA_HEIGHT } ] }>
           <View style={ styles.canvasControls }>
             <AspectRatioControlButton drawing={ drawing } />
             <ResolutionControlButton drawing={ drawing } />
@@ -92,9 +87,7 @@ const Drawing = () => {
             resolution={ drawing.resolution }
             aspectRatio={ drawing.aspectRatio } />
         </View>
-        { /* If min height was exceed the content will collide with tools area, to avoid it, the tools area must collapse */ }
         <ToolsArea
-          collapsable={ minHeightExceed }
           dispatchColorPicker={ dispatchColorPicker } />
       </SafeView>
       <DrawingColorPicker { ...colorPicker } />
