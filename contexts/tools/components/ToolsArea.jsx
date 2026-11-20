@@ -77,10 +77,8 @@ const ToolsArea = ( props ) => {
 
 const styles = StyleSheet.create( {
   toolsContainerWrapper: {
-    position: 'absolute',
-    bottom: 16,
-    left: 16,
-    right: 16,
+    marginBottom: 16,
+    marginHorizontal: 16,
     alignItems: 'center',
     zIndex: 100,
   },

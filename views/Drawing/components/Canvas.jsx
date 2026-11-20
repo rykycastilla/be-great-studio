@@ -4,11 +4,11 @@ import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useSta
 import { Resolver } from '@/utils/Resolver'
 import { rgbaToHex } from '@/utils/rgba_to_hex'
 import { Size, useColorList, useCurrentColor, useCurrentTool, useCurrentSize, useNewHistory } from '@/contexts/tools'
+import { StyleSheet, View } from 'react-native'
 import { Table } from '@/utils/Table'
-import { useCanvasStyle } from '../hooks/canvas_style'
+import { useAspectRatioCalculation } from '../hooks/aspect_ratio_calculation'
 import { useSettings } from '@/contexts/settings'
 import { useTheme } from '@/contexts/theme'
-import { View } from 'react-native'
 
 /**
  * @import { ForwardedRef, ReactElement } from 'react'
@@ -76,8 +76,8 @@ const Canvas = forwardRef(
   ( props, ref ) => {
 
     const { content, resolution, aspectRatio } = props
-    const { colors } = useTheme()
-    const canvasStyle = useCanvasStyle( aspectRatio )
+    const { colors, theme } = useTheme()
+    const calculatedAspectRatio = useAspectRatioCalculation( aspectRatio )
     const drawRef = useRef( /** @type { Draw | null } */ ( null ) )
     const currentTool = useCurrentTool()
     const currentColor = useCurrentColor()
@@ -142,7 +142,14 @@ const Canvas = forwardRef(
 
     return (
       <View
-        style={ [ canvasStyle ] }>
+        style={ [
+          styles.canvas,
+          {
+            aspectRatio: calculatedAspectRatio,
+            borderColor: colors.border,
+            shadowOpacity: theme === 'dark' ? 0.25 : 0.15,
+          },
+        ] }>
         <Draw
           ref={ drawRef }
           cursor={ showTouchCursor }
@@ -169,5 +176,23 @@ const Canvas = forwardRef(
     )
 
   } )
+
+const styles = StyleSheet.create( {
+
+  canvas: {
+    width: '100%',
+    maxHeight: '100%',
+    maxWidth: '100%',
+    marginBottom: 16,
+    borderWidth: 1,
+    marginLeft: 16,
+    marginRight: 16,
+    flexShrink: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 6,
+  },
+
+} )
 
 export default Canvas

@@ -6,7 +6,7 @@ import Name from './components/Name'
 import ResolutionControlButton from './components/ResolutionControlButton'
 import SaveButton from './components/SaveButton'
 import SaveWarningModal from './components/SaveWarningModal'
-import { SafeView, useDimensions } from '@/contexts/window'
+import { SafeView } from '@/contexts/window'
 import { StyleSheet, View } from 'react-native'
 import { ToolsArea, ToolsProvider } from '@/contexts/tools'
 import { useCallback, useRef } from 'react'
@@ -23,9 +23,6 @@ import { useSaverHandler } from './hooks/saver_handler'
  * @import { SaveEvent } from './components/SaveButton'
  */
 
-/** Tools area height in pixels for layout calculations */
-const TOOLS_AREA_HEIGHT = 220
-
 /**
  * @returns { ReactElement }
  */
@@ -34,7 +31,6 @@ const Drawing = () => {
   const canvasRef = useRef( /** @type { CanvasObject | null } */ ( null ) )
   const content = useContent()
   const drawing = useDrawing()
-  const { height } = useDimensions()
 
   useFocus()
 
@@ -75,8 +71,7 @@ const Drawing = () => {
             dataRequester={ requestData }
             onSave={ handleSave } />
         </View>
-        { /* Calculating if content has a safe height (to avoid collisions with tools area) */ }
-        <View style={ [ styles.content, { minHeight: height - TOOLS_AREA_HEIGHT } ] }>
+        <View style={ styles.content }>
           <View style={ styles.canvasControls }>
             <AspectRatioControlButton drawing={ drawing } />
             <ResolutionControlButton drawing={ drawing } />
@@ -100,6 +95,7 @@ const styles = StyleSheet.create( {
 
   container: {
     flex: 1,
+    justifyContent: 'space-between',
   },
 
   header: {
@@ -111,6 +107,10 @@ const styles = StyleSheet.create( {
   },
 
   content: {
+    minWidth: 0,
+    minHeight: 0,
+    marginHorizontal: 16,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
