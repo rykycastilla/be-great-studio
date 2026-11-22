@@ -4,6 +4,7 @@ import { Easing, withTiming } from 'react-native-reanimated'
 import { StyleSheet, View } from 'react-native'
 import { useSharedValue } from 'react-native-reanimated'
 import { useLayoutEffect, useState } from 'react'
+import { useLongCallback } from '@/hooks/long_callback'
 
 /**
  * @import { ReactElement } from 'react'
@@ -59,13 +60,18 @@ const ToolsArea = ( props ) => {
     else { collapseToolbar() }
   }, [ toolbarExpanded ] )  // eslint-disable-line
 
+  const handleHideToolbarLongPress = useLongCallback( () => {
+    setToolbarExpanded( false )
+  } )
+
   return (
     <View style={ styles.toolsContainerWrapper }>
       <ToolsAreaCard
         opacity={ toolbarOpacity }
         scale={ toolbarScale }
         translateY={ toolbarTranslateY }
-        dispatchColorPicker={ dispatchColorPicker } />
+        dispatchColorPicker={ dispatchColorPicker }
+        onLongPress={ handleHideToolbarLongPress } />
       <CollapsedToolsArea
         opacity={ collapsedToolbarOpacity }
         scale={ collapsedToolbarScale }

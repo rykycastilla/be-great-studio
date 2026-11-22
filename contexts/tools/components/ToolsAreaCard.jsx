@@ -5,7 +5,7 @@ import Reanimated, { useAnimatedStyle } from 'react-native-reanimated'
 import SizeControlRow from './SizeControlRow'
 import ToolsButton from './ToolsButton'
 import ZoomButton from './ZoomButton'
-import { Animated, StyleSheet, View } from 'react-native'
+import { Animated, Pressable, StyleSheet, View } from 'react-native'
 import { useEffect, useRef } from 'react'
 import { useTheme } from '@/contexts/theme'
 
@@ -22,6 +22,7 @@ const AnimatedView = Reanimated.createAnimatedComponent( View )
  * @property { SharedValue<number> } scale
  * @property { SharedValue<number> } translateY
  * @property { ( color:string ) => void } dispatchColorPicker
+ * @property { () => void } onLongPress
  */
 
 /**
@@ -30,7 +31,7 @@ const AnimatedView = Reanimated.createAnimatedComponent( View )
  */
 const ToolsAreaCard = ( props ) => {
 
-  const { opacity, scale, translateY, dispatchColorPicker } = props
+  const { opacity, scale, translateY, dispatchColorPicker, onLongPress:handleLongPress } = props
   const { theme, colors } = useTheme()
   const fadeAnim = useRef( new Animated.Value( 0 ) ).current
 
@@ -61,14 +62,16 @@ const ToolsAreaCard = ( props ) => {
         toolbarAnimatedStyle,
       ] }>
       <Animated.View style={ { opacity:fadeAnim } }>
-        <SizeControlRow />
-        <View style={ styles.toolsRow }>
-          <ToolsButton />
-          <ColorButton dispatchColorPicker={ dispatchColorPicker } />
-          <EyeDropperButton />
-          <ZoomButton />
-          <HistoryButtons />
-        </View>
+        <Pressable style={ styles.touchableContainer } onPress={ handleLongPress }>
+          <SizeControlRow />
+          <View style={ styles.toolsRow }>
+            <ToolsButton />
+            <ColorButton dispatchColorPicker={ dispatchColorPicker } />
+            <EyeDropperButton />
+            <ZoomButton />
+            <HistoryButtons />
+          </View>
+        </Pressable>
       </Animated.View>
     </AnimatedView>
 
@@ -86,6 +89,10 @@ const styles = StyleSheet.create( {
     shadowRadius: 8,
     elevation: 8,
     zIndex: 110,
+  },
+
+  touchableContainer: {
+    width: '100%',
   },
 
   toolsRow: {
